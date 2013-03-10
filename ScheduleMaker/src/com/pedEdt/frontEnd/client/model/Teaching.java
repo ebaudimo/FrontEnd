@@ -3,8 +3,18 @@ package com.pedEdt.frontEnd.client.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.core.client.GWT;
+
+import name.pehl.piriti.xml.client.XmlReader;
+import name.pehl.piriti.xml.client.XmlWriter;
 
 public class Teaching implements java.io.Serializable {
+	
+	interface TeachingReader extends XmlReader<Teaching> {}
+	public static final TeachingReader fromXML = GWT.create(TeachingReader.class);
+	
+	interface TeachingWriter extends XmlWriter<Teaching> {}
+	public static final TeachingWriter toXML = GWT.create(TeachingWriter.class);
 
 	private int id;
 	
