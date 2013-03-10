@@ -1,0 +1,2 @@
+# Module com.pedEdt.frontEnd.ScheduleMaker
+# RPC service class, partial path of RPC policy file

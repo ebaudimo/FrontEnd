@@ -1,0 +1,6 @@
+<module>
+	<inherits name="com.google.gwt.user.User"/>
+	<inherits name="com.google.gwt.user.theme.standard.Standard"/>
+	<inherits name="com.allen_sauer.gwt.dnd.gwt-dnd"/>
+	<entry-point class="com.pedEdt.frontEnd.client.ScheduleMaker"/>
+</module>
