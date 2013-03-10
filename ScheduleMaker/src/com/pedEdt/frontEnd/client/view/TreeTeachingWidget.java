@@ -23,7 +23,7 @@ public class TreeTeachingWidget extends Label{
 		this.teaching = teaching;
 		
 		
-		final TooltipListener tooltip = new TooltipListener(String.valueOf(teaching.getNbSeance()) + " séances programmées.", 5000);
+		final TooltipListener tooltip = new TooltipListener(String.valueOf(teaching.getNbSeance()) + " seances programmees.", 5000);
 		final Widget sender = this;
 		this.addMouseOverHandler(new MouseOverHandler() {			
 			public void onMouseOver(MouseOverEvent event) {

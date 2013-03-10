@@ -38,23 +38,24 @@ public class StartWindow extends PopupPanel {
 		setPopupPosition(500, 100);
 		
 		VerticalPanel contentPanel = new VerticalPanel();
-		contentPanel.add(new Label("Selectionner un semestre : "));
+		
+		contentPanel.add(new Label("Veuillez patienter nous recherchons les semestres deja existant ..."));
 		
 		//build the semesterList with a list of semester send by server
-		final ListBox semesterList = new ListBox();
-		buildSemesterList(semesterList);
+		//final ListBox semesterList = new ListBox();
+		buildSemesterList(contentPanel);
 
-		contentPanel.add(semesterList);
+		//contentPanel.add(semesterList);
 		
-		//if(semesterList.getItemCount() != 0) {
+		/*if(semesterList.getItemCount() != 0) {
 			contentPanel.add(new Button("Charger", new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
 					searchSemester(semesterList.getValue(semesterList.getSelectedIndex()));
 				}
 			}));
-		//}
-		/*else {
+		}
+		else {
 			contentPanel.add(new Button("Ajouter", new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
@@ -67,7 +68,27 @@ public class StartWindow extends PopupPanel {
 		this.setWidget(contentPanel);	
 	}
 
-	private void buildSemesterList(final ListBox myListBox) {
+	private void buildAddButton(VerticalPanel parent) {
+		parent.add(new Button("Ajouter", new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				Window.alert("Not implemented yet, coming soon ;)");
+			}
+		}));
+	}
+	
+	private void buildLoadButton(VerticalPanel parent, final ListBox list) {
+		parent.add(new Button("Charger", new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				searchSemester(list.getValue(list.getSelectedIndex()));
+			}
+		}));
+	}
+	
+ 	private void buildSemesterList(/*final ListBox myListBox,*/ final VerticalPanel parent) {
+		
+		final ListBox myListBox = new ListBox();
 		
 		String url = "proxy.jsp?url=http://localhost:8080/rest/service/read/semesters";
 		final RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, url);
@@ -76,12 +97,16 @@ public class StartWindow extends PopupPanel {
 			builder.sendRequest(null, new RequestCallback() {
 
 				@Override
-				public void onResponseReceived(Request request, Response response) {				
+				public void onResponseReceived(Request request, Response response) {
+					
+					parent.clear();
+					parent.add(new Label("Selectionner un semestre : "));
+					
 					if(response.getStatusCode() == 200) {
 						List<Semester> sl = SemesterList.fromXML.read(response.getText().trim()).getSemesterList();
 						
 						if(sl.isEmpty()) {
-							Window.alert("Aucun semestre encore enregistré.");
+							buildAddButton(parent);
 						}
 						else {
 							Iterator<Semester> i = sl.iterator();
@@ -90,6 +115,9 @@ public class StartWindow extends PopupPanel {
 								myListBox.addItem(String.valueOf(s.getNumber()) + " de " + String.valueOf(s.getYear()),
 													String.valueOf(s.getId())); //value is the semester id in database
 							}
+							
+							parent.add(myListBox);
+							buildLoadButton(parent, myListBox);
 						}
 					}
 				}
@@ -134,7 +162,9 @@ public class StartWindow extends PopupPanel {
 						
 						new MainGUI(mySemester);
 						me.hide();
-						
+					}
+					else {
+						Window.alert(String.valueOf(response.getStatusCode()) + " : " + response.getStatusText());
 					}
 				}
 				
@@ -149,5 +179,6 @@ public class StartWindow extends PopupPanel {
 			e.printStackTrace();
 		}	
 	} //end searchSemester
+	
 	
 }
