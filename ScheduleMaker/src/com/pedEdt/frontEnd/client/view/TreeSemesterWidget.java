@@ -1,5 +1,7 @@
 package com.pedEdt.frontEnd.client.view;
 
+import com.google.gwt.event.dom.client.ContextMenuEvent;
+import com.google.gwt.event.dom.client.ContextMenuHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.ui.Tree;
@@ -40,7 +42,7 @@ public class TreeSemesterWidget extends Tree{
 					}
 				}
 			}
-		});
+		});		
 	}
 
 	public Semester getSemester(){

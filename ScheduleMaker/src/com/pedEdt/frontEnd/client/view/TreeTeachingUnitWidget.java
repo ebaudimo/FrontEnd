@@ -11,7 +11,7 @@ public class TreeTeachingUnitWidget extends TreeItem{
 	@SuppressWarnings("deprecation")
 	public TreeTeachingUnitWidget(TeachingUnit teachingUnit){
 		super(teachingUnit.getTitle()+" ("+teachingUnit.getCode()+")");
-		this.teachingUnit = teachingUnit;
+		this.teachingUnit = teachingUnit;		
 	}
 	
 	public TeachingUnit getTeachingUnit(){

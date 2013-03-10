@@ -28,19 +28,27 @@ import com.pedEdt.frontEnd.client.util.DebugPanel;
 import com.pedEdt.frontEnd.client.view.ScheduleGridPanel;
 import com.pedEdt.frontEnd.client.view.ScheduleMenuBar;
 import com.pedEdt.frontEnd.client.view.ScheduleTreePanel;
+import com.pedEdt.frontEnd.client.view.StartWindow;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class ScheduleMaker implements EntryPoint {
 	
+	/*
 	protected VerticalPanel vpan;
 	protected HorizontalPanel hpan;
 	protected ScheduleGridPanel schedGridPan;
 	protected ScheduleTreePanel schedTree;
 	protected ScheduleMenuBar schedMenubar;
+	*/
 	
 	public void onModuleLoad() {
+		
+		StartWindow startPopup = new StartWindow();
+		RootPanel.get().add(startPopup);
+		startPopup.show();
+/*		
 		vpan = new VerticalPanel();
 		vpan.setSpacing(5);
 		hpan = new HorizontalPanel();
@@ -101,5 +109,6 @@ public class ScheduleMaker implements EntryPoint {
 		vpan.add(schedMenubar);
 		vpan.add(hpan);
 		RootPanel.get().add(vpan);
+		*/
 	}
 }

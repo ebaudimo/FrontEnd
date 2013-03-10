@@ -413,3 +413,23 @@ a:visited {
         border-top:1px solid #000000;
         background:#E8EEF7;
 }
+
+/* For tooltip */
+.tooltip {
+	background-color: bisque;
+	z-index: 5;
+	border: 1px solid black;
+}
+
+.startPopup {
+	z-index: 11;
+	border: 2px solid black;
+	background-color: #00FFFF;
+	margin-left: 400px;
+	margin-top: 100px;
+}
+.startWindow {
+	border: 2px solid black;
+	z-index: 10;
+	background-color: #00FFFF;
+}

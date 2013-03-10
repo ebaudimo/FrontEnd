@@ -10,7 +10,7 @@ import name.pehl.piriti.xml.client.XmlWriter;
 
 public class Semester implements java.io.Serializable {
 	
-	interface SemesterReader extends XmlReader<Semester> {}
+	public interface SemesterReader extends XmlReader<Semester> {}
 	public static final SemesterReader fromXML = GWT.create(SemesterReader.class);
 	
 	interface SemesterWriter extends XmlWriter<Semester> {}
