@@ -13,8 +13,10 @@ public class Semester implements java.io.Serializable {
 	public interface SemesterReader extends XmlReader<Semester> {}
 	public static final SemesterReader fromXML = GWT.create(SemesterReader.class);
 	
-	interface SemesterWriter extends XmlWriter<Semester> {}
+	public interface SemesterWriter extends XmlWriter<Semester> {}
 	public static final SemesterWriter toXML = GWT.create(SemesterWriter.class);
+	
+	
 
 	private int id;
 	

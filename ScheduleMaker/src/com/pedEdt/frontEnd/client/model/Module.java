@@ -10,11 +10,13 @@ import name.pehl.piriti.xml.client.XmlWriter;
 
 public class Module implements java.io.Serializable {
 	
-	interface ModuleReader extends XmlReader<Module> {}
+	public interface ModuleReader extends XmlReader<Module> {}
 	public static final ModuleReader fromXML = GWT.create(ModuleReader.class);
 	
-	interface ModuleWriter extends XmlWriter<Module> {}
+	public interface ModuleWriter extends XmlWriter<Module> {}
 	public static final ModuleWriter toXML = GWT.create(ModuleWriter.class);
+	
+	
 
 	private int id;
 	

@@ -9,6 +9,7 @@ import name.pehl.piriti.xml.client.XmlWriter;
 import com.google.gwt.core.client.GWT;
 
 public class SemesterList {
+	
 	public interface SemesterListReader extends XmlReader<SemesterList> {}
     public static final SemesterListReader fromXML = GWT.create(SemesterListReader.class);
     
