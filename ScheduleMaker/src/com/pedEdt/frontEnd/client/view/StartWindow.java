@@ -17,11 +17,12 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.pedEdt.frontEnd.client.model.Module;
+import com.pedEdt.frontEnd.client.model.ModuleList;
 import com.pedEdt.frontEnd.client.model.Semester;
 import com.pedEdt.frontEnd.client.model.SemesterList;
-import com.pedEdt.frontEnd.client.model.Teaching;
 import com.pedEdt.frontEnd.client.model.TeachingList;
 import com.pedEdt.frontEnd.client.model.TeachingUnit;
+import com.pedEdt.frontEnd.client.model.TeachingUnitList;
 
 public class StartWindow extends PopupPanel {
 
@@ -134,48 +135,92 @@ public class StartWindow extends PopupPanel {
 		}
 	}
 
-	private void searchSemester(final String id) {
-		String url = "proxy.jsp?url=http://localhost:8080/rest/service/read/teachings/semester/" + id;
-		final RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, url);
+	private void searchSemester(String id) {
 		
+		RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, "proxy.jsp?url=http://localhost:8080/rest/service/read/semester/" + id);
 		try {
 			builder.sendRequest(null, new RequestCallback() {
-				
-				@Override
 				public void onResponseReceived(Request request, Response response) {
 					if(response.getStatusCode() == 200) {
-						Semester mySemester = new Semester();
-						mySemester.setId(Integer.valueOf(id));
-						List<Teaching> tl = TeachingList.fromXML.read(response.getText().trim()).getTeachingList();
+						final Semester semester = Semester.fromXML.read(response.getText().trim());
 						
-						Iterator<Teaching> i = tl.iterator();
-						while (i.hasNext()) {
-							Teaching t = i.next();
-							
-							Module m = t.getModule();
-							m.addTeaching(t);
-							TeachingUnit tu = m.getTeachingUnit();
-							tu.addModule(m);
-							
-							mySemester.addTeachingUnit(tu);
+						RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, "proxy.jsp?url=http://localhost:8080/rest/service/read/teachingUnits/semester/" + semester.getId());
+						try {
+							builder.sendRequest(null, new RequestCallback() {
+								public void onResponseReceived(Request request, Response response) {
+									if(response.getStatusCode() == 200) {
+										semester.setTeachingUnits(TeachingUnitList.fromXML.read(response.getText().trim()).getTeachingUnitList());
+										
+										for (final TeachingUnit teachingUnit : semester.getTeachingUnits()) {
+											RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, "proxy.jsp?url=http://localhost:8080/rest/service/read/modules/teachingUnit/" + teachingUnit.getId());
+											try {
+												builder.sendRequest(null, new RequestCallback() {
+													public void onResponseReceived(Request request, Response response) {
+														if(response.getStatusCode() == 200) {
+															teachingUnit.setModules(ModuleList.fromXML.read(response.getText().trim()).getModuleList());
+															
+															for (final Module module : teachingUnit.getModules()) {
+																RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, "proxy.jsp?url=http://localhost:8080/rest/service/read/teachings/module/" + module.getId());
+																try {
+																	builder.sendRequest(null, new RequestCallback() {
+																		public void onResponseReceived(Request request, Response response) {
+																			if(response.getStatusCode() == 200) {
+																				module.setTeachings(TeachingList.fromXML.read(response.getText().trim()).getTeachingList());
+																				
+																				new MainGUI(semester);
+																				me.hide();
+																			}
+																			else {
+																				Window.alert(String.valueOf(response.getStatusCode()) + " : " + response.getStatusText());
+																			}
+																		}
+																		
+																		public void onError(Request request, Throwable exception) {
+																			// TODO Auto-generated method stub
+																		}
+																	});
+																} catch (RequestException e) {
+																	e.printStackTrace();
+																}
+															}
+														}
+														else {
+															Window.alert(String.valueOf(response.getStatusCode()) + " : " + response.getStatusText());
+														}
+													}
+													
+													public void onError(Request request, Throwable exception) {
+														// TODO Auto-generated method stub
+													}
+												});
+											} catch (RequestException e) {
+												e.printStackTrace();
+											}
+										}
+									}
+									else {
+										Window.alert(String.valueOf(response.getStatusCode()) + " : " + response.getStatusText());
+									}
+								}
+								
+								public void onError(Request request, Throwable exception) {
+									// TODO Auto-generated method stub
+								}
+							});
+						} catch (RequestException e) {
+							e.printStackTrace();
 						}
-						
-						new MainGUI(mySemester);
-						me.hide();
 					}
 					else {
 						Window.alert(String.valueOf(response.getStatusCode()) + " : " + response.getStatusText());
 					}
 				}
 				
-				@Override
 				public void onError(Request request, Throwable exception) {
 					// TODO Auto-generated method stub
-					
 				}
 			});
 		} catch (RequestException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 	} //end searchSemester
