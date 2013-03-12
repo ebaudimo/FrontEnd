@@ -13,7 +13,7 @@ public class Teaching implements java.io.Serializable {
 	interface TeachingReader extends XmlReader<Teaching> {}
 	public static final TeachingReader fromXML = GWT.create(TeachingReader.class);
 	
-	interface TeachingWriter extends XmlWriter<Teaching> {}
+	public interface TeachingWriter extends XmlWriter<Teaching> {}
 	public static final TeachingWriter toXML = GWT.create(TeachingWriter.class);
 
 	private int id;

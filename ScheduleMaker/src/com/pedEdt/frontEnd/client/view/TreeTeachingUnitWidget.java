@@ -31,10 +31,12 @@ public class TreeTeachingUnitWidget extends TreeItem{
 	}
 
 	public void createTree() {
-		for (Module module : teachingUnit.getModules()) {
-			TreeModuleWidget widget = new TreeModuleWidget(module);
-			widget.createTree();
-			addItem(widget);	
+		if(teachingUnit.getModules() != null) {
+			for (Module module : teachingUnit.getModules()) {
+				TreeModuleWidget widget = new TreeModuleWidget(module);
+				widget.createTree();
+				addItem(widget);	
+			}
 		}
 	}
 }

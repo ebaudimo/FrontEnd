@@ -3,6 +3,9 @@ package com.pedEdt.frontEnd.client.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
+
 import com.google.gwt.core.client.GWT;
 
 import name.pehl.piriti.xml.client.XmlReader;
@@ -13,7 +16,7 @@ public class Semester implements java.io.Serializable {
 	public interface SemesterReader extends XmlReader<Semester> {}
 	public static final SemesterReader fromXML = GWT.create(SemesterReader.class);
 	
-	interface SemesterWriter extends XmlWriter<Semester> {}
+	public interface SemesterWriter extends XmlWriter<Semester> {}
 	public static final SemesterWriter toXML = GWT.create(SemesterWriter.class);
 
 	private int id;
@@ -22,21 +25,29 @@ public class Semester implements java.io.Serializable {
 	
 	private int number;
 	
+	private int startDate;
+	
+	private int endDate;
+
 	private List<TeachingUnit> teachingUnits;
 
 
 
 	public Semester() {
-		teachingUnits = new ArrayList<TeachingUnit>();
+
 	}
 
-	public Semester(int year, int number, List<TeachingUnit> teachingUnits) {
+	public Semester(int year, int number, int startD, int endD, List<TeachingUnit> teachingUnits) {
 		this.year = year;
 		this.number = number;
+		this.startDate = startD;
+		this.endDate = endD;
 		this.teachingUnits = teachingUnits;
 	}
 	
 	
+
+	@XmlElement
 	public int getId() {
 		return this.id;
 	}
@@ -45,6 +56,7 @@ public class Semester implements java.io.Serializable {
 		this.id = id;
 	}
 
+	@XmlElement
 	public int getYear() {
 		return this.year;
 	}
@@ -53,14 +65,34 @@ public class Semester implements java.io.Serializable {
 		this.year = year;
 	}
 
+	@XmlElement
 	public int getNumber() {
 		return this.number;
 	}
 
-	public void setNumber(int nunber) {
-		this.number = nunber;
+	public void setNumber(int number) {
+		this.number = number;
+	}
+	
+	@XmlElement
+	public int getStartDate() {
+		return this.startDate;
 	}
 
+	public void setStartDate(int date) {
+		this.startDate = date;
+	}
+	
+	@XmlElement
+	public int getEndDate() {
+		return this.endDate;
+	}
+
+	public void setEndDate(int date) {
+		this.endDate = date;
+	}
+
+	@XmlTransient
 	public List<TeachingUnit> getTeachingUnits() {
 		return this.teachingUnits;
 	}
@@ -71,12 +103,10 @@ public class Semester implements java.io.Serializable {
 	
 	public void addTeachingUnit(TeachingUnit teachingUnit) {
 		this.teachingUnits.add(teachingUnit);
-		teachingUnit.setSemester(this);
 	}
 	
 	public void removeTeachingUnit(TeachingUnit teachingUnit) {
-		if( this.teachingUnits.remove(teachingUnit) )
-			teachingUnit.setSemester(null);
+		this.teachingUnits.remove(teachingUnit);
 	}
 	
 	public List<Teaching> isSessionInPeriod(int start) {

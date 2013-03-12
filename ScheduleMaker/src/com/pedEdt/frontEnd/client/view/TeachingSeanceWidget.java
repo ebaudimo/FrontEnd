@@ -13,9 +13,9 @@ public class TeachingSeanceWidget extends Composite{
 	protected Label label;
 	
 	protected Teaching teaching;
-	protected int seanceTimestamp;
+	protected int length; // nbr of blocks in the grid
 	protected int posH; // [0-4] horizontal position on the grid
-	protected int posV; // [0-65] vertical position on the grid
+	protected int posV; // [0-61] vertical position on the grid
 	
 	public TeachingSeanceWidget(Teaching teaching, int posH, int posV){
 		this.teaching = teaching;
@@ -55,5 +55,9 @@ public class TeachingSeanceWidget extends Composite{
 	
 	public int getPosV(){
 		return posV;
+	}
+
+	public int getLength(){
+		return length;
 	}
 }

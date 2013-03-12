@@ -414,7 +414,6 @@ a:visited {
         background:#E8EEF7;
 }
 
-/* For tooltip */
 .tooltip {
 	background-color: bisque;
 	z-index: 5;
@@ -432,4 +431,9 @@ a:visited {
 	border: 2px solid black;
 	z-index: 10;
 	background-color: #00FFFF;
+}
+
+.semesterInformation {
+	border: 2px solid black;
+	width: 100%;
 }

@@ -11,21 +11,57 @@ public class ScheduleMenuBar extends Composite {
 	protected MenuBar menuBar;
 	public ScheduleMenuBar() {
 		menuBar = new MenuBar();
-		menuBar.addItem("test1", new ScheduledCommand() {
+
+		MenuBar semesterMenu = new MenuBar(true);
+		semesterMenu.addItem("Nouveau", new ScheduledCommand() {
 			
 			@Override
 			public void execute() {
-				DebugPanel.getInstance().vpan.add(new Label("test1 handler"));	
+				DebugPanel.getInstance().vpan.add(new Label("Semester->New callback"));
 			}
 		});
+		semesterMenu.addItem("Ouvrir", new ScheduledCommand() {
+			
+			@Override
+			public void execute() {
+				DebugPanel.getInstance().vpan.add(new Label("Semester->Open callback"));
+			}
+		});
+		semesterMenu.addItem("Sauvegarder", new ScheduledCommand() {
+			
+			@Override
+			public void execute() {
+				DebugPanel.getInstance().vpan.add(new Label("Semester->Save callback"));
+			}
+		});
+		semesterMenu.addItem("Fermer", new ScheduledCommand() {
+			
+			@Override
+			public void execute() {
+				DebugPanel.getInstance().vpan.add(new Label("Semester->Close callback"));
+			}
+		});
+		menuBar.addItem("Semestre", semesterMenu);
 		
-		menuBar.addItem("test2", new ScheduledCommand() {
+		//debug
+		MenuBar debugMenu = new MenuBar(true);
+		debugMenu.addItem("Afficher/Cacher", new ScheduledCommand() {
 			
 			@Override
 			public void execute() {
-				DebugPanel.getInstance().vpan.add(new Label("test2 handler"));	
+				DebugPanel.getInstance().setVisible(!DebugPanel.getInstance().isVisible());
 			}
 		});
+		debugMenu.addItem("Clear", new ScheduledCommand() {
+			
+			@Override
+			public void execute() {
+				DebugPanel.getInstance().vpan.clear();	
+			}
+		});
+		menuBar.addItem("Debug", debugMenu);
+		//end debug
+		
 		initWidget(menuBar);
 	}
 
