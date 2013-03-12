@@ -31,9 +31,11 @@ public class TreeModuleWidget extends TreeItem{
 	}
 	
 	public void createTree(){
-		for (Teaching teaching : module.getTeachings()) {
-			TreeTeachingWidget widget = new TreeTeachingWidget(teaching);
-			addItem(widget);	
+		if(module.getTeachings() != null) {
+			for (Teaching teaching : module.getTeachings()) {
+				TreeTeachingWidget widget = new TreeTeachingWidget(teaching);
+				addItem(widget);	
+			}
 		}
 	}
 

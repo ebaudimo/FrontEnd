@@ -171,6 +171,7 @@ public class StartWindow extends PopupPanel {
 																						module.setTeachings(TeachingList.fromXML.read(response.getText().trim()).getTeachingList());
 		
 																						MainGUI.getInstance(semester);
+																						//new MainGUI(semester);
 																						me.hide();
 																					}
 																					else {
@@ -187,6 +188,11 @@ public class StartWindow extends PopupPanel {
 																		}
 																	}
 																} //end if Modules list is not empty
+																else {
+																	MainGUI.getInstance(semester);
+																	//new MainGUI(semester);
+																	me.hide();
+																}
 															}
 															else {
 																Window.alert(String.valueOf(response.getStatusCode()) + " : " + response.getStatusText());
@@ -202,6 +208,11 @@ public class StartWindow extends PopupPanel {
 												}
 											}
 										} //end if TeachingUnit is not empy
+										else {
+											MainGUI.getInstance(semester);
+											//new MainGUI(semester);
+											me.hide();
+										}
 									}
 									else {
 										Window.alert(String.valueOf(response.getStatusCode()) + " : " + response.getStatusText());
