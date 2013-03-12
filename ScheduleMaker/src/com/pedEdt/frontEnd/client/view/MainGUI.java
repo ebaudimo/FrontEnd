@@ -35,8 +35,20 @@ public class MainGUI {
 	protected ScheduleGridPanel schedGridPan;
 	protected ScheduleTreePanel schedTree;
 	protected ScheduleMenuBar schedMenubar;
+	protected ScheduleSemesterInformation schedInfobar;
+	protected HorizontalPanel menuContentPanel;
 	
-	public MainGUI(Semester s) {
+	//singleton
+	private static MainGUI mainGUIInstance;
+	
+	public static MainGUI getInstance(Semester s) {
+		if(null == mainGUIInstance) 
+			mainGUIInstance = new MainGUI(s);
+		
+		return mainGUIInstance;
+	}
+	
+	private MainGUI(Semester s) {
 		
 		vpan = new VerticalPanel();
 		vpan.setSpacing(5);
@@ -53,7 +65,8 @@ public class MainGUI {
 		schedTree = new ScheduleTreePanel(s);
 		
 		//1362060000 for test
-		List<Teaching> myList = s.isSessionInPeriod(1362060000);
+		//get a list of teaching which is present in the timestamp week
+		//List<Teaching> myList = s.isSessionInPeriod(1362060000);
 
 		hpan.add(schedTree);
 		hpan.add(schedGridPan);
@@ -62,8 +75,19 @@ public class MainGUI {
 		hpan.add(DebugPanel.getInstance());
 		//end debug
 		
-		vpan.add(schedMenubar);
+		schedInfobar = new ScheduleSemesterInformation(s);
+		
+		menuContentPanel = new HorizontalPanel();
+		menuContentPanel.add(schedMenubar);
+		menuContentPanel.add(schedInfobar);
+		vpan.add(menuContentPanel);
+		//vpan.add(schedMenubar);
+		
 		vpan.add(hpan);
+		
+		ScheduleNavigationBar navBar = new ScheduleNavigationBar();
+		vpan.add(navBar);
+		
 		RootPanel.get().add(vpan);
 		
 	}
