@@ -43,6 +43,7 @@ public class TreeSemesterWidget extends Tree{
 				}
 			}
 		});		
+		
 	}
 
 	public Semester getSemester(){
@@ -56,5 +57,4 @@ public class TreeSemesterWidget extends Tree{
 			addItem(widget);
 		}
 	}
-	
 }

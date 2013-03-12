@@ -5,15 +5,15 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.PopupPanel;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.UIObject;
 
 public class ContextMenu {
 	
-	protected Widget parent;
+	protected UIObject parent;
 	final protected PopupPanel menuPanel;
 	
 	
-	public ContextMenu(Widget parent) {
+	public ContextMenu(UIObject parent) {
 		
 		this.parent = parent;
 		

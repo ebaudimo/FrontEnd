@@ -179,6 +179,4 @@ public class StartWindow extends PopupPanel {
 			e.printStackTrace();
 		}	
 	} //end searchSemester
-	
-	
 }

@@ -22,9 +22,15 @@ public class TreeTeachingWidget extends Label{
 		ScheduleDragController.getInstance().makeDraggable(this);
 		this.teaching = teaching;
 		
-		
-		final TooltipListener tooltip = new TooltipListener(String.valueOf(teaching.getNbSeance()) + " seances programmees.", 5000);
 		final Widget sender = this;
+		final TooltipListener tooltip = new TooltipListener(
+				"Teacher : " + teaching.getTeacher() + "<br/>" +
+				"Groupe : " + String.valueOf(teaching.getNumGroup()) + "<br/>" +
+				"Reste " + String.valueOf(teaching.getNbSeance() - teaching.getSeances().size()) + " seances sur " + String.valueOf(teaching.getNbSeance()),
+				5000);
+		
+		
+		tooltip.setStyleName("tooltip");
 		this.addMouseOverHandler(new MouseOverHandler() {			
 			public void onMouseOver(MouseOverEvent event) {
 				tooltip.onMouseEnter(sender);

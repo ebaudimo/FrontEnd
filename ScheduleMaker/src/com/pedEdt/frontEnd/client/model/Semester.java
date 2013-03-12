@@ -78,4 +78,15 @@ public class Semester implements java.io.Serializable {
 		if( this.teachingUnits.remove(teachingUnit) )
 			teachingUnit.setSemester(null);
 	}
+	
+	public List<Teaching> isSessionInPeriod(int start) {
+		
+		List<Teaching> myList = new ArrayList<Teaching>();
+		
+		for (int i = 0; i < this.teachingUnits.size(); i++) {
+			myList.addAll(this.teachingUnits.get(i).isSessionInPeriod(start));
+		}
+		
+		return myList;
+	}
 }

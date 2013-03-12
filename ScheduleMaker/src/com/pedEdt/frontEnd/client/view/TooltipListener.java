@@ -1,4 +1,4 @@
-/*
+/**
 Tooltip component for GWT
 Copyright (C) 2006 Alexei Sokolov http://gwt.components.googlepages.com/
 

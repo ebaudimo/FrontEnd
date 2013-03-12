@@ -39,8 +39,6 @@ public class TeachingUnit implements java.io.Serializable {
 		this.modules = modules;
 	}
 	
-	
-
 
 	public int getId() {
 		return this.id;
@@ -95,4 +93,17 @@ public class TeachingUnit implements java.io.Serializable {
 		if( this.modules.remove(module) )
 			module.setTeachingUnit(null);
 	}
+	
+	public List<Teaching> isSessionInPeriod(int start) {
+		
+		List<Teaching> myList = new ArrayList<Teaching>();
+		
+		for (int i = 0; i < this.modules.size(); i++) {
+			//List<Teaching> mList = this.modules.get(i).isSessionInPeriod(start, end);
+			myList.addAll(this.modules.get(i).isSessionInPeriod(start));
+		}
+		
+		return myList;
+	}
+	
 }
