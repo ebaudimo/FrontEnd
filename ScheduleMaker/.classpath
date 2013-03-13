@@ -9,7 +9,7 @@
 	<classpathentry kind="lib" path="lib/guice-3.0.jar"/>
 	<classpathentry kind="lib" path="lib/guice-assistedinject-snapshot.jar"/>
 	<classpathentry kind="lib" path="lib/guice-snapshot.jar"/>
-	<classpathentry kind="lib" path="lib/gwt-dnd-3.2.0.jar"/>
+	<classpathentry kind="lib" path="lib/gwt-dnd-3.2.0.jar" sourcepath="C:/Users/Etienne/.m2/repository/com/allen-sauer/gwt/dnd/gwt-dnd/3.2.0/gwt-dnd-3.2.0-sources.jar"/>
 	<classpathentry kind="lib" path="lib/javax.inject.jar"/>
 	<classpathentry kind="lib" path="lib/org.restlet.ext.xml.jar"/>
 	<classpathentry kind="lib" path="lib/org.restlet.gwt.jar"/>

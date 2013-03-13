@@ -4,6 +4,7 @@ import com.allen_sauer.gwt.dnd.client.drop.GridDropController;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Widget;
 
 public class ScheduleGridPanel extends Composite {
 	
@@ -39,5 +40,9 @@ public class ScheduleGridPanel extends Composite {
 		return dropController;
 	}
 
+	public void addWidget(Widget child, int col, int row) {
+		mainPan.setWidget(row, col, child);
+	}
+	
 }
 

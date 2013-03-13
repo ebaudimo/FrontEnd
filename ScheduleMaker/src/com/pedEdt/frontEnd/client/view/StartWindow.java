@@ -118,6 +118,8 @@ public class StartWindow extends PopupPanel {
 
 	private void searchSemester(String id) {
 
+		
+		
 		RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, "proxy.jsp?url=http://localhost:8080/rest/service/read/semester/" + id);
 		try {
 			builder.sendRequest(null, new RequestCallback() {
@@ -125,7 +127,8 @@ public class StartWindow extends PopupPanel {
 					if(response.getStatusCode() == 200) {
 						
 						final Semester semester = Semester.fromXML.read(response.getText().trim());
-
+						//final MainGUI gui = MainGUI.getInstance(semester);
+						
 						RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, "proxy.jsp?url=http://localhost:8080/rest/service/read/teachingUnits/semester/" + semester.getId());
 						try {
 							builder.sendRequest(null, new RequestCallback() {
@@ -152,7 +155,6 @@ public class StartWindow extends PopupPanel {
 																						module.setTeachings(TeachingList.fromXML.read(response.getText().trim()).getTeachingList());
 		
 																						MainGUI.getInstance(semester);
-																						//MainGUI.getInstance(semester);
 																						//new MainGUI(semester);
 																						me.hide();
 																					}
@@ -184,7 +186,7 @@ public class StartWindow extends PopupPanel {
 													e.printStackTrace();
 												}
 											}
-										} //end if TeachingUnit is not empy
+										} //end if TeachingUnit is not empty
 									}
 									else {
 										Window.alert(String.valueOf(response.getStatusCode()) + " : " + response.getStatusText());

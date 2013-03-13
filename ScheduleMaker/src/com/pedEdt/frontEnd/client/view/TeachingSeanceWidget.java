@@ -17,7 +17,7 @@ public class TeachingSeanceWidget extends Composite{
 	protected int posH; // [0-4] horizontal position on the grid
 	protected int posV; // [0-61] vertical position on the grid
 	
-	public TeachingSeanceWidget(Teaching teaching, int posH, int posV){
+	public TeachingSeanceWidget(final Teaching teaching, int posH, int posV){
 		this.teaching = teaching;
 		this.posH = posH;
 		this.posV = posV;
@@ -38,7 +38,9 @@ public class TeachingSeanceWidget extends Composite{
 		
 		initWidget(mainPanel);
 		setStyleName("teaching-cell");
+		
 		ScheduleDragController.getInstance().makeDraggable(this, headerPanel);
+		
 	}
 	
 	public void setPosH(int newPosH){

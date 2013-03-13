@@ -7,8 +7,6 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 
-
-
 public class ScheduleNavigationBar extends Composite {
 
 	static int WEEK = 604800;

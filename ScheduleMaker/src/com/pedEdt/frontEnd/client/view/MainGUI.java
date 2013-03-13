@@ -14,11 +14,9 @@
  *******************************************************************************/
 package com.pedEdt.frontEnd.client.view;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -68,6 +66,7 @@ public class MainGUI {
 		
 		//1362060000 for test
 		//get a list of teaching which is present in the timestamp week
+
 		List<Teaching> myList = s.isSessionInPeriod(s.getStartDate());
 		if(myList != null) {
 			//TODO put the SessionWidget with teaching in grid
@@ -75,6 +74,8 @@ public class MainGUI {
 			while(i.hasNext()) {
 				Teaching t = i.next();
 				//build the sessionWidget and place it
+				schedGridPan.addWidget(new TeachingSeanceWidget(t,	0, 0), 0, 0);
+				
 			}
 		}
 
@@ -102,5 +103,28 @@ public class MainGUI {
 		
 		RootPanel.get().add(vpan);
 		
+	}
+
+	public void buildTree(Semester s) {
+		
+		//schedTree.clearTree();
+		
+		//build the tree
+		schedTree = new ScheduleTreePanel(s);
+
+		//1362060000 for test
+		//get a list of teaching which is present in the timestamp week
+
+		List<Teaching> myList = s.isSessionInPeriod(s.getStartDate());
+		if(myList != null) {
+			//TODO put the SessionWidget with teaching in grid
+			Iterator<Teaching> i = myList.iterator();
+			while(i.hasNext()) {
+				Teaching t = i.next();
+				//build the sessionWidget and place it
+				schedGridPan.addWidget(new TeachingSeanceWidget(t,	0, 0), 0, 0);
+
+			}
+		}
 	}
 }

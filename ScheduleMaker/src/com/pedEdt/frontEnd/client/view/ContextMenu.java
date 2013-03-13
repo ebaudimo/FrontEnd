@@ -12,7 +12,6 @@ public class ContextMenu {
 	protected UIObject parent;
 	final protected PopupPanel menuPanel;
 	
-	
 	public ContextMenu(UIObject parent) {
 		
 		this.parent = parent;

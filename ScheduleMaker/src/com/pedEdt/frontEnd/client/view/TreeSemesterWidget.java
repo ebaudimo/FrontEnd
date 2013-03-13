@@ -51,10 +51,12 @@ public class TreeSemesterWidget extends Tree{
 	}
 	
 	public void createTree(){
-		for (TeachingUnit teachingUnit : semester.getTeachingUnits()) {
-			TreeTeachingUnitWidget widget = new TreeTeachingUnitWidget(teachingUnit);
-			widget.createTree();
-			addItem(widget);
+		if(semester.getTeachingUnits() != null) {
+			for (TeachingUnit teachingUnit : semester.getTeachingUnits()) {
+				TreeTeachingUnitWidget widget = new TreeTeachingUnitWidget(teachingUnit);
+				widget.createTree();
+				addItem(widget);
+			}
 		}
 	}
 }

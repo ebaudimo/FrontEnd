@@ -21,5 +21,9 @@ public class ScheduleTreePanel extends Composite {
 		
 		scrollPanel.setStylePrimaryName("scroll-area");
 	}
+	
+	public void clearTree() {
+		scrollPanel.clear();
+	}
 
 }
