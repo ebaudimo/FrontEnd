@@ -1,7 +1,14 @@
 package com.pedEdt.frontEnd.client.view;
 
+import java.util.Date;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.FocusEvent;
+import com.google.gwt.event.dom.client.FocusHandler;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FormPanel;
@@ -11,6 +18,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.datepicker.client.DatePicker;
 import com.pedEdt.frontEnd.client.model.Module;
 import com.pedEdt.frontEnd.client.model.Semester;
 import com.pedEdt.frontEnd.client.model.TeachingUnit;
@@ -45,14 +53,66 @@ public class Forms {
 		HorizontalPanel startDatePanel = new HorizontalPanel();
 		startDatePanel.add(new Label("Date de debut : "));
 		final TextBox startDate = new TextBox();
+		final DatePicker startDatePicker = new DatePicker();
+		startDatePicker.addValueChangeHandler(new ValueChangeHandler<Date>() {
+			
+			@Override
+			public void onValueChange(ValueChangeEvent<Date> event) {
+				Date date = event.getValue();
+				startDate.setText(DateTimeFormat.getFormat("dd/MM/yyyy").format(date));
+				startDatePicker.setVisible(false);
+			}
+		});
+		startDatePicker.setVisible(false);
+		startDate.addFocusHandler(new FocusHandler() {
+			
+			@Override
+			public void onFocus(FocusEvent event) {
+				startDatePicker.setVisible(true);
+			}
+		});
+//		startDate.addBlurHandler(new BlurHandler() {
+//			
+//			@Override
+//			public void onBlur(BlurEvent event) {
+//				startDatePicker.setVisible(false);
+//			}
+//		});
 		startDatePanel.add(startDate);
+		startDatePanel.add(startDatePicker);
 		holder.add(startDatePanel);
 
 		//endDate
 		HorizontalPanel endDatePanel = new HorizontalPanel();
 		endDatePanel.add(new Label("Date de fin : "));
 		final TextBox endDate = new TextBox();
+		final DatePicker endDatePicker = new DatePicker();
+		endDatePicker.addValueChangeHandler(new ValueChangeHandler<Date>() {
+			
+			@Override
+			public void onValueChange(ValueChangeEvent<Date> event) {
+				Date date = event.getValue();
+				endDate.setText(DateTimeFormat.getFormat("dd/MM/yyyy").format(date));
+				endDatePicker.setVisible(false);
+			}
+		});
+		endDatePicker.setVisible(false);
+		endDate.addFocusHandler(new FocusHandler() {
+			
+			@Override
+			public void onFocus(FocusEvent event) {
+				endDatePicker.setVisible(true);
+			}
+		});
+//		endDate.addBlurHandler(new BlurHandler() {
+//			
+//			@Override
+//			public void onBlur(BlurEvent event) {
+//				endDatePicker.setVisible(false);
+//			}
+//		});
 		endDatePanel.add(endDate);
+		endDatePanel.add(endDatePicker);
 		holder.add(endDatePanel);
 		
 		//submit
@@ -86,8 +146,8 @@ public class Forms {
 				Semester semester = new Semester();
 				semester.setYear((year.getText().trim().equals("")) ? 0 : Integer.parseInt(year.getText().trim()));
 				semester.setNumber((number.getText().trim().equals("")) ? 0 : Integer.parseInt(number.getText().trim()));
-				semester.setStartDate((startDate.getText().trim().equals("")) ? 0 : Integer.parseInt(startDate.getText().trim()));
-				semester.setEndDate((endDate.getText().trim().equals("")) ? 0 : Integer. parseInt(endDate.getText().trim()));
+				semester.setStartDate(startDatePicker.getValue());
+				semester.setEndDate(endDatePicker.getValue());
 
 				Window.alert(Semester.toXML.toXml(semester));
 				//ServerCommunication.getInstance().createSemester(semester);
@@ -131,16 +191,68 @@ public class Forms {
 		HorizontalPanel startDatePanel = new HorizontalPanel();
 		startDatePanel.add(new Label("Date de debut : "));
 		final TextBox startDate = new TextBox();
-		startDate.setText("" + semester.getStartDate());
+		startDate.setText(DateTimeFormat.getFormat("dd/MM/yyyy").format(semester.getStartDate()));
+		final DatePicker startDatePicker = new DatePicker();
+		startDatePicker.addValueChangeHandler(new ValueChangeHandler<Date>() {
+			
+			@Override
+			public void onValueChange(ValueChangeEvent<Date> event) {
+				Date date = event.getValue();
+				startDate.setText(DateTimeFormat.getFormat("dd/MM/yyyy").format(date));
+				startDatePicker.setVisible(false);
+			}
+		});
+		startDatePicker.setVisible(false);
+		startDate.addFocusHandler(new FocusHandler() {
+			
+			@Override
+			public void onFocus(FocusEvent event) {
+				startDatePicker.setVisible(true);
+			}
+		});
+//		startDate.addBlurHandler(new BlurHandler() {
+//			
+//			@Override
+//			public void onBlur(BlurEvent event) {
+//				startDatePicker.setVisible(false);
+//			}
+//		});
 		startDatePanel.add(startDate);
+		startDatePanel.add(startDatePicker);
 		holder.add(startDatePanel);
 
 		//endDate
 		HorizontalPanel endDatePanel = new HorizontalPanel();
 		endDatePanel.add(new Label("Date de fin : "));
 		final TextBox endDate = new TextBox();
-		endDate.setText("" + semester.getEndDate());
+		endDate.setText(DateTimeFormat.getFormat("dd/MM/yyyy").format(semester.getEndDate()));
+		final DatePicker endDatePicker = new DatePicker();
+		endDatePicker.addValueChangeHandler(new ValueChangeHandler<Date>() {
+			
+			@Override
+			public void onValueChange(ValueChangeEvent<Date> event) {
+				Date date = event.getValue();
+				endDate.setText(DateTimeFormat.getFormat("dd/MM/yyyy").format(date));
+				endDatePicker.setVisible(false);
+			}
+		});
+		endDatePicker.setVisible(false);
+		endDate.addFocusHandler(new FocusHandler() {
+			
+			@Override
+			public void onFocus(FocusEvent event) {
+				endDatePicker.setVisible(true);
+			}
+		});
+//		endDate.addBlurHandler(new BlurHandler() {
+//			
+//			@Override
+//			public void onBlur(BlurEvent event) {
+//				endDatePicker.setVisible(false);
+//			}
+//		});
 		endDatePanel.add(endDate);
+		endDatePanel.add(endDatePicker);
 		holder.add(endDatePanel);
 
 		//submit
@@ -173,8 +285,8 @@ public class Forms {
 			public void onSubmit(SubmitEvent event) {
 				semester.setYear((year.getText().trim().equals("")) ? 0 : Integer.parseInt(year.getText().trim()));
 				semester.setNumber((number.getText().trim().equals("")) ? 0 : Integer.parseInt(number.getText().trim()));
-				semester.setStartDate((startDate.getText().trim().equals("")) ? 0 : Integer.parseInt(startDate.getText().trim()));
-				semester.setEndDate((endDate.getText().trim().equals("")) ? 0 : Integer. parseInt(endDate.getText().trim()));
+				semester.setStartDate(startDatePicker.getValue());
+				semester.setEndDate(endDatePicker.getValue());
 
 				Window.alert(Semester.toXML.toXml(semester));
 				//ServerCommunication.getInstance().updateSemester(semester);
@@ -297,7 +409,20 @@ public class Forms {
 				form.submit();
 			}
 		});
-		holder.add(submitButton);
+		
+		//cancel
+		Button cancelButton = new Button("Annuler", new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				popupPanel.hide();
+			}
+		});
+
+		HorizontalPanel buttonsPanel = new HorizontalPanel();
+		buttonsPanel.add(submitButton);
+		buttonsPanel.add(cancelButton);
+		holder.add(buttonsPanel);
 
 		form.add(holder);
 		form.addSubmitHandler(new FormPanel.SubmitHandler() {
@@ -428,7 +553,20 @@ public class Forms {
 				form.submit();
 			}
 		});
-		holder.add(submitButton);
+		
+		//cancel
+		Button cancelButton = new Button("Annuler", new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				popupPanel.hide();
+			}
+		});
+
+		HorizontalPanel buttonsPanel = new HorizontalPanel();
+		buttonsPanel.add(submitButton);
+		buttonsPanel.add(cancelButton);
+		holder.add(buttonsPanel);
 
 		form.add(holder);
 		form.addSubmitHandler(new FormPanel.SubmitHandler() {

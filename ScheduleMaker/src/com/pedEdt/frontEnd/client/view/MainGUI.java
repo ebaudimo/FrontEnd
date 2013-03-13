@@ -98,7 +98,8 @@ public class MainGUI {
 		
 		vpan.add(hpan);
 		
-		ScheduleNavigationBar navBar = new ScheduleNavigationBar(1, s.getStartDate(), s.getEndDate());
+		//TODO : timestamp to Date
+		ScheduleNavigationBar navBar = new ScheduleNavigationBar(1, (int) s.getStartDate().getTime(), (int) s.getEndDate().getTime());
 		vpan.add(navBar);
 		
 		RootPanel.get().add(vpan);
