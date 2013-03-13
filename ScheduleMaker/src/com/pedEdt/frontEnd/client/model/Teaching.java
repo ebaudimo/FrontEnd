@@ -1,12 +1,13 @@
 package com.pedEdt.frontEnd.client.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-
-import com.google.gwt.core.client.GWT;
 
 import name.pehl.piriti.xml.client.XmlReader;
 import name.pehl.piriti.xml.client.XmlWriter;
+
+import com.google.gwt.core.client.GWT;
 
 public class Teaching implements java.io.Serializable {
 	
@@ -28,17 +29,17 @@ public class Teaching implements java.io.Serializable {
 	
 	private int numGroup;
 	
-	private List<Integer> seances;
+	private List<Date> seances;
 	
 	private Module module;
 	
 	
 	
 	public Teaching() {
-		seances = new ArrayList<Integer>();
+		seances = new ArrayList<Date>();
 	}
 	
-	public Teaching(TeachingType type, String teacher, int nbHour, int nbSeance, int numGroup, List<Integer> seances, Module module) {
+	public Teaching(TeachingType type, String teacher, int nbHour, int nbSeance, int numGroup, List<Date> seances, Module module) {
 		this.type = type;
 		this.teacher = teacher;
 		this.nbHour = nbHour;
@@ -98,11 +99,11 @@ public class Teaching implements java.io.Serializable {
 		this.numGroup = numGroup;
 	}
 
-	public List<Integer> getSeances() {
+	public List<Date> getSeances() {
 		return seances;
 	}
 
-	public void setSeances(List<Integer> sceances) {
+	public void setSeances(List<Date> sceances) {
 		this.seances = sceances;
 	}
 
@@ -114,21 +115,22 @@ public class Teaching implements java.io.Serializable {
 		this.module = module;
 	}
 	
-	public void addSeance(int timestamp) {
-		this.seances.add(timestamp);
+	public void addSeance(Date date) {
+		this.seances.add(date);
 	}
 	
-	public void removeSeance(int timestamp) {
+	public void removeSeance(Date date) {
 		for (int i = 0; i < this.seances.size(); i++)
-			if (this.seances.get(i) == timestamp)
+			if (this.seances.get(i).equals(date))
 				this.seances.remove(i);
 	}
 	
-	public boolean isSessionInPeriod(int start) {
-		int WEEK = 604800;
-		for (int i = 0; i < this.seances.size(); i++)
-			if (this.seances.get(i) >= start && this.seances.get(i) <= start+WEEK)
-				return true;
+	public boolean isSessionInPeriod(Date start) {
+		//TODO : timestamp to Date
+//		int WEEK = 604800;
+//		for (int i = 0; i < this.seances.size(); i++)
+//			if (this.seances.get(i).after(start) && this.seances.get(i).before(start + WEEK))
+//				return true;
 		return false;
 	}
 }

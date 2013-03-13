@@ -1,12 +1,13 @@
 package com.pedEdt.frontEnd.client.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-
-import com.google.gwt.core.client.GWT;
 
 import name.pehl.piriti.xml.client.XmlReader;
 import name.pehl.piriti.xml.client.XmlWriter;
+
+import com.google.gwt.core.client.GWT;
 
 public class Module implements java.io.Serializable {
 	
@@ -88,7 +89,7 @@ public class Module implements java.io.Serializable {
 			teaching.setModule(null);
 	}
 	
-	public List<Teaching> isSessionInPeriod(int start) {
+	public List<Teaching> isSessionInPeriod(Date start) {
 		
 		List<Teaching> myList = new ArrayList<Teaching>();
 		

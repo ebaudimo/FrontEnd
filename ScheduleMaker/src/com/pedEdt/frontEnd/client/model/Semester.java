@@ -1,15 +1,16 @@
 package com.pedEdt.frontEnd.client.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import com.google.gwt.core.client.GWT;
-
 import name.pehl.piriti.xml.client.XmlReader;
 import name.pehl.piriti.xml.client.XmlWriter;
+
+import com.google.gwt.core.client.GWT;
 
 public class Semester implements java.io.Serializable {
 	
@@ -25,9 +26,9 @@ public class Semester implements java.io.Serializable {
 	
 	private int number;
 	
-	private int startDate;
+	private Date startDate;
 	
-	private int endDate;
+	private Date endDate;
 
 	private List<TeachingUnit> teachingUnits;
 
@@ -37,7 +38,7 @@ public class Semester implements java.io.Serializable {
 
 	}
 
-	public Semester(int year, int number, int startD, int endD, List<TeachingUnit> teachingUnits) {
+	public Semester(int year, int number, Date startD, Date endD, List<TeachingUnit> teachingUnits) {
 		this.year = year;
 		this.number = number;
 		this.startDate = startD;
@@ -75,20 +76,20 @@ public class Semester implements java.io.Serializable {
 	}
 	
 	@XmlElement
-	public int getStartDate() {
+	public Date getStartDate() {
 		return this.startDate;
 	}
 
-	public void setStartDate(int date) {
+	public void setStartDate(Date date) {
 		this.startDate = date;
 	}
 	
 	@XmlElement
-	public int getEndDate() {
+	public Date getEndDate() {
 		return this.endDate;
 	}
 
-	public void setEndDate(int date) {
+	public void setEndDate(Date date) {
 		this.endDate = date;
 	}
 
@@ -109,7 +110,7 @@ public class Semester implements java.io.Serializable {
 		this.teachingUnits.remove(teachingUnit);
 	}
 	
-	public List<Teaching> isSessionInPeriod(int start) {
+	public List<Teaching> isSessionInPeriod(Date start) {
 		
 		List<Teaching> myList = new ArrayList<Teaching>();
 		
