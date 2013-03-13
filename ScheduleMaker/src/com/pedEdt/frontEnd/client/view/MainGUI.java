@@ -15,8 +15,10 @@
 package com.pedEdt.frontEnd.client.view;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -66,8 +68,18 @@ public class MainGUI {
 		
 		//1362060000 for test
 		//get a list of teaching which is present in the timestamp week
-		//List<Teaching> myList = s.isSessionInPeriod(1362060000);
+		List<Teaching> myList = s.isSessionInPeriod(s.getStartDate());
+		if(myList != null) {
+			//TODO put the SessionWidget with teaching in grid
+			Iterator<Teaching> i = myList.iterator();
+			while(i.hasNext()) {
+				Teaching t = i.next();
+				//build the sessionWidget and place it
+			}
+		}
 
+		
+		
 		hpan.add(schedTree);
 		hpan.add(schedGridPan);
 		
@@ -85,7 +97,7 @@ public class MainGUI {
 		
 		vpan.add(hpan);
 		
-		ScheduleNavigationBar navBar = new ScheduleNavigationBar();
+		ScheduleNavigationBar navBar = new ScheduleNavigationBar(1, s.getStartDate(), s.getEndDate());
 		vpan.add(navBar);
 		
 		RootPanel.get().add(vpan);
