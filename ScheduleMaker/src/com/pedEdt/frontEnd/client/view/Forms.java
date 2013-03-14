@@ -15,12 +15,15 @@ import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.FormPanel.SubmitEvent;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DatePicker;
 import com.pedEdt.frontEnd.client.model.Module;
 import com.pedEdt.frontEnd.client.model.Semester;
+import com.pedEdt.frontEnd.client.model.Teaching;
+import com.pedEdt.frontEnd.client.model.TeachingType;
 import com.pedEdt.frontEnd.client.model.TeachingUnit;
 
 public class Forms {
@@ -71,13 +74,6 @@ public class Forms {
 				startDatePicker.setVisible(true);
 			}
 		});
-//		startDate.addBlurHandler(new BlurHandler() {
-//			
-//			@Override
-//			public void onBlur(BlurEvent event) {
-//				startDatePicker.setVisible(false);
-//			}
-//		});
 		startDatePanel.add(startDate);
 		startDatePanel.add(startDatePicker);
 		holder.add(startDatePanel);
@@ -104,13 +100,6 @@ public class Forms {
 				endDatePicker.setVisible(true);
 			}
 		});
-//		endDate.addBlurHandler(new BlurHandler() {
-//			
-//			@Override
-//			public void onBlur(BlurEvent event) {
-//				endDatePicker.setVisible(false);
-//			}
-//		});
 		endDatePanel.add(endDate);
 		endDatePanel.add(endDatePicker);
 		holder.add(endDatePanel);
@@ -210,13 +199,6 @@ public class Forms {
 				startDatePicker.setVisible(true);
 			}
 		});
-//		startDate.addBlurHandler(new BlurHandler() {
-//			
-//			@Override
-//			public void onBlur(BlurEvent event) {
-//				startDatePicker.setVisible(false);
-//			}
-//		});
 		startDatePanel.add(startDate);
 		startDatePanel.add(startDatePicker);
 		holder.add(startDatePanel);
@@ -244,13 +226,6 @@ public class Forms {
 				endDatePicker.setVisible(true);
 			}
 		});
-//		endDate.addBlurHandler(new BlurHandler() {
-//			
-//			@Override
-//			public void onBlur(BlurEvent event) {
-//				endDatePicker.setVisible(false);
-//			}
-//		});
 		endDatePanel.add(endDate);
 		endDatePanel.add(endDatePicker);
 		holder.add(endDatePanel);
@@ -324,9 +299,6 @@ public class Forms {
 		titlePanel.add(title);
 		holder.add(titlePanel);
 
-		//semester
-		holder.add(new Label("Liste deroulante semestre ?"));
-
 		//submit
 		Button submitButton = new Button("Valider", new ClickHandler() {
 
@@ -398,9 +370,6 @@ public class Forms {
 		titlePanel.add(title);
 		holder.add(titlePanel);
 
-		//semester
-		holder.add(new Label("Liste deroulante semestre ?"));
-
 		//submit
 		Button submitButton = new Button("Valider", new ClickHandler() {
 
@@ -467,9 +436,6 @@ public class Forms {
 		final TextBox title = new TextBox();
 		titlePanel.add(title);
 		holder.add(titlePanel);
-
-		//semester
-		holder.add(new Label("Liste deroulante UE ?"));
 
 		//submit
 		Button submitButton = new Button("Valider", new ClickHandler() {
@@ -542,9 +508,6 @@ public class Forms {
 		titlePanel.add(title);
 		holder.add(titlePanel);
 
-		//semester
-		holder.add(new Label("Liste deroulante UE ?"));
-
 		//submit
 		Button submitButton = new Button("Valider", new ClickHandler() {
 
@@ -585,4 +548,197 @@ public class Forms {
 		popupPanel.setWidget(form);
 		return popupPanel;
 	} // popupUpdateModule(Module module)
+	
+	
+	
+	public static PopupPanel popupCreateTeaching(final Module module) {
+
+		final PopupPanel popupPanel = new PopupPanel(false, true);
+
+		final FormPanel form = new FormPanel();
+
+		VerticalPanel holder = new VerticalPanel();
+		
+		holder.add(new Label("Creer Enseignement"));
+
+		//type
+		HorizontalPanel typePanel = new HorizontalPanel();
+		typePanel.add(new Label("Type : "));
+		final ListBox type = new ListBox();
+		for (TeachingType t : TeachingType.values())
+			type.addItem(t.toString(), t.toString());
+		typePanel.add(type);
+		holder.add(typePanel);
+		
+		//teacher
+		HorizontalPanel teacherPanel = new HorizontalPanel();
+		teacherPanel.add(new Label("Professeur(s) : "));
+		final TextBox teacher = new TextBox();
+		teacherPanel.add(teacher);
+		holder.add(teacherPanel);
+		
+		//nbHour
+		HorizontalPanel nbHourPanel = new HorizontalPanel();
+		nbHourPanel.add(new Label("Nombre d'heures : "));
+		final TextBox nbHour = new TextBox();
+		nbHourPanel.add(nbHour);
+		holder.add(nbHourPanel);
+		
+		//nbSeance
+		HorizontalPanel nbSeancePanel = new HorizontalPanel();
+		nbSeancePanel.add(new Label("Nombre de seances : "));
+		final TextBox nbSeance = new TextBox();
+		nbSeancePanel.add(nbSeance);
+		holder.add(nbSeancePanel);
+		
+		//numGroup
+		HorizontalPanel numGroupPanel = new HorizontalPanel();
+		numGroupPanel.add(new Label("Numero du groupe : "));
+		final TextBox numGroup = new TextBox();
+		numGroupPanel.add(numGroup);
+		holder.add(numGroupPanel);
+
+		//submit
+		Button submitButton = new Button("Valider", new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				form.submit();
+			}
+		});
+		
+		//cancel
+		Button cancelButton = new Button("Annuler", new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				popupPanel.hide();
+			}
+		});
+
+		HorizontalPanel buttonsPanel = new HorizontalPanel();
+		buttonsPanel.add(submitButton);
+		buttonsPanel.add(cancelButton);
+		holder.add(buttonsPanel);
+
+		form.add(holder);
+		form.addSubmitHandler(new FormPanel.SubmitHandler() {
+
+			@Override
+			public void onSubmit(SubmitEvent event) {
+				Teaching teaching = new Teaching();
+				teaching.setType(TeachingType.getTeachingType(type.getValue(type.getSelectedIndex())));
+				teaching.setTeacher(teacher.getText().trim());
+				teaching.setNbHour(Integer.parseInt(nbHour.getText().trim()));
+				teaching.setNbSeance(Integer.parseInt(nbSeance.getText().trim()));
+				teaching.setNumGroup(Integer.parseInt(numGroup.getText().trim()));
+				teaching.setModule(module);
+
+				Window.alert(Teaching.toXML.toXml(teaching));
+				//ServerCommunication.getInstance().createTeaching(teaching);
+				popupPanel.hide();
+			}
+		});
+
+		popupPanel.setWidget(form);
+		return popupPanel;
+	} // popupCreateTeaching(final Module module)
+	
+	
+	
+	public static PopupPanel popupUpdateTeaching(final Teaching teaching) {
+
+		final PopupPanel popupPanel = new PopupPanel(false, true);
+
+		final FormPanel form = new FormPanel();
+
+		VerticalPanel holder = new VerticalPanel();
+		
+		holder.add(new Label("Modifier Enseignement"));
+
+		//type
+		HorizontalPanel typePanel = new HorizontalPanel();
+		typePanel.add(new Label("Type : "));
+		final ListBox type = new ListBox();
+		for (TeachingType t : TeachingType.values())
+			type.addItem(t.toString(), t.toString());
+		typePanel.add(type);
+		holder.add(typePanel);
+		
+		//teacher
+		HorizontalPanel teacherPanel = new HorizontalPanel();
+		teacherPanel.add(new Label("Professeur(s) : "));
+		final TextBox teacher = new TextBox();
+		teacher.setText(teaching.getTeacher());
+		teacherPanel.add(teacher);
+		holder.add(teacherPanel);
+		
+		//nbHour
+		HorizontalPanel nbHourPanel = new HorizontalPanel();
+		nbHourPanel.add(new Label("Nombre d'heures : "));
+		final TextBox nbHour = new TextBox();
+		nbHour.setText("" + teaching.getNbHour());
+		nbHourPanel.add(nbHour);
+		holder.add(nbHourPanel);
+		
+		//nbSeance
+		HorizontalPanel nbSeancePanel = new HorizontalPanel();
+		nbSeancePanel.add(new Label("Nombre de seances : "));
+		final TextBox nbSeance = new TextBox();
+		nbSeance.setText("" + teaching.getNbSeance());
+		nbSeancePanel.add(nbSeance);
+		holder.add(nbSeancePanel);
+		
+		//numGroup
+		HorizontalPanel numGroupPanel = new HorizontalPanel();
+		numGroupPanel.add(new Label("Numero du groupe : "));
+		final TextBox numGroup = new TextBox();
+		numGroup.setText("" + teaching.getNumGroup());
+		numGroupPanel.add(numGroup);
+		holder.add(numGroupPanel);
+
+		//submit
+		Button submitButton = new Button("Valider", new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				form.submit();
+			}
+		});
+		
+		//cancel
+		Button cancelButton = new Button("Annuler", new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				popupPanel.hide();
+			}
+		});
+
+		HorizontalPanel buttonsPanel = new HorizontalPanel();
+		buttonsPanel.add(submitButton);
+		buttonsPanel.add(cancelButton);
+		holder.add(buttonsPanel);
+
+		form.add(holder);
+		form.addSubmitHandler(new FormPanel.SubmitHandler() {
+
+			@Override
+			public void onSubmit(SubmitEvent event) {
+				Teaching teaching = new Teaching();
+				teaching.setType(TeachingType.getTeachingType(type.getValue(type.getSelectedIndex())));
+				teaching.setTeacher(teacher.getText().trim());
+				teaching.setNbHour(Integer.parseInt(nbHour.getText().trim()));
+				teaching.setNbSeance(Integer.parseInt(nbSeance.getText().trim()));
+				teaching.setNumGroup(Integer.parseInt(numGroup.getText().trim()));
+
+				Window.alert(Teaching.toXML.toXml(teaching));
+				//ServerCommunication.getInstance().updateTeaching(teaching);
+				popupPanel.hide();
+			}
+		});
+
+		popupPanel.setWidget(form);
+		return popupPanel;
+	} // popupCreateTeaching(final Module module)
 }

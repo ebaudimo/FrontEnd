@@ -16,6 +16,13 @@ public enum TeachingType {
 		stringValue = s;
 	}
 	
+	public static TeachingType getTeachingType(String s) {
+		for (TeachingType t : values())
+			if (t.toString().equals(s))
+				return t;
+		return null;
+	}
+	
 	public String toString() {
 		return stringValue;
 	}
