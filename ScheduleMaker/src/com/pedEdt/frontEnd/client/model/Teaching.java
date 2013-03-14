@@ -29,7 +29,7 @@ public class Teaching implements java.io.Serializable {
 	
 	private int numGroup;
 	
-	private List<Date> seances;
+	private List<Date> seances = new ArrayList<Date>();
 	
 	private Module module;
 	

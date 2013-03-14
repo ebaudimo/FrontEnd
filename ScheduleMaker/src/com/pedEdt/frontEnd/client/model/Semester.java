@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlTransient;
-
 import name.pehl.piriti.xml.client.XmlReader;
 import name.pehl.piriti.xml.client.XmlWriter;
 
@@ -26,9 +23,9 @@ public class Semester implements java.io.Serializable {
 	
 	private int number;
 	
-	private Date startDate;
+	private Date startDate = new Date();
 	
-	private Date endDate;
+	private Date endDate = new Date();
 
 	private List<TeachingUnit> teachingUnits;
 
@@ -48,7 +45,6 @@ public class Semester implements java.io.Serializable {
 	
 	
 
-	@XmlElement
 	public int getId() {
 		return this.id;
 	}
@@ -57,7 +53,6 @@ public class Semester implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@XmlElement
 	public int getYear() {
 		return this.year;
 	}
@@ -66,7 +61,6 @@ public class Semester implements java.io.Serializable {
 		this.year = year;
 	}
 
-	@XmlElement
 	public int getNumber() {
 		return this.number;
 	}
@@ -74,8 +68,7 @@ public class Semester implements java.io.Serializable {
 	public void setNumber(int number) {
 		this.number = number;
 	}
-	
-	@XmlElement
+
 	public Date getStartDate() {
 		return this.startDate;
 	}
@@ -83,8 +76,7 @@ public class Semester implements java.io.Serializable {
 	public void setStartDate(Date date) {
 		this.startDate = date;
 	}
-	
-	@XmlElement
+
 	public Date getEndDate() {
 		return this.endDate;
 	}
@@ -93,7 +85,6 @@ public class Semester implements java.io.Serializable {
 		this.endDate = date;
 	}
 
-	@XmlTransient
 	public List<TeachingUnit> getTeachingUnits() {
 		return this.teachingUnits;
 	}
