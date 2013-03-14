@@ -89,7 +89,7 @@ public class Module implements java.io.Serializable {
 			teaching.setModule(null);
 	}
 	
-	public List<Teaching> isSessionInPeriod(Date start) {
+	public List<Teaching> isSessionInPeriod(long start) {
 		
 		List<Teaching> myList = new ArrayList<Teaching>();
 		

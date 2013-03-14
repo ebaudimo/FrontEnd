@@ -9,15 +9,15 @@ import com.google.gwt.user.client.ui.Label;
 
 public class ScheduleNavigationBar extends Composite {
 
-	static int WEEK = 604800;
+	static long WEEK = 604800;
 	
 	private int currentValue;
-	private int nbWeek;
+	private long nbWeek;
 	private Label myLabel;
 	
-	public ScheduleNavigationBar(int numWeek, int startSemester, int endSemester) {
+	public ScheduleNavigationBar(int numWeek, long startSemester, long endSemester) {
 		
-		nbWeek = (endSemester-startSemester)/WEEK;
+		nbWeek = (endSemester - startSemester) / WEEK;
 		
 		if(numWeek > 0 && numWeek <= nbWeek)
 			setCurrentValue(numWeek);

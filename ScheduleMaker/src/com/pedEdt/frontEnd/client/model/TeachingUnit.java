@@ -95,7 +95,7 @@ public class TeachingUnit implements java.io.Serializable {
 			module.setTeachingUnit(null);
 	}
 	
-	public List<Teaching> isSessionInPeriod(Date start) {
+	public List<Teaching> isSessionInPeriod(long start) {
 		
 		List<Teaching> myList = new ArrayList<Teaching>();
 		

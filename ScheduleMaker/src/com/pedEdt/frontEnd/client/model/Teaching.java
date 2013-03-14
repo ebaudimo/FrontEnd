@@ -29,17 +29,17 @@ public class Teaching implements java.io.Serializable {
 	
 	private int numGroup;
 	
-	private List<Date> seances = new ArrayList<Date>();
+	private List<Long> seances = new ArrayList<Long>();
 	
 	private Module module;
 	
 	
 	
 	public Teaching() {
-		seances = new ArrayList<Date>();
+		seances = new ArrayList<Long>();
 	}
 	
-	public Teaching(TeachingType type, String teacher, int nbHour, int nbSeance, int numGroup, List<Date> seances, Module module) {
+	public Teaching(TeachingType type, String teacher, int nbHour, int nbSeance, int numGroup, List<Long> seances, Module module) {
 		this.type = type;
 		this.teacher = teacher;
 		this.nbHour = nbHour;
@@ -99,11 +99,11 @@ public class Teaching implements java.io.Serializable {
 		this.numGroup = numGroup;
 	}
 
-	public List<Date> getSeances() {
+	public List<Long> getSeances() {
 		return seances;
 	}
 
-	public void setSeances(List<Date> sceances) {
+	public void setSeances(List<Long> sceances) {
 		this.seances = sceances;
 	}
 
@@ -115,7 +115,7 @@ public class Teaching implements java.io.Serializable {
 		this.module = module;
 	}
 	
-	public void addSeance(Date date) {
+	public void addSeance(long date) {
 		this.seances.add(date);
 	}
 	
@@ -125,12 +125,11 @@ public class Teaching implements java.io.Serializable {
 				this.seances.remove(i);
 	}
 	
-	public boolean isSessionInPeriod(Date start) {
-		//TODO : timestamp to Date
-//		int WEEK = 604800;
-//		for (int i = 0; i < this.seances.size(); i++)
-//			if (this.seances.get(i).after(start) && this.seances.get(i).before(start + WEEK))
-//				return true;
+	public boolean isSessionInPeriod(long start) {
+		final int WEEK = 604800;
+		for (int i = 0; i < this.seances.size(); i++)
+			if (this.seances.get(i) >= start && this.seances.get(i) <= start + WEEK)
+				return true;
 		return false;
 	}
 }

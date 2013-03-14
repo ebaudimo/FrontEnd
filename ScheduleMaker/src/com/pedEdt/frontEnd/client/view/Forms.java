@@ -146,8 +146,8 @@ public class Forms {
 				Semester semester = new Semester();
 				semester.setYear((year.getText().trim().equals("")) ? 0 : Integer.parseInt(year.getText().trim()));
 				semester.setNumber((number.getText().trim().equals("")) ? 0 : Integer.parseInt(number.getText().trim()));
-				semester.setStartDate(startDatePicker.getValue());
-				semester.setEndDate(endDatePicker.getValue());
+				semester.setStartDate(startDatePicker.getValue().getTime() / 1000);
+				semester.setEndDate(endDatePicker.getValue().getTime() / 1000);
 
 				Window.alert(Semester.toXML.toXml(semester));
 				//ServerCommunication.getInstance().createSemester(semester);
@@ -191,7 +191,7 @@ public class Forms {
 		HorizontalPanel startDatePanel = new HorizontalPanel();
 		startDatePanel.add(new Label("Date de debut : "));
 		final TextBox startDate = new TextBox();
-		startDate.setText(DateTimeFormat.getFormat("dd/MM/yyyy").format(semester.getStartDate()));
+		startDate.setText(DateTimeFormat.getFormat("dd/MM/yyyy").format(new Date(semester.getStartDate())));
 		final DatePicker startDatePicker = new DatePicker();
 		startDatePicker.addValueChangeHandler(new ValueChangeHandler<Date>() {
 			
@@ -225,7 +225,7 @@ public class Forms {
 		HorizontalPanel endDatePanel = new HorizontalPanel();
 		endDatePanel.add(new Label("Date de fin : "));
 		final TextBox endDate = new TextBox();
-		endDate.setText(DateTimeFormat.getFormat("dd/MM/yyyy").format(semester.getEndDate()));
+		endDate.setText(DateTimeFormat.getFormat("dd/MM/yyyy").format(new Date(semester.getEndDate())));
 		final DatePicker endDatePicker = new DatePicker();
 		endDatePicker.addValueChangeHandler(new ValueChangeHandler<Date>() {
 			
@@ -285,8 +285,8 @@ public class Forms {
 			public void onSubmit(SubmitEvent event) {
 				semester.setYear((year.getText().trim().equals("")) ? 0 : Integer.parseInt(year.getText().trim()));
 				semester.setNumber((number.getText().trim().equals("")) ? 0 : Integer.parseInt(number.getText().trim()));
-				semester.setStartDate(startDatePicker.getValue());
-				semester.setEndDate(endDatePicker.getValue());
+				semester.setStartDate(startDatePicker.getValue().getTime() /1000);
+				semester.setEndDate(endDatePicker.getValue().getTime() / 1000);
 
 				Window.alert(Semester.toXML.toXml(semester));
 				//ServerCommunication.getInstance().updateSemester(semester);

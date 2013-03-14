@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import name.pehl.piriti.commons.client.Path;
 import name.pehl.piriti.xml.client.XmlReader;
 import name.pehl.piriti.xml.client.XmlWriter;
 
@@ -23,9 +24,9 @@ public class Semester implements java.io.Serializable {
 	
 	private int number;
 	
-	private Date startDate = new Date();
+	private long startDate;
 	
-	private Date endDate = new Date();
+	private long endDate;
 
 	private List<TeachingUnit> teachingUnits;
 
@@ -35,7 +36,7 @@ public class Semester implements java.io.Serializable {
 
 	}
 
-	public Semester(int year, int number, Date startD, Date endD, List<TeachingUnit> teachingUnits) {
+	public Semester(int year, int number, long startD, long endD, List<TeachingUnit> teachingUnits) {
 		this.year = year;
 		this.number = number;
 		this.startDate = startD;
@@ -69,19 +70,19 @@ public class Semester implements java.io.Serializable {
 		this.number = number;
 	}
 
-	public Date getStartDate() {
+	public long getStartDate() {
 		return this.startDate;
 	}
 
-	public void setStartDate(Date date) {
+	public void setStartDate(long date) {
 		this.startDate = date;
 	}
 
-	public Date getEndDate() {
+	public long getEndDate() {
 		return this.endDate;
 	}
 
-	public void setEndDate(Date date) {
+	public void setEndDate(long date) {
 		this.endDate = date;
 	}
 
@@ -101,7 +102,7 @@ public class Semester implements java.io.Serializable {
 		this.teachingUnits.remove(teachingUnit);
 	}
 	
-	public List<Teaching> isSessionInPeriod(Date start) {
+	public List<Teaching> isSessionInPeriod(long start) {
 		
 		List<Teaching> myList = new ArrayList<Teaching>();
 		

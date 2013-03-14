@@ -15,10 +15,8 @@ public class ScheduleSemesterInformation extends Composite {
 		
 		DateTimeFormat Format = DateTimeFormat.getFormat("dd/MM/yyyy");
 		
-//		Date start = DateUtil.getDate(s.getStartDate());
-//		Date end = DateUtil.getDate(s.getEndDate());
-		Date start = s.getStartDate();
-		Date end = s.getEndDate();
+		Date start = DateUtil.getDate(s.getStartDate());
+		Date end = DateUtil.getDate(s.getEndDate());
 		
 		Label myLabel = new Label("   Semestre : " + String.valueOf(s.getNumber()) + "	Annee : " + String.valueOf(s.getYear()) +
 									"      Date debut : " + start.toGMTString() + " Date fin : " + end.toLocaleString()
