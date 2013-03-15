@@ -330,10 +330,9 @@ public class Forms {
 				TeachingUnit teachingUnit = new TeachingUnit();
 				teachingUnit.setCode(code.getText().trim());
 				teachingUnit.setTitle(title.getText().trim());
-				teachingUnit.setSemester(semester);
 
 				Window.alert(TeachingUnit.toXML.toXml(teachingUnit));
-				//ServerCommunication.getInstance().createTeachingUnit(teachingUnit);
+				//ServerCommunication.getInstance().createTeachingUnit(semester.getId(), teachingUnit);
 				popupPanel.hide();
 			}
 		});
@@ -468,10 +467,9 @@ public class Forms {
 				Module module = new Module();
 				module.setCode(code.getText().trim());
 				module.setTitle(title.getText().trim());
-				module.setTeachingUnit(teachingUnit);
 
 				Window.alert(Module.toXML.toXml(module));
-				//ServerCommunication.getInstance().createModule(module);
+				//ServerCommunication.getInstance().createModule(teachingUnit.getId(), module);
 				popupPanel.hide();
 			}
 		});
@@ -632,10 +630,9 @@ public class Forms {
 				teaching.setNbHour(Integer.parseInt(nbHour.getText().trim()));
 				teaching.setNbSeance(Integer.parseInt(nbSeance.getText().trim()));
 				teaching.setNumGroup(Integer.parseInt(numGroup.getText().trim()));
-				teaching.setModule(module);
 
 				Window.alert(Teaching.toXML.toXml(teaching));
-				//ServerCommunication.getInstance().createTeaching(teaching);
+				//ServerCommunication.getInstance().createTeaching(module.getId(), teaching);
 				popupPanel.hide();
 			}
 		});
@@ -740,5 +737,5 @@ public class Forms {
 
 		popupPanel.setWidget(form);
 		return popupPanel;
-	} // popupCreateTeaching(final Module module)
+	} // popupUpdateTeaching(final Teaching teaching)
 }

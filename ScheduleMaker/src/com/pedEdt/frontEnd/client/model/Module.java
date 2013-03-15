@@ -1,7 +1,6 @@
 package com.pedEdt.frontEnd.client.model;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import name.pehl.piriti.xml.client.XmlReader;
@@ -23,18 +22,17 @@ public class Module implements java.io.Serializable {
 	
 	private String title;
 	
-	private TeachingUnit teachingUnit;
-	
 	private List<Teaching> teachings;
+	
+	
 
 	public Module() {
 		teachings = new ArrayList<Teaching>();
 	}
 
-	public Module(String code, String title, TeachingUnit teachingUnit, List<Teaching> teachings) {
+	public Module(String code, String title, List<Teaching> teachings) {
 		this.code = code;
 		this.title = title;
-		this.teachingUnit = teachingUnit;
 		this.teachings = teachings;
 	}
 	
@@ -63,14 +61,6 @@ public class Module implements java.io.Serializable {
 		this.title = title;
 	}
 
-	public TeachingUnit getTeachingUnit() {
-		return this.teachingUnit;
-	}
-
-	public void setTeachingUnit(TeachingUnit teachingUnit) {
-		this.teachingUnit = teachingUnit;
-	}
-
 	public List<Teaching> getTeachings() {
 		return this.teachings;
 	}
@@ -81,12 +71,10 @@ public class Module implements java.io.Serializable {
 	
 	public void addTeaching(Teaching teaching) {
 		this.teachings.add(teaching);
-		teaching.setModule(this);
 	}
 	
 	public void removeTeaching(Teaching teaching) {
-		if( this.teachings.remove(teaching) )
-			teaching.setModule(null);
+		this.teachings.remove(teaching);
 	}
 	
 	public List<Teaching> isSessionInPeriod(long start) {

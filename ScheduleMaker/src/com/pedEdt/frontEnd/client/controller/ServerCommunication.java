@@ -100,8 +100,8 @@ public final class ServerCommunication {
 	
 	/* TeachingUnit */
 
-	public void createTeachingUnit(TeachingUnit teachingUnit) {
-		builder = new RequestBuilder(RequestBuilder.POST, "proxy.jsp?url=http://localhost:8080/rest/service/create/teachingUnit");
+	public void createTeachingUnit(int id_semester, TeachingUnit teachingUnit) {
+		builder = new RequestBuilder(RequestBuilder.POST, "proxy.jsp?url=http://localhost:8080/rest/service/create/teachingUnit/" + id_semester);
 		builder.setHeader("Content-type", "application/xml");
 		builder.setRequestData(TeachingUnit.toXML.toXml(teachingUnit));
 		try {
@@ -165,8 +165,8 @@ public final class ServerCommunication {
 	
 	/* Module */
 
-	public void createModule(Module module) {
-		builder = new RequestBuilder(RequestBuilder.POST, "proxy.jsp?url=http://localhost:8080/rest/service/create/module");
+	public void createModule(int id_teachingUnit, Module module) {
+		builder = new RequestBuilder(RequestBuilder.POST, "proxy.jsp?url=http://localhost:8080/rest/service/create/module/" + id_teachingUnit);
 		builder.setHeader("Content-type", "application/xml");
 		builder.setRequestData(Module.toXML.toXml(module));
 		try {
@@ -230,8 +230,8 @@ public final class ServerCommunication {
 	
 	/* Teaching */
 
-	public void createTeaching(Teaching teaching) {
-		builder = new RequestBuilder(RequestBuilder.POST, "proxy.jsp?url=http://localhost:8080/rest/service/create/teaching");
+	public void createTeaching(int id_module, Teaching teaching) {
+		builder = new RequestBuilder(RequestBuilder.POST, "proxy.jsp?url=http://localhost:8080/rest/service/create/teaching/" + id_module);
 		builder.setHeader("Content-type", "application/xml");
 		builder.setRequestData(Teaching.toXML.toXml(teaching));
 		try {

@@ -1,10 +1,8 @@
 package com.pedEdt.frontEnd.client.model;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import name.pehl.piriti.commons.client.Path;
 import name.pehl.piriti.xml.client.XmlReader;
 import name.pehl.piriti.xml.client.XmlWriter;
 

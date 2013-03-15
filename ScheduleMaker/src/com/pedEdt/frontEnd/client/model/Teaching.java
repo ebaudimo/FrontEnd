@@ -31,22 +31,19 @@ public class Teaching implements java.io.Serializable {
 	
 	private List<Long> seances = new ArrayList<Long>();
 	
-	private Module module;
-	
 	
 	
 	public Teaching() {
 		seances = new ArrayList<Long>();
 	}
 	
-	public Teaching(TeachingType type, String teacher, int nbHour, int nbSeance, int numGroup, List<Long> seances, Module module) {
+	public Teaching(TeachingType type, String teacher, int nbHour, int nbSeance, int numGroup, List<Long> seances) {
 		this.type = type;
 		this.teacher = teacher;
 		this.nbHour = nbHour;
 		this.nbSeance = nbSeance;
 		this.numGroup = numGroup;
 		this.seances = seances;
-		this.module = module;
 	}
 	
 	
@@ -105,14 +102,6 @@ public class Teaching implements java.io.Serializable {
 
 	public void setSeances(List<Long> sceances) {
 		this.seances = sceances;
-	}
-
-	public Module getModule() {
-		return module;
-	}
-
-	public void setModule(Module module) {
-		this.module = module;
 	}
 	
 	public void addSeance(long date) {
