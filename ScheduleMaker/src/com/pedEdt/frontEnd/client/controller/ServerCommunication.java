@@ -290,4 +290,71 @@ public final class ServerCommunication {
 			e.printStackTrace();
 		}
 	}
+
+
+	
+	/* TeachingSceance */
+
+	public void createTeachingSceance(int idTeaching, long date) {
+		builder = new RequestBuilder(RequestBuilder.POST, "proxy.jsp?url=http://localhost:8080/rest/service/create/teachingSeance/" + idTeaching);
+		builder.setHeader("Content-type", "application/xml");
+		builder.setRequestData("" + date);
+		try {
+			builder.sendRequest(null, new RequestCallback() {
+				public void onError(Request request, Throwable exception) {
+					Window.alert("Erreur lors de la creation de la TeachingSeance.");
+				}
+
+				public void onResponseReceived(Request request, Response response) {
+					if (response.getStatusCode() == 200) {
+						Window.alert("TeachingSeance cree");
+					}
+				}
+			});
+		} catch (RequestException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void updateTeachingSeance(int idTeaching, long oldDate, long newDate) {
+		builder = new RequestBuilder(RequestBuilder.POST, "proxy.jsp?url=http://localhost:8080/rest/service/update/teachingSeance/" + idTeaching);
+		builder.setHeader("Content-type", "application/xml");
+		builder.setRequestData(oldDate + "," + newDate);
+		try {
+			builder.sendRequest(null, new RequestCallback() {
+				public void onError(Request request, Throwable exception) {
+					Window.alert("Erreur lors de la modification de la TeachingSeance.");
+				}
+
+				public void onResponseReceived(Request request, Response response) {
+					if (response.getStatusCode() == 200) {
+						Window.alert("TeachingSeance modifie");
+					}
+				}
+			});
+		} catch (RequestException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void deleteTeachingSeance(int idTeaching, long date) {
+		builder = new RequestBuilder(RequestBuilder.GET, "proxy.jsp?url=http://localhost:8080/rest/service/delete/teachingSeance/" + idTeaching);
+		builder.setHeader("Content-type", "application/xml");
+		builder.setRequestData("" + date);
+		try {
+			builder.sendRequest(null, new RequestCallback() {
+				public void onError(Request request, Throwable exception) {
+					Window.alert("Erreur lors de la suppression de la TeachingSeance.");
+				}
+
+				public void onResponseReceived(Request request, Response response) {
+					if (response.getStatusCode() == 200) {
+						Window.alert("TeachingSeance supprime");
+					}
+				}
+			});
+		} catch (RequestException e) {
+			e.printStackTrace();
+		}
+	}
 }

@@ -16,13 +16,8 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.pedEdt.frontEnd.client.model.Module;
-import com.pedEdt.frontEnd.client.model.ModuleList;
 import com.pedEdt.frontEnd.client.model.Semester;
 import com.pedEdt.frontEnd.client.model.SemesterList;
-import com.pedEdt.frontEnd.client.model.TeachingList;
-import com.pedEdt.frontEnd.client.model.TeachingUnit;
-import com.pedEdt.frontEnd.client.model.TeachingUnitList;
 
 public class StartWindow extends PopupPanel {
 
@@ -127,79 +122,80 @@ public class StartWindow extends PopupPanel {
 					if(response.getStatusCode() == 200) {
 						
 						final Semester semester = Semester.fromXML.read(response.getText().trim());
-						//final MainGUI gui = MainGUI.getInstance(semester);
+						MainGUI.getInstance(semester);
+						me.hide();
 						
-						RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, "proxy.jsp?url=http://localhost:8080/rest/service/read/teachingUnits/semester/" + semester.getId());
-						try {
-							builder.sendRequest(null, new RequestCallback() {
-								public void onResponseReceived(Request request, Response response) {
-									if(response.getStatusCode() == 200) {
-										semester.setTeachingUnits(TeachingUnitList.fromXML.read(response.getText().trim()).getTeachingUnitList());
-
-										if(semester.getTeachingUnits() != null) {
-											for (final TeachingUnit teachingUnit : semester.getTeachingUnits()) {
-												RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, "proxy.jsp?url=http://localhost:8080/rest/service/read/modules/teachingUnit/" + teachingUnit.getId());
-												try {
-													builder.sendRequest(null, new RequestCallback() {
-														public void onResponseReceived(Request request, Response response) {
-															if(response.getStatusCode() == 200) {
-																teachingUnit.setModules(ModuleList.fromXML.read(response.getText().trim()).getModuleList());
-	
-																if(teachingUnit.getModules() != null) {
-																	for (final Module module : teachingUnit.getModules()) {
-																		RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, "proxy.jsp?url=http://localhost:8080/rest/service/read/teachings/module/" + module.getId());
-																		try {
-																			builder.sendRequest(null, new RequestCallback() {
-																				public void onResponseReceived(Request request, Response response) {
-																					if(response.getStatusCode() == 200) {
-																						module.setTeachings(TeachingList.fromXML.read(response.getText().trim()).getTeachingList());
-		
-																						MainGUI.getInstance(semester);
-																						//new MainGUI(semester);
-																						me.hide();
-																					}
-																					else {
-																						Window.alert(String.valueOf(response.getStatusCode()) + " : " + response.getStatusText());
-																					}
-																				}
-		
-																				public void onError(Request request, Throwable exception) {
-																					// TODO Auto-generated method stub
-																				}
-																			});
-																		} catch (RequestException e) {
-																			e.printStackTrace();
-																		}
-																	}
-																} //end if Modules list is not empty
-															}
-															else {
-																Window.alert(String.valueOf(response.getStatusCode()) + " : " + response.getStatusText());
-															}
-														}
-	
-														public void onError(Request request, Throwable exception) {
-															// TODO Auto-generated method stub
-														}
-													});
-												} catch (RequestException e) {
-													e.printStackTrace();
-												}
-											}
-										} //end if TeachingUnit is not empty
-									}
-									else {
-										Window.alert(String.valueOf(response.getStatusCode()) + " : " + response.getStatusText());
-									}
-								}
-
-								public void onError(Request request, Throwable exception) {
-									// TODO Auto-generated method stub
-								}
-							});
-						} catch (RequestException e) {
-							e.printStackTrace();
-						}
+//						RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, "proxy.jsp?url=http://localhost:8080/rest/service/read/teachingUnits/semester/" + semester.getId());
+//						try {
+//							builder.sendRequest(null, new RequestCallback() {
+//								public void onResponseReceived(Request request, Response response) {
+//									if(response.getStatusCode() == 200) {
+//										semester.setTeachingUnits(TeachingUnitList.fromXML.read(response.getText().trim()).getTeachingUnitList());
+//
+//										if(semester.getTeachingUnits() != null) {
+//											for (final TeachingUnit teachingUnit : semester.getTeachingUnits()) {
+//												RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, "proxy.jsp?url=http://localhost:8080/rest/service/read/modules/teachingUnit/" + teachingUnit.getId());
+//												try {
+//													builder.sendRequest(null, new RequestCallback() {
+//														public void onResponseReceived(Request request, Response response) {
+//															if(response.getStatusCode() == 200) {
+//																teachingUnit.setModules(ModuleList.fromXML.read(response.getText().trim()).getModuleList());
+//	
+//																if(teachingUnit.getModules() != null) {
+//																	for (final Module module : teachingUnit.getModules()) {
+//																		RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, "proxy.jsp?url=http://localhost:8080/rest/service/read/teachings/module/" + module.getId());
+//																		try {
+//																			builder.sendRequest(null, new RequestCallback() {
+//																				public void onResponseReceived(Request request, Response response) {
+//																					if(response.getStatusCode() == 200) {
+//																						module.setTeachings(TeachingList.fromXML.read(response.getText().trim()).getTeachingList());
+//		
+//																						MainGUI.getInstance(semester);
+//																						//new MainGUI(semester);
+//																						me.hide();
+//																					}
+//																					else {
+//																						Window.alert(String.valueOf(response.getStatusCode()) + " : " + response.getStatusText());
+//																					}
+//																				}
+//		
+//																				public void onError(Request request, Throwable exception) {
+//																					// TODO Auto-generated method stub
+//																				}
+//																			});
+//																		} catch (RequestException e) {
+//																			e.printStackTrace();
+//																		}
+//																	}
+//																} //end if Modules list is not empty
+//															}
+//															else {
+//																Window.alert(String.valueOf(response.getStatusCode()) + " : " + response.getStatusText());
+//															}
+//														}
+//	
+//														public void onError(Request request, Throwable exception) {
+//															// TODO Auto-generated method stub
+//														}
+//													});
+//												} catch (RequestException e) {
+//													e.printStackTrace();
+//												}
+//											}
+//										} //end if TeachingUnit is not empty
+//									}
+//									else {
+//										Window.alert(String.valueOf(response.getStatusCode()) + " : " + response.getStatusText());
+//									}
+//								}
+//
+//								public void onError(Request request, Throwable exception) {
+//									// TODO Auto-generated method stub
+//								}
+//							});
+//						} catch (RequestException e) {
+//							e.printStackTrace();
+//						}
 					}
 					else {
 						Window.alert(String.valueOf(response.getStatusCode()) + " : " + response.getStatusText());
