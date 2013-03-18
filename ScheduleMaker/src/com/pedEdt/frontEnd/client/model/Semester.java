@@ -104,10 +104,11 @@ public class Semester implements java.io.Serializable {
 		
 		List<Teaching> myList = new ArrayList<Teaching>();
 		
-		for (int i = 0; i < this.teachingUnits.size(); i++) {
-			myList.addAll(this.teachingUnits.get(i).isSessionInPeriod(start));
+		if(this.teachingUnits != null) {
+			for (int i = 0; i < this.teachingUnits.size(); i++) {
+				myList.addAll(this.teachingUnits.get(i).isSessionInPeriod(start));
+			}
 		}
-		
 		return myList;
 	}
 }

@@ -1,6 +1,7 @@
 package com.pedEdt.frontEnd.client.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -45,7 +46,6 @@ public class Teaching implements java.io.Serializable {
 		this.numGroup = numGroup;
 		this.seances = seances;
 	}
-	
 	
 
 	public int getId() {
@@ -100,12 +100,16 @@ public class Teaching implements java.io.Serializable {
 		return seances;
 	}
 
-	public void setSeances(List<Long> sceances) {
-		this.seances = sceances;
+	public void setSeances(List<Long> seances) {
+		this.seances = seances;
 	}
 	
-	public void addSeance(long date) {
+	public int addSeance(long date) {
 		this.seances.add(date);
+		Collections.sort(this.seances);
+		
+		return this.seances.indexOf(date);
+		
 	}
 	
 	public void removeSeance(Date date) {
@@ -114,8 +118,12 @@ public class Teaching implements java.io.Serializable {
 				this.seances.remove(i);
 	}
 	
+	public void removeSeanceByIndex(int index) {
+		this.seances.remove(index);
+	}
+	
 	public boolean isSessionInPeriod(long start) {
-		final int WEEK = 604800;
+		final long WEEK = 604800;
 		for (int i = 0; i < this.seances.size(); i++)
 			if (this.seances.get(i) >= start && this.seances.get(i) <= start + WEEK)
 				return true;

@@ -48,6 +48,10 @@ public class MainGUI {
 		return mainGUIInstance;
 	}
 	
+	public static MainGUI getInstance() {
+		return mainGUIInstance;
+	}
+	
 	private MainGUI(Semester s) {
 		
 		vpan = new VerticalPanel();
@@ -64,9 +68,7 @@ public class MainGUI {
 		//build the tree
 		schedTree = new ScheduleTreePanel(s);
 		
-		//1362060000 for test
 		//get a list of teaching which is present in the timestamp week
-
 		List<Teaching> myList = s.isSessionInPeriod(s.getStartDate());
 		if(myList != null) {
 			//TODO put the SessionWidget with teaching in grid
@@ -98,7 +100,7 @@ public class MainGUI {
 		
 		vpan.add(hpan);
 		
-		ScheduleNavigationBar navBar = new ScheduleNavigationBar(1, s.getStartDate(), s.getEndDate());
+		ScheduleNavigationBar navBar = ScheduleNavigationBar.getInstance(1, s.getStartDate(), s.getEndDate());
 		vpan.add(navBar);
 		
 		RootPanel.get().add(vpan);

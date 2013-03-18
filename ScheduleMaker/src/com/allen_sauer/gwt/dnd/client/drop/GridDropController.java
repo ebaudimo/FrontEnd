@@ -2,10 +2,16 @@ package com.allen_sauer.gwt.dnd.client.drop;
 
 import com.allen_sauer.gwt.dnd.client.DragContext;
 import com.allen_sauer.gwt.dnd.client.drop.AbsolutePositionDropController;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+import com.pedEdt.frontEnd.client.controller.ServerCommunication;
+import com.pedEdt.frontEnd.client.model.Teaching;
+import com.pedEdt.frontEnd.client.util.DateUtil;
 import com.pedEdt.frontEnd.client.util.DebugPanel;
+import com.pedEdt.frontEnd.client.view.MainGUI;
+import com.pedEdt.frontEnd.client.view.ScheduleNavigationBar;
 import com.pedEdt.frontEnd.client.view.TeachingSeanceWidget;
 import com.pedEdt.frontEnd.client.view.TreeTeachingWidget;
 
@@ -46,19 +52,49 @@ public class GridDropController extends AbsolutePositionDropController{
 		DebugPanel.getInstance().vpan.add(new Label("posV = "+posV));
 		//end debug
 		
-		if( widget instanceof TreeTeachingWidget){
+		
+		if(widget instanceof TreeTeachingWidget) {
 			TeachingSeanceWidget l = new TeachingSeanceWidget(((TreeTeachingWidget) widget).getTeaching(),posH,posV);
 			l.setHeight((gridY*8+8)+"px");
 			l.setWidth((gridX-1)+"px");
 			dropTarget.add(l, left, top);
 			draggableList.get(0).positioner.removeFromParent();
+			
+			//need to update the Teaching object with this session
+			//find the date of the session
+			ScheduleNavigationBar navBar = ScheduleNavigationBar.getInstance();
+			Teaching teaching = ((TreeTeachingWidget) widget).getTeaching();
+			long newDate = DateUtil.computeNewDate(navBar.getStart(), navBar.getCurrentValue(), posH, posV);
+			int index = teaching.addSeance(newDate);
+			
+			ServerCommunication.getInstance().updateTeaching(teaching);
+			l.setIndexSession(index);
+			
+			Window.alert(String.valueOf(index));
+		
 		}
-		else if( widget instanceof TeachingSeanceWidget){
+		else if(widget instanceof TeachingSeanceWidget) {
 			((TeachingSeanceWidget) widget).setPosH(posH);
 			((TeachingSeanceWidget) widget).setPosV(posV);
 			dropTarget.add(widget, left, top);
 			draggableList.get(0).positioner.removeFromParent();
-		}	
+			
+			//need to update the Teaching object with this session
+			ScheduleNavigationBar navBar = ScheduleNavigationBar.getInstance();
+			long newDate = DateUtil.computeNewDate(navBar.getStart(), navBar.getCurrentValue(), posH, posV);
+			Teaching teaching = ((TeachingSeanceWidget) widget).getTeaching();
+			
+			teaching.removeSeanceByIndex(((TeachingSeanceWidget) widget).getIndexSession());
+			int index = teaching.addSeance(newDate);
+			
+			ServerCommunication.getInstance().updateTeaching(teaching);
+			((TeachingSeanceWidget) widget).setIndexSession(index);
+			
+			Window.alert(String.valueOf(index));
+		}
+		
+		
+		
 	}
 	
 	@Override

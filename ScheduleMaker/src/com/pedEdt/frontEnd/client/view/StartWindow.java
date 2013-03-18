@@ -24,8 +24,7 @@ public class StartWindow extends PopupPanel {
 	final private PopupPanel me;
 
 	public StartWindow() {
-		//if true the panel closes automatically when the user click outside
-		super(false);
+		super(false, true);
 
 		me = this;
 
@@ -49,7 +48,10 @@ public class StartWindow extends PopupPanel {
 		parent.add(new Button("Ajouter", new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				Window.alert("Not implemented yet, coming soon ;)");
+				//Window.alert("Not implemented yet, coming soon ;)");
+				PopupPanel newSemester = Forms.popupCreateSemester();
+				newSemester.showRelativeTo(me);
+				me.hide();
 			}
 		}));
 	}
@@ -73,7 +75,6 @@ public class StartWindow extends PopupPanel {
 		try {
 			builder.sendRequest(null, new RequestCallback() {
 
-				@Override
 				public void onResponseReceived(Request request, Response response) {
 
 					parent.clear();
@@ -82,10 +83,7 @@ public class StartWindow extends PopupPanel {
 					if(response.getStatusCode() == 200) {
 						List<Semester> sl = SemesterList.fromXML.read(response.getText().trim()).getSemesterList();
 
-						if(sl.isEmpty()) {
-							buildAddButton(parent);
-						}
-						else {
+						if(!sl.isEmpty()) {
 							Iterator<Semester> i = sl.iterator();
 							while (i.hasNext()) {
 								Semester s = i.next();
@@ -95,8 +93,10 @@ public class StartWindow extends PopupPanel {
 
 							parent.add(myListBox);
 							buildLoadButton(parent, myListBox);
-						}
+						}						
 					}
+					
+					buildAddButton(parent);
 				}
 
 				@Override
@@ -113,8 +113,6 @@ public class StartWindow extends PopupPanel {
 
 	private void searchSemester(String id) {
 
-		
-		
 		RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, "proxy.jsp?url=http://localhost:8080/rest/service/read/semester/" + id);
 		try {
 			builder.sendRequest(null, new RequestCallback() {
