@@ -16,6 +16,7 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 public class TreeTeachingWidget extends Label{
 	
 	protected Teaching teaching;
+	protected TooltipListener tooltip;
 	
 	public TreeTeachingWidget(Teaching teaching){
 		super(teaching.getTeacher() + " " + String.valueOf(teaching.getType()));
@@ -23,7 +24,7 @@ public class TreeTeachingWidget extends Label{
 		this.teaching = teaching;
 		
 		final Widget sender = this;
-		final TooltipListener tooltip = new TooltipListener(
+		tooltip = new TooltipListener(
 				"Teacher : " + teaching.getTeacher() + "<br/>" +
 				"Groupe : " + String.valueOf(teaching.getNumGroup()) + "<br/>" +
 				"Reste " + String.valueOf(teaching.getNbSeance() - teaching.getSeances().size()) + " seances sur " + String.valueOf(teaching.getNbSeance()),
@@ -57,4 +58,10 @@ public class TreeTeachingWidget extends Label{
 		return teaching;
 	}
 
+	public void updateTooltip() {
+		tooltip.setText("Teacher : " + teaching.getTeacher() + "<br/>" +
+		"Groupe : " + String.valueOf(teaching.getNumGroup()) + "<br/>" +
+		"Reste " + String.valueOf(teaching.getNbSeance() - teaching.getSeances().size()) + 
+		" seances sur " + String.valueOf(teaching.getNbSeance()));	
+	}
 }

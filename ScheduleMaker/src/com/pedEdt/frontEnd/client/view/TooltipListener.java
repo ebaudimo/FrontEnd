@@ -119,4 +119,8 @@ public class TooltipListener extends MouseListenerAdapter {
   public void setOffsetY(int offsetY) {
     this.offsetY = offsetY;
   }
+  
+  public void setText(String t) {
+	  this.text = t;
+  }
 } 

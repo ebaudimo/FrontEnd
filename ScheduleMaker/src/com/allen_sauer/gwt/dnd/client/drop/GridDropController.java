@@ -71,7 +71,8 @@ public class GridDropController extends AbsolutePositionDropController{
 			l.setIndexSession(index);
 			
 			Window.alert(String.valueOf(index));
-		
+			((TreeTeachingWidget) widget).updateTooltip();
+			
 		}
 		else if(widget instanceof TeachingSeanceWidget) {
 			((TeachingSeanceWidget) widget).setPosH(posH);
