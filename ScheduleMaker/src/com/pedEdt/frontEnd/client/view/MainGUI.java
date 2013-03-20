@@ -102,7 +102,7 @@ public class MainGUI {
 
 				List<Long> l = t.getSeances();
 				for(int cpt = 0; cpt < l.size(); cpt++) {
-					if(DateUtil.inThisWeek(new Date(l.get(cpt)))) {
+					if(DateUtil.inThisWeek(DateUtil.getDate(l.get(cpt)))) {
 						TeachingSeanceWidget session = new TeachingSeanceWidget(t, 
 								DateUtil.findPosH(l.get(cpt)), 
 								DateUtil.findPosV(l.get(cpt)));
@@ -110,12 +110,7 @@ public class MainGUI {
 						schedGridPan.getDropController().addTeachingSeanceWidget(session);
 					}
 				}
-
-				//build the sessionWidget and place it
-				//TeachingSeanceWidget session = new TeachingSeanceWidget(t, 0, 0);
-				//schedGridPan.addWidget(new TeachingSeanceWidget(t,	0, 0), 0, 0);
 			}
 		}
-		
 	}
 }

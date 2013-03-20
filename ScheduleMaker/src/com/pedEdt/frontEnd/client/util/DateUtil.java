@@ -60,7 +60,7 @@ public class DateUtil {
 		
 	}
 	
-	//return the end of the week (
+	//return the end of the week
 	public static long getEndWeek(Date date) {
 		long current = date.getTime();
 		
@@ -125,11 +125,13 @@ public class DateUtil {
 		
 	}
 	
-	// return the long for a new TeachingWidgetSession (create or update)
-	public static long computeNewDate(long startSemester, int currentWeek, int posH, int posV) {
-		Date start = getDate(startSemester);		
+	//return the long for a new TeachingWidgetSession (create or update)
+	public static long computeNewDate(int posH, int posV) {
+		ScheduleNavigationBar navBar = ScheduleNavigationBar.getInstance();
+		
+		Date start = getDate(navBar.getStart());	
 		int diff = (posH + 1) - start.getDay();
-		long currentDate = startSemester + WEEK * currentWeek + diff * DAY + posV * 600;
+		long currentDate = navBar.getStart() + WEEK * navBar.getCurrentValue() + diff * DAY + posV * 600;
 		return currentDate;
 	}
 
@@ -166,4 +168,7 @@ public class DateUtil {
 		
 	}
 	
+	public static long getNbWeek(Date start, Date end) {
+		return (end.getTime() - start.getTime()) / (WEEK*1000);
+	}
 }

@@ -1,11 +1,19 @@
 package com.pedEdt.frontEnd.client.view;
 
+import java.util.Date;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextBox;
 import com.pedEdt.frontEnd.client.util.DateUtil;
 
 public class ScheduleNavigationBar extends Composite {
@@ -31,10 +39,10 @@ public class ScheduleNavigationBar extends Composite {
 	
 	private ScheduleNavigationBar(int numWeek, long startSemester, long endSemester) {
 		
-		this.start = startSemester;
-		this.end = endSemester;
+		this.start = startSemester*1000;
+		this.end = endSemester*1000;
 		
-		nbWeek = (endSemester - startSemester) / DateUtil.WEEK;
+		nbWeek = DateUtil.getNbWeek(new Date(start), new Date(end));
 		
 		if(numWeek > 0 && numWeek <= nbWeek)
 			setCurrentValue(numWeek);
@@ -68,6 +76,45 @@ public class ScheduleNavigationBar extends Composite {
 			}
 		}));
 		
+		navPanel.add(new Label("Aller directement : "));
+		final TextBox where = new TextBox();
+		where.setStyleName("textbox");
+		final Button go = new Button("GO", new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+				currentValue = Integer.valueOf(where.getText());
+				
+				Window.alert("Load new week");
+				
+			}
+		});
+		where.addKeyUpHandler(new KeyUpHandler() {
+			
+			@Override
+			public void onKeyUp(KeyUpEvent event) {
+				String str = where.getText();
+				
+				if(str.isEmpty()) {
+					where.removeStyleDependentName("onError");
+					go.setEnabled(false);
+				}
+				
+				if(str.matches("[0-9]*")) {
+					where.removeStyleDependentName("onError");
+					go.setEnabled(true);
+				}
+				else {
+					where.setStyleDependentName("onError", true);
+					go.setEnabled(false);
+				}
+			}
+		});
+		
+		navPanel.add(where);
+		navPanel.add(go);
+		
 		initWidget(navPanel);
 	}
 
@@ -78,7 +125,6 @@ public class ScheduleNavigationBar extends Composite {
 	public void setCurrentValue(int currentValue) {
 		this.currentValue = currentValue;
 	}
-
 	
 	public long getStart() {
 		return start;

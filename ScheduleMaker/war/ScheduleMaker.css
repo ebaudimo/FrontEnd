@@ -437,3 +437,12 @@ a:visited {
 	border: 2px solid black;
 	width: 100%;
 }
+
+.textbox {
+	text-align: center;
+	background-color: #ddd;
+}
+
+.textbox-onError {
+	background-color: red;
+}

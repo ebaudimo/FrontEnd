@@ -59,15 +59,11 @@ public class GridDropController extends AbsolutePositionDropController{
 			dropTarget.add(l, left, top);
 			draggableList.get(0).positioner.removeFromParent();
 			
-			//need to update the Teaching object with this session
-			//find the date of the session
-			//maybe in the TeachingSeanceWidget constructor
-			ScheduleNavigationBar navBar = ScheduleNavigationBar.getInstance();
 			Teaching teaching = ((TreeTeachingWidget) widget).getTeaching();
-			long newDate = DateUtil.computeNewDate(navBar.getStart(), navBar.getCurrentValue(), posH, posV);
+			long newDate = DateUtil.computeNewDate(posH, posV);
 			int index = teaching.addSeance(newDate);
 			
-			ServerCommunication.getInstance().updateTeaching(teaching);
+			//ServerCommunication.getInstance().updateTeaching(teaching);
 			l.setIndexSession(index);
 			
 			Window.alert(String.valueOf(index));
@@ -80,15 +76,12 @@ public class GridDropController extends AbsolutePositionDropController{
 			dropTarget.add(widget, left, top);
 			draggableList.get(0).positioner.removeFromParent();
 			
-			//need to update the Teaching object with this session
-			ScheduleNavigationBar navBar = ScheduleNavigationBar.getInstance();
-			long newDate = DateUtil.computeNewDate(navBar.getStart(), navBar.getCurrentValue(), posH, posV);
+			long newDate = DateUtil.computeNewDate(posH, posV);
 			Teaching teaching = ((TeachingSeanceWidget) widget).getTeaching();
-			
 			teaching.removeSeanceByIndex(((TeachingSeanceWidget) widget).getIndexSession());
 			int index = teaching.addSeance(newDate);
 			
-			ServerCommunication.getInstance().updateTeaching(teaching);
+			//ServerCommunication.getInstance().updateTeaching(teaching);
 			((TeachingSeanceWidget) widget).setIndexSession(index);
 			
 			Window.alert(String.valueOf(index));
