@@ -14,6 +14,7 @@
  *******************************************************************************/
 package com.pedEdt.frontEnd.client.view;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -23,6 +24,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.pedEdt.frontEnd.client.controller.ScheduleDragController;
 import com.pedEdt.frontEnd.client.model.Semester;
 import com.pedEdt.frontEnd.client.model.Teaching;
+import com.pedEdt.frontEnd.client.util.DateUtil;
 import com.pedEdt.frontEnd.client.util.DebugPanel;
 
 /**
@@ -67,22 +69,7 @@ public class MainGUI {
 		
 		//build the tree
 		schedTree = new ScheduleTreePanel(s);
-		
-		//get a list of teaching which is present in the timestamp week
-		List<Teaching> myList = s.isSessionInPeriod(s.getStartDate());
-		if(myList != null) {
-			//TODO put the SessionWidget with teaching in grid
-			Iterator<Teaching> i = myList.iterator();
-			while(i.hasNext()) {
-				Teaching t = i.next();
-				//build the sessionWidget and place it
-				schedGridPan.addWidget(new TeachingSeanceWidget(t,	0, 0), 0, 0);
 				
-			}
-		}
-
-		
-		
 		hpan.add(schedTree);
 		hpan.add(schedGridPan);
 		
@@ -105,28 +92,30 @@ public class MainGUI {
 		
 		RootPanel.get().add(vpan);
 		
-	}
-
-	public void buildTree(Semester s) {
-		
-		//schedTree.clearTree();
-		
-		//build the tree
-		schedTree = new ScheduleTreePanel(s);
-
-		//1362060000 for test
 		//get a list of teaching which is present in the timestamp week
-
 		List<Teaching> myList = s.isSessionInPeriod(s.getStartDate());
 		if(myList != null) {
 			//TODO put the SessionWidget with teaching in grid
 			Iterator<Teaching> i = myList.iterator();
 			while(i.hasNext()) {
 				Teaching t = i.next();
-				//build the sessionWidget and place it
-				schedGridPan.addWidget(new TeachingSeanceWidget(t,	0, 0), 0, 0);
 
+				List<Long> l = t.getSeances();
+				for(int cpt = 0; cpt < l.size(); cpt++) {
+					if(DateUtil.inThisWeek(new Date(l.get(cpt)))) {
+						TeachingSeanceWidget session = new TeachingSeanceWidget(t, 
+								DateUtil.findPosH(l.get(cpt)), 
+								DateUtil.findPosV(l.get(cpt)));
+						session.setIndexSession(cpt);
+						schedGridPan.getDropController().addTeachingSeanceWidget(session);
+					}
+				}
+
+				//build the sessionWidget and place it
+				//TeachingSeanceWidget session = new TeachingSeanceWidget(t, 0, 0);
+				//schedGridPan.addWidget(new TeachingSeanceWidget(t,	0, 0), 0, 0);
 			}
 		}
+		
 	}
 }

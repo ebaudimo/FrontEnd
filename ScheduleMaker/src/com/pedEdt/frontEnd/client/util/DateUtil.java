@@ -1,6 +1,7 @@
 package com.pedEdt.frontEnd.client.util;
 
 import java.util.Date;
+import com.pedEdt.frontEnd.client.view.ScheduleNavigationBar;
 
 public class DateUtil {
 	
@@ -9,7 +10,100 @@ public class DateUtil {
 	public static long HOUR = 3600;
 	
 	public static Date getDate(long fromBD) {
-		return new Date(fromBD * 1000);
+		return new Date(fromBD * 1000); //*1000 for milliseconds
+	}
+	
+	//return the start of the week (Monday morning, 00h 00m 01s)
+	public static long getStartWeek(Date date) {
+		long current = date.getTime();
+		
+		switch(date.getDay()) {
+		case 0: //Sunday
+			current = current - DAY * 6 * 1000;
+			current = current - (HOUR*1000) * date.getHours(); 
+			current = current - (60*1000) * date.getMinutes();
+			break;
+		case 1: //Monday
+			current = current - (HOUR*1000) * date.getHours(); //subtract the hours
+			current = current - (60*1000) * date.getMinutes(); //subtract the minutes
+			break;
+		case 2:
+			current = current - DAY * 1000;
+			current = current - (HOUR*1000) * date.getHours(); 
+			current = current - (60*1000) * date.getMinutes();
+			break;
+		case 3:
+			current = current - DAY * 2 * 1000;
+			current = current - (HOUR*1000) * date.getHours(); 
+			current = current - (60*1000) * date.getMinutes();
+			break;
+		case 4:
+			current = current - DAY * 3 * 1000;
+			current = current - (HOUR*1000) * date.getHours(); 
+			current = current - (60*1000) * date.getMinutes();
+			break;
+		case 5:
+			current = current - DAY * 4 * 1000;
+			current = current - (HOUR*1000) * date.getHours(); 
+			current = current - (60*1000) * date.getMinutes();
+			break;
+		case 6:
+			current = current - DAY * 5 * 1000;
+			current = current - (HOUR*1000) * date.getHours(); 
+			current = current - (60*1000) * date.getMinutes();
+			break;
+		default:
+			break;
+		}
+		
+		return current;
+		
+	}
+	
+	//return the end of the week (
+	public static long getEndWeek(Date date) {
+		long current = date.getTime();
+		
+		switch(date.getDay()) {
+		case 0: //Sunday
+			current = current + (HOUR*1000) * (23 - date.getHours()); 
+			current = current + (60*1000) * (59 - date.getMinutes());
+			break;
+		case 1: //Monday
+			current = current + (DAY*1000) * 6;
+			current = current + (HOUR*1000) * (23 - date.getHours()); 
+			current = current + (60*1000) * (59 - date.getMinutes());
+			break;
+		case 2:
+			current = current + (DAY*1000) * 5;
+			current = current + (HOUR*1000) * (23 - date.getHours()); 
+			current = current + (60*1000) * (59 - date.getMinutes());
+			break;
+		case 3:
+			current = current + (DAY*1000) * 4;
+			current = current + (HOUR*1000) * (23 - date.getHours()); 
+			current = current + (60*1000) * (59 - date.getMinutes());
+			break;
+		case 4:
+			current = current + (DAY*1000) * 3;
+			current = current + (HOUR*1000) * (23 - date.getHours()); 
+			current = current + (60*1000) * (59 - date.getMinutes());
+			break;
+		case 5:
+			current = current + (DAY*1000) * 2;
+			current = current + (HOUR*1000) * (23 - date.getHours()); 
+			current = current + (60*1000) * (59 - date.getMinutes());
+			break;
+		case 6:
+			current = current + (DAY*1000);
+			current = current + (HOUR*1000) * (23 - date.getHours()); 
+			current = current + (60*1000) * (59 - date.getMinutes());
+			break;
+		default:
+			break;
+		}
+		
+		return current;
 	}
 	
 	public static boolean inPeriod(Date date, Date start, Date end) {
@@ -19,22 +113,57 @@ public class DateUtil {
 		return false;
 	}
 
+	public static boolean inThisWeek(Date search) {
+		ScheduleNavigationBar navBar = ScheduleNavigationBar.getInstance();
+		
+		Date navigation = new Date(navBar.getStart() * navBar.getCurrentValue());
+		
+		Date startWeek = new Date(getStartWeek(navigation));
+		Date endWeek = new Date(getEndWeek(navigation));
+		
+		return inPeriod(getDate(search.getTime()), startWeek, endWeek);
+		
+	}
+	
+	// return the long for a new TeachingWidgetSession (create or update)
 	public static long computeNewDate(long startSemester, int currentWeek, int posH, int posV) {
-		Date start = getDate(startSemester);
-		long currentDate = 0;
-		//TODO : int contains '-' ? If yes, if else structure is not needed
-		if(start.getDay() == posH + 1) { //same day in the week	
-			currentDate = startSemester + WEEK * currentWeek + posV * 600;
-		}
-		else if(start.getDay() < posH + 1) {
-			int diff = (posH + 1) - start.getDay();
-			currentDate = startSemester + WEEK * currentWeek + diff * DAY + posV * 600;
-		}
-		else { //start.getDay() > posH + 1
-			int diff = start.getDay() - (posH + 1);
-			currentDate = startSemester + WEEK * currentWeek - diff * DAY + posV * 600;
-		}
+		Date start = getDate(startSemester);		
+		int diff = (posH + 1) - start.getDay();
+		long currentDate = startSemester + WEEK * currentWeek + diff * DAY + posV * 600;
 		return currentDate;
+	}
+
+	public static int findPosH(long sessionDate) {
+		Date myDate = new Date(sessionDate);	
+		switch(myDate.getDay()) {
+		case 1: //Monday
+			return 0;
+		case 2:
+			return 1;
+		case 3:
+			return 2;
+		case 4:
+			return 3;
+		case 5: 
+			return 4;
+		default:
+			return -1;
+		}
+	}
+	
+	public static int findPosV(long sessionDate) {
+		Date myDate = new Date(sessionDate);
+
+		int hour = myDate.getHours();
+		int min = myDate.getMinutes();
+		/*
+		switch(myDate.getHours()) {
+		case 8:
+			return 
+		}
+		*/
+		return 5;
+		
 	}
 	
 }

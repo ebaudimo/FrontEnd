@@ -20,7 +20,7 @@ public class ScheduleNavigationBar extends Composite {
 	private static ScheduleNavigationBar navBar;
 	public static ScheduleNavigationBar getInstance(int numWeek, long startSemester, long endSemester) {
 		if(navBar == null)
-			navBar = new ScheduleNavigationBar(numWeek, startSemester, endSemester);
+			navBar = new ScheduleNavigationBar(numWeek, startSemester*1000, endSemester*1000);
 		
 		return navBar;
 	}

@@ -9,6 +9,7 @@ import name.pehl.piriti.xml.client.XmlReader;
 import name.pehl.piriti.xml.client.XmlWriter;
 
 import com.google.gwt.core.client.GWT;
+import com.pedEdt.frontEnd.client.util.DateUtil;
 
 public class Teaching implements java.io.Serializable {
 	
@@ -109,7 +110,6 @@ public class Teaching implements java.io.Serializable {
 		Collections.sort(this.seances);
 		
 		return this.seances.indexOf(date);
-		
 	}
 	
 	public void removeSeance(Date date) {
@@ -123,9 +123,8 @@ public class Teaching implements java.io.Serializable {
 	}
 	
 	public boolean isSessionInPeriod(long start) {
-		final long WEEK = 604800;
 		for (int i = 0; i < this.seances.size(); i++)
-			if (this.seances.get(i) >= start && this.seances.get(i) <= start + WEEK)
+			if (this.seances.get(i) >= start && this.seances.get(i) <= start + DateUtil.WEEK)
 				return true;
 		return false;
 	}

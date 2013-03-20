@@ -10,7 +10,6 @@ import com.pedEdt.frontEnd.client.controller.ServerCommunication;
 import com.pedEdt.frontEnd.client.model.Teaching;
 import com.pedEdt.frontEnd.client.util.DateUtil;
 import com.pedEdt.frontEnd.client.util.DebugPanel;
-import com.pedEdt.frontEnd.client.view.MainGUI;
 import com.pedEdt.frontEnd.client.view.ScheduleNavigationBar;
 import com.pedEdt.frontEnd.client.view.TeachingSeanceWidget;
 import com.pedEdt.frontEnd.client.view.TreeTeachingWidget;
@@ -62,6 +61,7 @@ public class GridDropController extends AbsolutePositionDropController{
 			
 			//need to update the Teaching object with this session
 			//find the date of the session
+			//maybe in the TeachingSeanceWidget constructor
 			ScheduleNavigationBar navBar = ScheduleNavigationBar.getInstance();
 			Teaching teaching = ((TreeTeachingWidget) widget).getTeaching();
 			long newDate = DateUtil.computeNewDate(navBar.getStart(), navBar.getCurrentValue(), posH, posV);
@@ -137,4 +137,24 @@ public class GridDropController extends AbsolutePositionDropController{
 		}
 	}
 	
+	public void addTeachingSeanceWidget(TeachingSeanceWidget session) {
+		//TeachingSeanceWidget l = new TeachingSeanceWidget(teaching, posH, posV);
+		session.setHeight("200px");//(gridY*8+8)+"px");
+		session.setWidth("200px");//(gridX-1)+"px");
+		
+		//int top =draggableList.get(0).desiredY;
+		//int left=draggableList.get(0).desiredX;
+		/*
+		left = session.getPosH() * gridX;
+		left = Math.max(0,left);
+		top = session.getPosV() * gridY;
+		top = Math.max(0,top);
+		// border correction
+		top += top/10;
+		left += 1;
+		*/
+		dropTarget.add(session, 200, 200);
+		
+		//draggableList.get(0).positioner.removeFromParent();
+	}
 }
