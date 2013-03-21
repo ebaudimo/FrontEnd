@@ -123,9 +123,18 @@ public class Teaching implements java.io.Serializable {
 	}
 	
 	public boolean isSessionInPeriod(long start) {
-		for (int i = 0; i < this.seances.size(); i++)
-			if (this.seances.get(i)*1000 >= start && this.seances.get(i)*1000 <= start + DateUtil.WEEK*1000)
+		for (int i = 0; i < this.seances.size(); i++) {
+//			if (this.seances.get(i)*1000 >= start && this.seances.get(i)*1000 <= start + DateUtil.WEEK)
+//				return true;
+//			}
+			
+			Date d = DateUtil.getDate(this.seances.get(i));
+			Date s = new Date(start);
+			Date e = new Date(start + DateUtil.WEEK);
+			
+			if(d.after(s) && d.before(e))
 				return true;
+		}
 		return false;
 	}
 }

@@ -5,7 +5,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -23,9 +22,9 @@ public class ScheduleNavigationBar extends Composite {
 	
 	
 	private static ScheduleNavigationBar navBar;
-	public static ScheduleNavigationBar getInstance(int numWeek, long startSemester, long endSemester) {
+	public static ScheduleNavigationBar getInstance(int numWeek, long startFromDB, long endFromDB) {
 		if(navBar == null)
-			navBar = new ScheduleNavigationBar(numWeek, startSemester*1000, endSemester*1000);
+			navBar = new ScheduleNavigationBar(numWeek, startFromDB, endFromDB);
 		
 		return navBar;
 	}
@@ -34,12 +33,12 @@ public class ScheduleNavigationBar extends Composite {
 		return navBar;
 	}
 	
-	private ScheduleNavigationBar(int numWeek, long startSemester, long endSemester) {
+	private ScheduleNavigationBar(int numWeek, long startFromDB, long endFromDB) {
 		
-		this.start = startSemester*1000;
-		this.end = endSemester*1000;
+		this.start = DateUtil.getDate(startFromDB).getTime();
+		this.end = DateUtil.getDate(endFromDB).getTime();
 		
-		nbWeek = DateUtil.getNbWeek(new Date(start), new Date(end));
+		nbWeek = DateUtil.getNbWeek(new Date(this.start), new Date(this.end));
 		
 		if(numWeek > 0 && numWeek <= nbWeek)
 			setCurrentValue(numWeek);

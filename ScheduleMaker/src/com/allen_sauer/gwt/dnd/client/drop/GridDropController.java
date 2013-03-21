@@ -1,12 +1,8 @@
 package com.allen_sauer.gwt.dnd.client.drop;
 
-import java.util.Iterator;
-
 import com.allen_sauer.gwt.dnd.client.DragContext;
 import com.allen_sauer.gwt.dnd.client.drop.AbsolutePositionDropController;
-import com.google.gwt.user.client.ui.Widget;
-import com.pedEdt.frontEnd.client.model.Teaching;
-import com.pedEdt.frontEnd.client.util.DateUtil;
+import com.pedEdt.frontEnd.client.controller.DateController;
 import com.pedEdt.frontEnd.client.view.Grid;
 import com.pedEdt.frontEnd.client.view.SeanceWidget;
 import com.pedEdt.frontEnd.client.view.SeanceWidgetsManager;
@@ -63,34 +59,9 @@ public class GridDropController extends AbsolutePositionDropController{
 			tw.setHeight((gridY*lenght+lenght)+"px");
 			tw.setWidth((gridX-1)+"px");
 			widget = tw;
-			
-			//etienne
-			Teaching teaching = ((TreeTeachingWidget) context.draggable).getTeaching();
-			//long newDate = DateUtil.computeNewDate(posH, posV);
-			//int index = teaching.addSeance(newDate);
-			
-			//ServerCommunication.getInstance().updateTeaching(teaching);
-			//l.setIndexSession(index);
-			
-			//Window.alert(String.valueOf(index));
-			((TreeTeachingWidget) context.draggable).updateTooltip();
-			
 		}
 		else if( context.draggable instanceof SeanceWidget){
 			widget = (SeanceWidget) context.draggable;
-			
-			/*
-			//long newDate = DateUtil.computeNewDate(posH, posV);
-			Teaching teaching = ((SeanceWidget) widget).getTeaching();
-			teaching.removeSeanceByIndex(((SeanceWidget) widget).getIndexSession());
-			int index = teaching.addSeance(newDate);
-			
-			//ServerCommunication.getInstance().updateTeaching(teaching);
-			((SeanceWidget) widget).setIndexSession(index);
-			
-			//Window.alert(String.valueOf(index));
-	
-			 */
 		}	
 		
 		int posH = Math.round((float) left / gridX);
@@ -99,6 +70,9 @@ public class GridDropController extends AbsolutePositionDropController{
 
 		widget.setPosV(posV);
 		widget.setPosH(posH);
+		
+		DateController.getInstance().linkDateToSeanceWidget(widget, posH, posV);
+		
 		swManager.addSeance(widget);
 		swManager.doPositionning();
 		draggableList.get(0).positioner.removeFromParent();	
@@ -146,25 +120,25 @@ public class GridDropController extends AbsolutePositionDropController{
 	}	
 
 	public void addTeachingSeanceWidget(SeanceWidget session) {
-//		//TeachingSeanceWidget l = new TeachingSeanceWidget(teaching, posH, posV);
-//		session.setHeight((gridY*8+8)+"px");
-//		session.setWidth((gridX*5)+"px");
-//		
-//		//int top =draggableList.get(0).desiredY;
-//		//int left=draggableList.get(0).desiredX;
-//		
-//		
-//		int left = session.getPosH() * gridX;
-//		left = Math.max(0,left);
-//		int top = session.getPosV() * gridY;
-//		top = Math.max(0,top);
-//		// border correction
-//		top += top/10;
-//		left += 1;
-//		
-//		dropTarget.add(session, left, top);
-//		
-//		//draggableList.get(0).positioner.removeFromParent();
+/*		//TeachingSeanceWidget l = new TeachingSeanceWidget(teaching, posH, posV);
+		session.setHeight((gridY*8+8)+"px");
+		session.setWidth((gridX*5)+"px");
+		
+		//int top =draggableList.get(0).desiredY;
+		//int left=draggableList.get(0).desiredX;
+		
+		
+		int left = session.getPosH() * gridX;
+		left = Math.max(0,left);
+		int top = session.getPosV() * gridY;
+		top = Math.max(0,top);
+		// border correction
+		top += top/10;
+		left += 1;
+		
+		dropTarget.add(session, left, top);*/
+		
+		//draggableList.get(0).positioner.removeFromParent();
 		swManager.addSeance(session);
 		swManager.doPositionning();
 	}

@@ -77,6 +77,14 @@ public class Module implements java.io.Serializable {
 		this.teachings.remove(teaching);
 	}
 	
+	public List<Teaching> getAllTeaching() {
+		List<Teaching> myList = new ArrayList<Teaching>();
+		if(this.teachings != null)
+			myList.addAll(this.teachings);
+
+		return myList;
+	}
+	
 	public List<Teaching> isSessionInPeriod(long start) {
 		
 		List<Teaching> myList = new ArrayList<Teaching>();

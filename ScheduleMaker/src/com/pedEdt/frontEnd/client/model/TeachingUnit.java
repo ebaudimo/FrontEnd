@@ -79,6 +79,16 @@ public class TeachingUnit implements java.io.Serializable {
 		this.modules.remove(module);
 	}
 	
+	public List<Teaching> getAllTeaching() {
+		List<Teaching> myList = new ArrayList<Teaching>();
+		if(this.modules != null) {
+			for (int i = 0; i < this.modules.size(); i++) {
+				myList.addAll(this.modules.get(i).getAllTeaching());
+			}
+		}
+		return myList;
+	}
+	
 	public List<Teaching> isSessionInPeriod(long start) {
 		
 		List<Teaching> myList = new ArrayList<Teaching>();

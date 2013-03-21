@@ -27,9 +27,6 @@ import com.pedEdt.frontEnd.client.model.Teaching;
 import com.pedEdt.frontEnd.client.util.DateUtil;
 import com.pedEdt.frontEnd.client.util.DebugPanel;
 
-/**
- * Entry point classes define <code>onModuleLoad()</code>.
- */
 public class MainGUI {
 	
 	protected VerticalPanel vpan;
@@ -108,25 +105,41 @@ public class MainGUI {
 		//TODO need to clear the grid panel before add new SessionWidget
 		schedGridPan.getDropController().removeAllSeanceWidget();
 		
-		Date date = DateUtil.addWeek(DateUtil.getDate(this.semester.getStartDate()), ScheduleNavigationBar.getInstance().getCurrentValue());
-		List<Teaching> myList = this.semester.isSessionInPeriod(date.getTime());
-		if(myList != null) {
-			//put the SessionWidget with teaching in grid
-			Iterator<Teaching> i = myList.iterator();
-			while(i.hasNext()) {
-				Teaching t = i.next();
-
-				List<Long> l = t.getSeances();
-				for(int cpt = 0; cpt < l.size(); cpt++) {
-					if(DateUtil.inThisWeek(DateUtil.getDate(l.get(cpt)))) {
-						SeanceWidget session = new SeanceWidget(t, 
-								DateUtil.findPosH(l.get(cpt)), 
-								DateUtil.findPosV(l.get(cpt)));
+		List<Teaching> allTeaching = this.semester.getAllTeaching();
+		if(allTeaching != null) {
+			for (Teaching teaching : allTeaching) {
+				//a real 'for loop' to have a counter
+				for(int cpt = 0; cpt < teaching.getSeances().size(); cpt++) {
+					if(DateUtil.inThisWeek(DateUtil.getDate(teaching.getSeances().get(cpt)))) {
+						SeanceWidget session = new SeanceWidget(teaching, 
+								DateUtil.findPosH(DateUtil.getDate(teaching.getSeances().get(cpt))), 
+								DateUtil.findPosV(DateUtil.getDate(teaching.getSeances().get(cpt))));
 						session.setIndexSession(cpt);
 						schedGridPan.getDropController().addTeachingSeanceWidget(session);
 					}
 				}
 			}
 		}
+		
+//		Date date = DateUtil.addWeek(DateUtil.getDate(this.semester.getStartDate()), ScheduleNavigationBar.getInstance().getCurrentValue());
+//		List<Teaching> myList = this.semester.isSessionInWeek(date.getTime());
+//		if(myList != null) {
+//			//put the SessionWidget with teaching in grid
+//			Iterator<Teaching> i = myList.iterator();
+//			while(i.hasNext()) {
+//				Teaching t = i.next();
+//
+//				List<Long> l = t.getSeances();
+//				for(int cpt = 0; cpt < l.size(); cpt++) {
+//					if(DateUtil.inThisWeek(DateUtil.getDate(l.get(cpt)))) {
+//						SeanceWidget session = new SeanceWidget(t, 
+//								DateUtil.findPosH(DateUtil.getDate(l.get(cpt))), 
+//								DateUtil.findPosV(DateUtil.getDate(l.get(cpt))));
+//						session.setIndexSession(cpt);
+//						schedGridPan.getDropController().addTeachingSeanceWidget(session);
+//					}
+//				}
+//			}
+//		}
 	}
 }

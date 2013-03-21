@@ -34,81 +34,10 @@ import com.pedEdt.frontEnd.client.view.StartWindow;
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class ScheduleMaker implements EntryPoint {
-	
-	/*
-	protected VerticalPanel vpan;
-	protected HorizontalPanel hpan;
-	protected ScheduleGridPanel schedGridPan;
-	protected ScheduleTreePanel schedTree;
-	protected ScheduleMenuBar schedMenubar;
-	*/
-	
 	public void onModuleLoad() {
 		
 		StartWindow startPopup = new StartWindow();
 		RootPanel.get().add(startPopup);
 		startPopup.show();
-/*		
-		vpan = new VerticalPanel();
-		vpan.setSpacing(5);
-		hpan = new HorizontalPanel();
-		hpan.setSpacing(5);
-		schedMenubar = new ScheduleMenuBar();
-		schedGridPan = new ScheduleGridPanel();
-		
-		ScheduleDragController.createInstance(schedGridPan.schedGrid.getDroppableArea(), false);
-		ScheduleDragController.getInstance().registerDropController(schedGridPan.getDropController());
-		ScheduleDragController.getInstance().setBehaviorDragProxy(true);
-		
-		//static semester for the test
-		Teaching teaching1 = new Teaching();
-		teaching1.setType(TeachingType.COURS);
-		
-		Teaching teaching2 = new Teaching();
-		teaching2.setType(TeachingType.TD);
-		
-		Teaching teaching3 = new Teaching();
-		teaching3.setType(TeachingType.COURS);
-		
-		Module module1 = new Module();
-		module1.setCode("UE1M1");
-		module1.setTitle("Module 1");
-		module1.addTeaching(teaching1);
-		module1.addTeaching(teaching2);
-		
-		Module module2 = new Module();
-		module2.setCode("UE2M1");
-		module2.setTitle("Module 1");
-		module2.addTeaching(teaching3);
-		
-		TeachingUnit teachingUnit1 = new TeachingUnit();
-		teachingUnit1.setCode("UE1");
-		teachingUnit1.setTitle("UE 1");
-		teachingUnit1.addModule(module1);
-		
-		TeachingUnit teachingUnit2 = new TeachingUnit();
-		teachingUnit2.setCode("UE2");
-		teachingUnit2.setTitle("UE 2");
-		teachingUnit2.addModule(module2);
-		
-		Semester semester = new Semester();
-		semester.addTeachingUnit(teachingUnit1);
-		semester.addTeachingUnit(teachingUnit2);
-		//end semester
-		
-		schedTree = new ScheduleTreePanel(semester);
-		
-
-		hpan.add(schedTree);
-		hpan.add(schedGridPan);
-		
-		//debug
-		hpan.add(DebugPanel.getInstance());
-		//end debug
-		
-		vpan.add(schedMenubar);
-		vpan.add(hpan);
-		RootPanel.get().add(vpan);
-		*/
 	}
 }

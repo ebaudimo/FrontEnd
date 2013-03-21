@@ -5,57 +5,56 @@ import com.pedEdt.frontEnd.client.view.ScheduleNavigationBar;
 
 public class DateUtil {
 	
-	public static long WEEK = 604800;
-	public static long DAY = 86400;
-	public static long HOUR = 3600;
+	public static long WEEK = 604800000;
+	public static long DAY = 86400000;
+	public static long HOUR = 3600000;
 	
 	public static Date getDate(long fromBD) {
-		return new Date(fromBD * 1000); //*1000 for milliseconds
+		return new Date(fromBD * 1000); // for milliseconds
 	}
 	
-	//why need a Date object : with long i am not sure if it's from database (without millisecond) or somewhere else  
 	public static Date addWeek(Date startDate, int nbWeek) {
-		return new Date(startDate.getTime() + (WEEK*1000)*nbWeek);
+		return new Date(startDate.getTime() + WEEK * nbWeek);
 	}
 	
-	//return the start of the week (Monday morning, 00h 00m 01s)
+	//return the start of the week (Monday morning, 00h 00m etc.)
  	public static long getStartWeek(Date date) {
 		long current = date.getTime();
 		
 		switch(date.getDay()) {
 		case 0: //Sunday
-			current = current - DAY * 6 * 1000;
-			current = current - (HOUR*1000) * date.getHours(); 
-			current = current - (60*1000) * date.getMinutes();
+			current = current - DAY * 6;
+			current = current - HOUR * date.getHours(); 
+			current = current - 60000 * date.getMinutes();
 			break;
 		case 1: //Monday
-			current = current - (HOUR*1000) * date.getHours(); //subtract the hours
-			current = current - (60*1000) * date.getMinutes(); //subtract the minutes
+			current = current - HOUR * date.getHours(); //subtract the hours
+			current = current - 60000 * date.getMinutes(); //subtract the minutes
 			break;
 		case 2:
-			current = current - DAY * 1000;
-			current = current - (HOUR*1000) * date.getHours(); 
-			current = current - (60*1000) * date.getMinutes();
+			current = current - DAY;
+			current = current - HOUR * date.getHours(); 
+			current = current - 60000 * date.getMinutes();
 			break;
 		case 3:
-			current = current - DAY * 2 * 1000;
-			current = current - (HOUR*1000) * date.getHours(); 
-			current = current - (60*1000) * date.getMinutes();
+			current = current - DAY * 2;
+			current = current - HOUR * date.getHours(); 
+			current = current - 60000 * date.getMinutes();
 			break;
 		case 4:
-			current = current - DAY * 3 * 1000;
-			current = current - (HOUR*1000) * date.getHours(); 
-			current = current - (60*1000) * date.getMinutes();
+			current = current - DAY * 3;
+			current = current - HOUR * date.getHours(); 
+			current = current - 60000 * date.getMinutes();
 			break;
 		case 5:
-			current = current - DAY * 4 * 1000;
-			current = current - (HOUR*1000) * date.getHours(); 
-			current = current - (60*1000) * date.getMinutes();
+			current = current - DAY * 4 ;
+			current = current - HOUR * date.getHours(); 
+			current = current - 60000 * date.getMinutes();
 			break;
 		case 6:
 			current = current - DAY * 5 * 1000;
-			current = current - (HOUR*1000) * date.getHours(); 
-			current = current - (60*1000) * date.getMinutes();
+			current = current - HOUR * date.getHours(); 
+			current = current - 60000 * date.getMinutes();
 			break;
 		default:
 			break;
@@ -71,38 +70,38 @@ public class DateUtil {
 		
 		switch(date.getDay()) {
 		case 0: //Sunday
-			current = current + (HOUR*1000) * (23 - date.getHours()); 
-			current = current + (60*1000) * (59 - date.getMinutes());
+			current = current + HOUR * (23 - date.getHours()); 
+			current = current + 60000 * (59 - date.getMinutes());
 			break;
 		case 1: //Monday
-			current = current + (DAY*1000) * 6;
-			current = current + (HOUR*1000) * (23 - date.getHours()); 
-			current = current + (60*1000) * (59 - date.getMinutes());
+			current = current + DAY * 6;
+			current = current + HOUR * (23 - date.getHours()); 
+			current = current + 60000 * (59 - date.getMinutes());
 			break;
 		case 2:
-			current = current + (DAY*1000) * 5;
-			current = current + (HOUR*1000) * (23 - date.getHours()); 
-			current = current + (60*1000) * (59 - date.getMinutes());
+			current = current + DAY * 5;
+			current = current + HOUR * (23 - date.getHours()); 
+			current = current + 60000 * (59 - date.getMinutes());
 			break;
 		case 3:
-			current = current + (DAY*1000) * 4;
-			current = current + (HOUR*1000) * (23 - date.getHours()); 
-			current = current + (60*1000) * (59 - date.getMinutes());
+			current = current + DAY * 4;
+			current = current + HOUR * (23 - date.getHours()); 
+			current = current + 60000 * (59 - date.getMinutes());
 			break;
 		case 4:
-			current = current + (DAY*1000) * 3;
-			current = current + (HOUR*1000) * (23 - date.getHours()); 
-			current = current + (60*1000) * (59 - date.getMinutes());
+			current = current + DAY * 3;
+			current = current + HOUR * (23 - date.getHours()); 
+			current = current + 60000 * (59 - date.getMinutes());
 			break;
 		case 5:
-			current = current + (DAY*1000) * 2;
-			current = current + (HOUR*1000) * (23 - date.getHours()); 
-			current = current + (60*1000) * (59 - date.getMinutes());
+			current = current + DAY * 2;
+			current = current + HOUR * (23 - date.getHours()); 
+			current = current + 60000 * (59 - date.getMinutes());
 			break;
 		case 6:
-			current = current + (DAY*1000);
-			current = current + (HOUR*1000) * (23 - date.getHours()); 
-			current = current + (60*1000) * (59 - date.getMinutes());
+			current = current + DAY;
+			current = current + HOUR * (23 - date.getHours()); 
+			current = current + 60000 * (59 - date.getMinutes());
 			break;
 		default:
 			break;
@@ -126,7 +125,7 @@ public class DateUtil {
 		Date startWeek = new Date(getStartWeek(navigation));
 		Date endWeek = new Date(getEndWeek(navigation));
 		
-		return inPeriod(getDate(search.getTime()), startWeek, endWeek);
+		return inPeriod(search, startWeek, endWeek);
 		
 	}
 	
@@ -140,9 +139,8 @@ public class DateUtil {
 		return currentDate;
 	}
 
-	public static int findPosH(long sessionDate) {
-		Date myDate = new Date(sessionDate);	
-		switch(myDate.getDay()) {
+	public static int findPosH(Date sessionDate) {
+		switch(sessionDate.getDay()) {
 		case 1: //Monday
 			return 0;
 		case 2:
@@ -151,29 +149,54 @@ public class DateUtil {
 			return 2;
 		case 4:
 			return 3;
-		case 5: 
+		case 5: //Friday
 			return 4;
 		default:
 			return -1;
 		}
 	}
 	
-	public static int findPosV(long sessionDate) {
-		Date myDate = new Date(sessionDate);
-
-		int hour = myDate.getHours();
-		int min = myDate.getMinutes();
-		/*
-		switch(myDate.getHours()) {
-		case 8:
-			return 
-		}
-		*/
-		return 5;
+	public static int findPosV(Date sessionDate) {
+		int hour = sessionDate.getHours();
+		int min = sessionDate.getMinutes();
 		
+		switch(hour) {
+		case 8: {
+			return min / 10;
+		}
+		case 9: {
+			return min / 10 + 6;
+		}
+		case 10: {
+			return min / 10 + 6 * 2;
+		}
+		case 11: {
+			return min / 10 + 6 * 3;
+		}
+		case 12: {
+			return min / 10 + 6 * 4;
+		}
+		case 13: {
+			return min / 10 + 6 * 5;
+		}
+		case 14: {
+			return min / 10 + 6 * 6;
+		}
+		case 15: {
+			return min / 10 + 6 * 7;
+		}
+		case 16: {
+			return min / 10 + 6 * 8;
+		}
+		case 17: {
+			return min / 10 + 6 * 9;
+		}
+		default:
+			return -1;
+		}
 	}
 	
 	public static long getNbWeek(Date start, Date end) {
-		return (end.getTime() - start.getTime()) / (WEEK*1000);
+		return (end.getTime() - start.getTime()) / WEEK;
 	}
 }
