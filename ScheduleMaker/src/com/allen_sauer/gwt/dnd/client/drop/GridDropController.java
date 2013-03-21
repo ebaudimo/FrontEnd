@@ -1,154 +1,182 @@
 package com.allen_sauer.gwt.dnd.client.drop;
 
+import java.util.Iterator;
+
 import com.allen_sauer.gwt.dnd.client.DragContext;
 import com.allen_sauer.gwt.dnd.client.drop.AbsolutePositionDropController;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.AbsolutePanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-import com.pedEdt.frontEnd.client.controller.ServerCommunication;
 import com.pedEdt.frontEnd.client.model.Teaching;
 import com.pedEdt.frontEnd.client.util.DateUtil;
-import com.pedEdt.frontEnd.client.util.DebugPanel;
-import com.pedEdt.frontEnd.client.view.ScheduleNavigationBar;
-import com.pedEdt.frontEnd.client.view.TeachingSeanceWidget;
+import com.pedEdt.frontEnd.client.view.Grid;
+import com.pedEdt.frontEnd.client.view.SeanceWidget;
+import com.pedEdt.frontEnd.client.view.SeanceWidgetsManager;
 import com.pedEdt.frontEnd.client.view.TreeTeachingWidget;
 
 public class GridDropController extends AbsolutePositionDropController{
 	
 	private int gridX;
 	private int gridY;
+	private int days;
+	private int intervals;
+	private SeanceWidgetsManager swManager;
 	
-	
-	public GridDropController(AbsolutePanel dropTarget) {
-		super(dropTarget);
-		gridX = (int) Math.floor(dropTarget.getOffsetWidth() / 5);
-		gridY = (int) Math.floor(dropTarget.getOffsetHeight() / 62);
+	public GridDropController(Grid grid) {
+		super(grid.getDroppableArea());
+		
+		days = grid.getNbDays();
+		intervals = grid.getNbIntervals()+1; //TODO: why +1 necessary to fit the grid?
+		gridX = (int) Math.floor(dropTarget.getOffsetWidth() / days);
+		gridY = (int) Math.floor(dropTarget.getOffsetHeight() / intervals);
+		swManager = new SeanceWidgetsManager(grid);
 	}
 	
+	private int applyVerticalAttraction(int posV, int length){
+		if( length == 8){
+			if( posV < 9)
+				return 0;
+			if( posV < 18)
+				return 9;
+			if( posV < 35)
+				return 18;
+			if( posV < 44)
+				return 35;
+			if( posV < 53)
+				return 44;
+			return 53;
+		}
+		posV = Math.min(posV, intervals - 1 - length);
+		return posV;
+	}
+	
+	
 	public void onDrop(final DragContext context){
-		//super.onDrop(context);
 
 		//get the top and left position and the widget
 		int top =draggableList.get(0).desiredY;
 		int left=draggableList.get(0).desiredX;
-		Widget widget = context.draggable;
+		SeanceWidget widget = null;
+		
+		if( context.draggable instanceof TreeTeachingWidget){
+			SeanceWidget tw = new SeanceWidget(((TreeTeachingWidget) context.draggable).getTeaching());
+			int lenght = ((TreeTeachingWidget)context.draggable).getLengthOnGrid();
+			tw.setLength(lenght);
+			tw.setHeight((gridY*lenght+lenght)+"px");
+			tw.setWidth((gridX-1)+"px");
+			widget = tw;
+			
+			//etienne
+			Teaching teaching = ((TreeTeachingWidget) context.draggable).getTeaching();
+			//long newDate = DateUtil.computeNewDate(posH, posV);
+			//int index = teaching.addSeance(newDate);
+			
+			//ServerCommunication.getInstance().updateTeaching(teaching);
+			//l.setIndexSession(index);
+			
+			//Window.alert(String.valueOf(index));
+			((TreeTeachingWidget) context.draggable).updateTooltip();
+			
+		}
+		else if( context.draggable instanceof SeanceWidget){
+			widget = (SeanceWidget) context.draggable;
+			
+			/*
+			//long newDate = DateUtil.computeNewDate(posH, posV);
+			Teaching teaching = ((SeanceWidget) widget).getTeaching();
+			teaching.removeSeanceByIndex(((SeanceWidget) widget).getIndexSession());
+			int index = teaching.addSeance(newDate);
+			
+			//ServerCommunication.getInstance().updateTeaching(teaching);
+			((SeanceWidget) widget).setIndexSession(index);
+			
+			//Window.alert(String.valueOf(index));
+	
+			 */
+		}	
 		
 		int posH = Math.round((float) left / gridX);
 		int posV = Math.round((float) top / gridY);
-		left = posH * gridX;
-		left = Math.max(0,left);
-		top = posV * gridY;
-		top = Math.max(0,top);
-		
-		// border correction
-		top += top/10;
-		left += 1;
-		
-		//debug
-		DebugPanel.getInstance().vpan.clear();
-		DebugPanel.getInstance().vpan.add(new Label("posH = "+posH));
-		DebugPanel.getInstance().vpan.add(new Label("posV = "+posV));
-		//end debug
-		
-		
-		if(widget instanceof TreeTeachingWidget) {
-			TeachingSeanceWidget l = new TeachingSeanceWidget(((TreeTeachingWidget) widget).getTeaching(),posH,posV);
-			l.setHeight((gridY*8+8)+"px");
-			l.setWidth((gridX-1)+"px");
-			dropTarget.add(l, left, top);
-			draggableList.get(0).positioner.removeFromParent();
-			
-			Teaching teaching = ((TreeTeachingWidget) widget).getTeaching();
-			long newDate = DateUtil.computeNewDate(posH, posV);
-			int index = teaching.addSeance(newDate);
-			
-			//ServerCommunication.getInstance().updateTeaching(teaching);
-			l.setIndexSession(index);
-			
-			Window.alert(String.valueOf(index));
-			((TreeTeachingWidget) widget).updateTooltip();
-			
-		}
-		else if(widget instanceof TeachingSeanceWidget) {
-			((TeachingSeanceWidget) widget).setPosH(posH);
-			((TeachingSeanceWidget) widget).setPosV(posV);
-			dropTarget.add(widget, left, top);
-			draggableList.get(0).positioner.removeFromParent();
-			
-			long newDate = DateUtil.computeNewDate(posH, posV);
-			Teaching teaching = ((TeachingSeanceWidget) widget).getTeaching();
-			teaching.removeSeanceByIndex(((TeachingSeanceWidget) widget).getIndexSession());
-			int index = teaching.addSeance(newDate);
-			
-			//ServerCommunication.getInstance().updateTeaching(teaching);
-			((TeachingSeanceWidget) widget).setIndexSession(index);
-			
-			Window.alert(String.valueOf(index));
-		}
-		
-		
-		
+		posV = applyVerticalAttraction(posV, widget.getLength());
+
+		widget.setPosV(posV);
+		widget.setPosH(posH);
+		swManager.addSeance(widget);
+		swManager.doPositionning();
+		draggableList.get(0).positioner.removeFromParent();	
 	}
 	
 	@Override
 	public void onMove(final DragContext context) {
 		super.onMove(context);
 
-		gridX = (int) Math.floor(dropTarget.getOffsetWidth() / 5);
-		gridY = (int) Math.floor(dropTarget.getOffsetHeight() / 62);
-
+		gridX = (int) Math.floor(dropTarget.getOffsetWidth() / days); 
+		gridY = (int) Math.floor(dropTarget.getOffsetHeight() / intervals);
+		
 
 		for (Draggable draggable : draggableList) {
-			
 			draggable.desiredX = context.desiredDraggableX - dropTargetOffsetX + draggable.relativeX;
 			draggable.desiredY = context.desiredDraggableY - dropTargetOffsetY + draggable.relativeY;
-			
-			//debug
-			DebugPanel.getInstance().vpan.clear();
-			DebugPanel.getInstance().vpan.add(new Label("desiredX = "+draggable.desiredX));
-			DebugPanel.getInstance().vpan.add(new Label("desiredY = "+draggable.desiredY));
-			//end debug
 			
 			//border correction
 			draggable.desiredY -= draggable.desiredY/10;
 
-			draggable.desiredX = (int)Math.floor((double) draggable.desiredX / gridX) * gridX;
+			int posH = Math.round((float) draggable.desiredX / gridX);
+			int posV = Math.round((float) draggable.desiredY / gridY);
+			int length = 0;
+			
+			if( draggable.widget instanceof TreeTeachingWidget){
+				length = ((TreeTeachingWidget)draggable.widget).getLengthOnGrid();
+				
+			}
+			else if( draggable.widget instanceof SeanceWidget){
+				length = ((SeanceWidget)draggable.widget).getLength();		
+			}
+		
+			posV = applyVerticalAttraction(posV, length);
+
+			draggable.positioner.setWidth((gridX-1)+"px");
+			draggable.positioner.setHeight((gridY*length+length)+"px");
+			draggable.desiredX = posH * gridX;
 			draggable.desiredX = Math.max(0, draggable.desiredX);
-			draggable.desiredY = (int)Math.round((double) draggable.desiredY / gridY) * gridY;
+			draggable.desiredY = posV * gridY;
 			draggable.desiredY = Math.max(0, draggable.desiredY);
 			
-			//debug
-			DebugPanel.getInstance().vpan.add(new Label("left = "+draggable.desiredX));
-			DebugPanel.getInstance().vpan.add(new Label("top = "+draggable.desiredY));
-			//end debug
-
 			int postionerY = draggable.desiredY + (draggable.desiredY/10);
-			
-			draggable.positioner.setWidth((gridX-1)+"px");
-			draggable.positioner.setHeight((gridY*8+8)+"px");
 			dropTarget.add(draggable.positioner, draggable.desiredX, postionerY);
 		}
+	}	
+
+	public void addTeachingSeanceWidget(SeanceWidget session) {
+//		//TeachingSeanceWidget l = new TeachingSeanceWidget(teaching, posH, posV);
+//		session.setHeight((gridY*8+8)+"px");
+//		session.setWidth((gridX*5)+"px");
+//		
+//		//int top =draggableList.get(0).desiredY;
+//		//int left=draggableList.get(0).desiredX;
+//		
+//		
+//		int left = session.getPosH() * gridX;
+//		left = Math.max(0,left);
+//		int top = session.getPosV() * gridY;
+//		top = Math.max(0,top);
+//		// border correction
+//		top += top/10;
+//		left += 1;
+//		
+//		dropTarget.add(session, left, top);
+//		
+//		//draggableList.get(0).positioner.removeFromParent();
+		swManager.addSeance(session);
+		swManager.doPositionning();
+	}
+
+	public void removeAllSeanceWidget() {
+//		Iterator<Widget> i = dropTarget.iterator();
+//		while(i.hasNext()) {
+//			Widget w = i.next();
+//			if(w instanceof SeanceWidget)
+//				dropTarget.remove(w);
+//		}
+		swManager.removeAllSeances();
 	}
 	
-	public void addTeachingSeanceWidget(TeachingSeanceWidget session) {
-		//TeachingSeanceWidget l = new TeachingSeanceWidget(teaching, posH, posV);
-		session.setHeight("200px");//(gridY*8+8)+"px");
-		session.setWidth("200px");//(gridX-1)+"px");
-		
-		//int top =draggableList.get(0).desiredY;
-		//int left=draggableList.get(0).desiredX;
-		/*
-		left = session.getPosH() * gridX;
-		left = Math.max(0,left);
-		top = session.getPosV() * gridY;
-		top = Math.max(0,top);
-		// border correction
-		top += top/10;
-		left += 1;
-		*/
-		dropTarget.add(session, 200, 200);
-		
-		//draggableList.get(0).positioner.removeFromParent();
 	}
-}

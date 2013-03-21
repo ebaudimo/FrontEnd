@@ -13,8 +13,13 @@ public class DateUtil {
 		return new Date(fromBD * 1000); //*1000 for milliseconds
 	}
 	
+	//why need a Date object : with long i am not sure if it's from database (without millisecond) or somewhere else  
+	public static Date addWeek(Date startDate, int nbWeek) {
+		return new Date(startDate.getTime() + (WEEK*1000)*nbWeek);
+	}
+	
 	//return the start of the week (Monday morning, 00h 00m 01s)
-	public static long getStartWeek(Date date) {
+ 	public static long getStartWeek(Date date) {
 		long current = date.getTime();
 		
 		switch(date.getDay()) {

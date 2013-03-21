@@ -1,11 +1,8 @@
 package com.pedEdt.frontEnd.client.view;
 
 import java.util.Date;
-
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.KeyPressEvent;
-import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.Window;
@@ -57,6 +54,8 @@ public class ScheduleNavigationBar extends Composite {
 				if(currentValue > 1) {
 					currentValue --;
 					myLabel.setText("Semaine " + String.valueOf(currentValue));
+					
+					MainGUI.getInstance().loadWeekGrid();
 				}
 				//else : do nothing
 			}
@@ -71,6 +70,8 @@ public class ScheduleNavigationBar extends Composite {
 				if(currentValue < nbWeek) {
 					currentValue ++;
 					myLabel.setText("Semaine " + String.valueOf(currentValue));
+					
+					MainGUI.getInstance().loadWeekGrid();
 				}
 				//else : do nothing
 			}
@@ -86,12 +87,11 @@ public class ScheduleNavigationBar extends Composite {
 				// TODO Auto-generated method stub
 				currentValue = Integer.valueOf(where.getText());
 				
-				Window.alert("Load new week");
-				
+				//Window.alert("Load new week");
+				MainGUI.getInstance().loadWeekGrid();
 			}
 		});
 		where.addKeyUpHandler(new KeyUpHandler() {
-			
 			@Override
 			public void onKeyUp(KeyUpEvent event) {
 				String str = where.getText();
@@ -100,14 +100,15 @@ public class ScheduleNavigationBar extends Composite {
 					where.removeStyleDependentName("onError");
 					go.setEnabled(false);
 				}
-				
-				if(str.matches("[0-9]*")) {
-					where.removeStyleDependentName("onError");
-					go.setEnabled(true);
-				}
 				else {
-					where.setStyleDependentName("onError", true);
-					go.setEnabled(false);
+					if(str.matches("[0-9]*")) {
+						where.removeStyleDependentName("onError");
+						go.setEnabled(true);
+					}
+					else {
+						where.setStyleDependentName("onError", true);
+						go.setEnabled(false);
+					}
 				}
 			}
 		});

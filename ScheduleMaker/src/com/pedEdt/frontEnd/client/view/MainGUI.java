@@ -40,6 +40,8 @@ public class MainGUI {
 	protected ScheduleSemesterInformation schedInfobar;
 	protected HorizontalPanel menuContentPanel;
 	
+	private Semester semester;
+	
 	//singleton
 	private static MainGUI mainGUIInstance;
 	
@@ -55,6 +57,8 @@ public class MainGUI {
 	}
 	
 	private MainGUI(Semester s) {
+		
+		this.semester = s;
 		
 		vpan = new VerticalPanel();
 		vpan.setSpacing(5);
@@ -92,10 +96,22 @@ public class MainGUI {
 		
 		RootPanel.get().add(vpan);
 		
-		//get a list of teaching which is present in the timestamp week
-		List<Teaching> myList = s.isSessionInPeriod(s.getStartDate());
+		loadWeekGrid();
+		
+		}
+
+	public Semester getSemester() {
+		return this.semester;
+	}
+	
+	public void loadWeekGrid() {
+		//TODO need to clear the grid panel before add new SessionWidget
+		schedGridPan.getDropController().removeAllSeanceWidget();
+		
+		Date date = DateUtil.addWeek(DateUtil.getDate(this.semester.getStartDate()), ScheduleNavigationBar.getInstance().getCurrentValue());
+		List<Teaching> myList = this.semester.isSessionInPeriod(date.getTime());
 		if(myList != null) {
-			//TODO put the SessionWidget with teaching in grid
+			//put the SessionWidget with teaching in grid
 			Iterator<Teaching> i = myList.iterator();
 			while(i.hasNext()) {
 				Teaching t = i.next();
@@ -103,7 +119,7 @@ public class MainGUI {
 				List<Long> l = t.getSeances();
 				for(int cpt = 0; cpt < l.size(); cpt++) {
 					if(DateUtil.inThisWeek(DateUtil.getDate(l.get(cpt)))) {
-						TeachingSeanceWidget session = new TeachingSeanceWidget(t, 
+						SeanceWidget session = new SeanceWidget(t, 
 								DateUtil.findPosH(l.get(cpt)), 
 								DateUtil.findPosV(l.get(cpt)));
 						session.setIndexSession(cpt);

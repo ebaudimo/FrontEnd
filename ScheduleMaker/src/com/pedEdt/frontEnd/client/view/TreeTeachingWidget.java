@@ -64,4 +64,10 @@ public class TreeTeachingWidget extends Label{
 		"Reste " + String.valueOf(teaching.getNbSeance() - teaching.getSeances().size()) + 
 		" seances sur " + String.valueOf(teaching.getNbSeance()));	
 	}
+
+	public int getLengthOnGrid(){
+		//TODO: compute with nbHours and nbSeances
+		return 8;
+	}
 }
+

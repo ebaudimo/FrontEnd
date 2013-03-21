@@ -21,7 +21,7 @@ public class ScheduleGridPanel extends Composite {
 		mainPan.setCellPadding(0);
 		schedGrid = new Grid();
 		schedTimeline = new GridTimeline();
-		dropController = new GridDropController(schedGrid.getDroppableArea());
+		dropController = new GridDropController(schedGrid);
 		gridDaysHdr = new GridDaysHeader();
 		initWidget(mainPan);
 		mainPan.setWidget(0, 1, gridDaysHdr);
@@ -40,9 +40,10 @@ public class ScheduleGridPanel extends Composite {
 		return dropController;
 	}
 
+	/*
 	public void addWidget(Widget child, int col, int row) {
 		mainPan.setWidget(row, col, child);
 	}
-	
+	*/
 }
 

@@ -299,6 +299,15 @@ a:visited {
 /*           added                      */
 /* ************************************ */
 
+.center{
+	margin: auto;
+}
+.application-title{
+	text-align: center;
+    font-family: arial;
+    font-size: 25px;
+}
+
 .major-time-interval {
         display: block;
         height: 9px;
@@ -385,7 +394,6 @@ a:visited {
         position: absolute;
         font-size: 10px;
         font-family: arial;
-        /*border: 1px solid #000;*/
         overflow: hidden;
         /*filter: alpha(opacity = 80);
         opacity: .8;
@@ -400,7 +408,16 @@ a:visited {
 	background:Silver;
 	font-size: 10px;
     font-family: arial;
-	border-bottom: 1px solid #000000
+/* 	border-bottom: 1px solid #000000 */
+}
+.teaching-cell-body{
+	font-size: 10px;
+	text-align : center;
+    font-family: arial;
+    font-style: italic;
+    filter: alpha(opacity = 80);
+    opacity: .8;
+    -moz-opacity: .8;
 }
 
 .hour-label {
