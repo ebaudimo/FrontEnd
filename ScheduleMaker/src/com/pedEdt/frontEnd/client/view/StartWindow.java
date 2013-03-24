@@ -65,7 +65,7 @@ public class StartWindow extends PopupPanel {
 		}));
 	}
 
- 	private void buildSemesterList(/*final ListBox myListBox,*/ final VerticalPanel parent) {
+ 	private void buildSemesterList(final VerticalPanel parent) {
 
 		final ListBox myListBox = new ListBox();
 
@@ -208,6 +208,5 @@ public class StartWindow extends PopupPanel {
 			e.printStackTrace();
 		}	
 	} //end searchSemester
-
 
 }

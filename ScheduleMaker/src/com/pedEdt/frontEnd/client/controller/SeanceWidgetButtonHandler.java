@@ -16,6 +16,8 @@ public class SeanceWidgetButtonHandler implements ClickHandler {
 	public void onClick(ClickEvent event) {
 		widget.setRemoved();
 		widget.removeFromParent();
+		
+		//TODO: find in the tree the teaching and put remove one session of the seances list
 	}
 
 }

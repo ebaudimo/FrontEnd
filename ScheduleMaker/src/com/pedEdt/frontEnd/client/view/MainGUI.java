@@ -14,8 +14,6 @@
  *******************************************************************************/
 package com.pedEdt.frontEnd.client.view;
 
-import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -115,6 +113,7 @@ public class MainGUI {
 								DateUtil.findPosH(DateUtil.getDate(teaching.getSeances().get(cpt))), 
 								DateUtil.findPosV(DateUtil.getDate(teaching.getSeances().get(cpt))));
 						session.setIndexSession(cpt);
+						//TODO : ici le posH et posV sont correct
 						schedGridPan.getDropController().addTeachingSeanceWidget(session);
 					}
 				}

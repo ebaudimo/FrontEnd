@@ -26,7 +26,7 @@ public class TreeTeachingWidget extends Label{
 		final Widget sender = this;
 		tooltip = new TooltipListener(
 				"Teacher : " + teaching.getTeacher() + "<br/>" +
-				"Groupe : " + String.valueOf(teaching.getNumGroup()) + "<br/>" +
+				//"Groupe : " + String.valueOf(teaching.getNumGroup()) + "<br/>" +
 				"Reste " + String.valueOf(teaching.getNbSeance() - teaching.getSeances().size()) + " seances sur " + String.valueOf(teaching.getNbSeance()),
 				5000);
 		
@@ -58,9 +58,24 @@ public class TreeTeachingWidget extends Label{
 		return teaching;
 	}
 
+	public void updateTreeTeaching(Teaching newTeaching) {
+		this.teaching = newTeaching;
+		if(this.teaching.getSeances().size() == this.teaching.getNbSeance()) { //all session is affected
+			ScheduleDragController.getInstance().makeNotDraggable(this);
+			this.setStyleName("teachingNotEnable");
+		}
+		else {
+			ScheduleDragController.getInstance().makeDraggable(this);
+			this.removeStyleName("teachingNotEnable");
+		}
+		
+		updateTooltip();
+		
+	}
+	
 	public void updateTooltip() {
 		tooltip.setText("Teacher : " + teaching.getTeacher() + "<br/>" +
-		"Groupe : " + String.valueOf(teaching.getNumGroup()) + "<br/>" +
+		//"Groupe : " + String.valueOf(teaching.getNumGroup()) + "<br/>" +
 		"Reste " + String.valueOf(teaching.getNbSeance() - teaching.getSeances().size()) + 
 		" seances sur " + String.valueOf(teaching.getNbSeance()));	
 	}

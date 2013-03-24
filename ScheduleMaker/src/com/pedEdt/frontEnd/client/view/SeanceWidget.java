@@ -35,6 +35,8 @@ public class SeanceWidget extends Composite {
 		this.teaching = teaching;
 		this.posH = posH;
 		this.posV = posV;
+		
+		this.indexSession = -1;
 
 		mainPanel = new VerticalPanel();
 		
@@ -48,7 +50,7 @@ public class SeanceWidget extends Composite {
 		headerLabel.setHorizontalAlignment(Label.ALIGN_CENTER);
 		headerLabel.setStyleName("teaching-cell-header");
 		
-		headerCloseButton = new Button("x", new SeanceWidgetButtonHandler(this));
+		headerCloseButton = new Button("X", new SeanceWidgetButtonHandler(this));
 		headerCloseButton.setHeight("15px");
 		headerCloseButton.setStyleName("teaching-cell-header");
 		headerPanel.add(headerLabel);

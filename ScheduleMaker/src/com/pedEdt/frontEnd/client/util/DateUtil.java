@@ -120,7 +120,7 @@ public class DateUtil {
 	public static boolean inThisWeek(Date search) {
 		ScheduleNavigationBar navBar = ScheduleNavigationBar.getInstance();
 		
-		Date navigation = new Date(navBar.getStart() * navBar.getCurrentValue());
+		Date navigation = new Date(navBar.getStart() + WEEK * (navBar.getCurrentValue()-1));
 		
 		Date startWeek = new Date(getStartWeek(navigation));
 		Date endWeek = new Date(getEndWeek(navigation));

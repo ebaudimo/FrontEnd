@@ -60,7 +60,7 @@ public class ScheduleNavigationBar extends Composite {
 			}
 		}));
 		
-		myLabel = new Label("Semaine " + String.valueOf(currentValue));
+		myLabel = new Label("Semaine " + String.valueOf(this.currentValue));
 		navPanel.add(myLabel);
 		
 		navPanel.add(new Button("Suivant", new ClickHandler() {
@@ -80,10 +80,7 @@ public class ScheduleNavigationBar extends Composite {
 		final TextBox where = new TextBox();
 		where.setStyleName("textbox");
 		final Button go = new Button("GO", new ClickHandler() {
-			
-			@Override
 			public void onClick(ClickEvent event) {
-				// TODO Auto-generated method stub
 				currentValue = Integer.valueOf(where.getText());
 				
 				//Window.alert("Load new week");
@@ -119,7 +116,7 @@ public class ScheduleNavigationBar extends Composite {
 	}
 
 	public int getCurrentValue() {
-		return currentValue;
+		return this.currentValue;
 	}
 
 	public void setCurrentValue(int currentValue) {

@@ -44,7 +44,6 @@ public class GridDropController extends AbsolutePositionDropController{
 		return posV;
 	}
 	
-	
 	public void onDrop(final DragContext context){
 
 		//get the top and left position and the widget
@@ -71,7 +70,11 @@ public class GridDropController extends AbsolutePositionDropController{
 		widget.setPosV(posV);
 		widget.setPosH(posH);
 		
-		DateController.getInstance().linkDateToSeanceWidget(widget, posH, posV);
+		//TODO: need to find a way to update the semester object (update the teaching of the semester object)
+		new DateController().linkDateToSeanceWidget(widget, posH, posV);
+		if(context.draggable instanceof TreeTeachingWidget) {
+			((TreeTeachingWidget) context.draggable).updateTreeTeaching(widget.getTeaching());
+		}
 		
 		swManager.addSeance(widget);
 		swManager.doPositionning();
