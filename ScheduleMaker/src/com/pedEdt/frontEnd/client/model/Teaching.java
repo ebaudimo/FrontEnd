@@ -36,7 +36,7 @@ public class Teaching implements java.io.Serializable {
 	
 	
 	public Teaching() {
-		seances = new ArrayList<Long>();
+		
 	}
 	
 	public Teaching(TeachingType type, String teacher, int nbHour, int nbSeance, int numGroup, List<Long> seances) {

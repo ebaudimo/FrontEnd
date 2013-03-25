@@ -22,12 +22,12 @@ public class Module implements java.io.Serializable {
 	
 	private String title;
 	
-	private List<Teaching> teachings;
+	private List<Teaching> teachings = new ArrayList<Teaching>();
 	
 	
 
 	public Module() {
-		teachings = new ArrayList<Teaching>();
+		
 	}
 
 	public Module(String code, String title, List<Teaching> teachings) {

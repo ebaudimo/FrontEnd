@@ -26,7 +26,7 @@ public class Semester implements java.io.Serializable {
 	
 	private long endDate;
 
-	private List<TeachingUnit> teachingUnits;
+	private List<TeachingUnit> teachingUnits = new ArrayList<TeachingUnit>();
 
 
 

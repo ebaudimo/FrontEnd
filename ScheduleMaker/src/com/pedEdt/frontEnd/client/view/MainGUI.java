@@ -59,7 +59,7 @@ public class MainGUI {
 		vpan.setSpacing(5);
 		hpan = new HorizontalPanel();
 		hpan.setSpacing(5);
-		schedMenubar = new ScheduleMenuBar();
+		schedMenubar = new ScheduleMenuBar(s);
 		schedGridPan = new ScheduleGridPanel();
 		
 		ScheduleDragController.createInstance(schedGridPan.schedGrid.getDroppableArea(), false);

@@ -22,12 +22,12 @@ public class TeachingUnit implements java.io.Serializable {
 	
 	private String title;
 	
-	private List<Module> modules;
+	private List<Module> modules = new ArrayList<Module>();
 	
 	
 
 	public TeachingUnit() {
-		modules = new ArrayList<Module>();
+		
 	}
 
 	public TeachingUnit(String code, String title, List<Module> modules) {

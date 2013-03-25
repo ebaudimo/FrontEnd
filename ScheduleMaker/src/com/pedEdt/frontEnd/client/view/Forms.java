@@ -17,11 +17,11 @@ import com.google.gwt.user.client.ui.FormPanel.SubmitEvent;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DatePicker;
+import com.pedEdt.frontEnd.client.controller.ServerCommunication;
 import com.pedEdt.frontEnd.client.model.Module;
 import com.pedEdt.frontEnd.client.model.Semester;
 import com.pedEdt.frontEnd.client.model.Teaching;
@@ -150,8 +150,7 @@ public class Forms {
 									semester.setStartDate(dateStart.getTime() / 1000);
 									semester.setEndDate(dateEnd.getTime() / 1000);
 
-									Window.alert(Semester.toXML.toXml(semester));
-									//ServerCommunication.getInstance().createSemester(semester);
+									ServerCommunication.getInstance().createSemester(semester);
 									popupPanel.hide();
 								} else {
 									Window.alert("Date de fin incorrecte.");
@@ -307,8 +306,7 @@ public class Forms {
 										semester.setStartDate(dateStart.getTime() / 1000);
 										semester.setEndDate(dateEnd.getTime() / 1000);
 
-										Window.alert(Semester.toXML.toXml(semester));
-										//ServerCommunication.getInstance().updateSemester(semester);
+										ServerCommunication.getInstance().updateSemester(semester);
 										popupPanel.hide();
 								} else {
 									Window.alert("Date de fin incorrecte.");
@@ -399,8 +397,7 @@ public class Forms {
 					teachingUnit.setCode(code.getText().trim());
 					teachingUnit.setTitle(title.getText().trim());
 
-					Window.alert(TeachingUnit.toXML.toXml(teachingUnit));
-					//ServerCommunication.getInstance().createTeachingUnit(semester.getId(), teachingUnit);
+					ServerCommunication.getInstance().createTeachingUnit(semester.getId(), teachingUnit);
 					popupPanel.hide();
 				} else {
 					Window.alert("Vous devez remplir tous les champs.");
@@ -472,8 +469,7 @@ public class Forms {
 					teachingUnit.setCode(code.getText().trim());
 					teachingUnit.setTitle(title.getText().trim());
 
-					Window.alert(TeachingUnit.toXML.toXml(teachingUnit));
-					//ServerCommunication.getInstance().updateTeachingUnit(teachingUnit);
+					ServerCommunication.getInstance().updateTeachingUnit(teachingUnit);
 					popupPanel.hide();
 				} else {
 					Window.alert("Vous devez remplir tous les champs.");
@@ -544,8 +540,7 @@ public class Forms {
 					module.setCode(code.getText().trim());
 					module.setTitle(title.getText().trim());
 
-					Window.alert(Module.toXML.toXml(module));
-					//ServerCommunication.getInstance().createModule(teachingUnit.getId(), module);
+					ServerCommunication.getInstance().createModule(teachingUnit.getId(), module);
 					popupPanel.hide();
 				} else {
 					Window.alert("Vous devez remplir tous les champs.");
@@ -617,8 +612,7 @@ public class Forms {
 					module.setCode(code.getText().trim());
 					module.setTitle(title.getText().trim());
 	
-					Window.alert(Module.toXML.toXml(module));
-					//ServerCommunication.getInstance().updateModule(module);
+					ServerCommunication.getInstance().updateModule(module);
 					popupPanel.hide();
 				} else {
 					Window.alert("Vous devez remplir tous les champs.");
@@ -728,8 +722,7 @@ public class Forms {
 					teaching.setNbSeance(Integer.parseInt(nbSeance.getText().trim()));
 					teaching.setNumGroup(Integer.parseInt(numGroup.getText().trim()));
 
-					Window.alert(Teaching.toXML.toXml(teaching));
-					//ServerCommunication.getInstance().createTeaching(module.getId(), teaching);
+					ServerCommunication.getInstance().createTeaching(module.getId(), teaching);
 					popupPanel.hide();
 				} else {
 					Window.alert("Vous devez remplir tous les champs.");
@@ -845,8 +838,7 @@ public class Forms {
 					teaching.setNbSeance(Integer.parseInt(nbSeance.getText().trim()));
 					teaching.setNumGroup(Integer.parseInt(numGroup.getText().trim()));
 
-					Window.alert(Teaching.toXML.toXml(teaching));
-					//ServerCommunication.getInstance().updateTeaching(teaching);
+					ServerCommunication.getInstance().updateTeaching(teaching);
 					popupPanel.hide();
 				} else {
 					Window.alert("Vous devez remplir tous les champs.");
