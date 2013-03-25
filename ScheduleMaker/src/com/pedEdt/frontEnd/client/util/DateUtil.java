@@ -9,6 +9,7 @@ public class DateUtil {
 	public static long WEEK = 604800000;
 	public static long DAY = 86400000;
 	public static long HOUR = 3600000;
+	public static long TEN_MINUTES = 600000;
 	
 	public static Date getDate(long fromBD) {
 		return new Date(fromBD * 1000); // for milliseconds
@@ -17,6 +18,11 @@ public class DateUtil {
 	public static long setDateToDB(Date date) {
 		Long l = date.getTime();
 		String tmp = l.toString().substring(0, l.toString().length()-3);
+		return Long.valueOf(tmp);
+	}
+	
+	public static long setDateToDB(Long date) {
+		String tmp = date.toString().substring(0, date.toString().length()-3);
 		return Long.valueOf(tmp);
 	}
 	
@@ -148,9 +154,10 @@ public class DateUtil {
 	public static long computeNewDate(int posH, int posV) {
 		ScheduleNavigationBar navBar = ScheduleNavigationBar.getInstance();
 		
-		Date start = getDate(navBar.getStart());	
+		Date start = new Date(navBar.getStart());
 		int diff = (posH + 1) - start.getDay();
-		long currentDate = navBar.getStart() + WEEK * navBar.getCurrentValue() + diff * DAY + posV * 600;
+		
+		long currentDate = navBar.getStart() + WEEK * (navBar.getCurrentValue()-1) + diff * DAY + (HOUR * 8 + posV * TEN_MINUTES);
 		return currentDate;
 	}
 

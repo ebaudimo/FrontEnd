@@ -1,27 +1,33 @@
 package com.pedEdt.frontEnd.client.view;
 
-import com.google.gwt.user.client.ui.Label;
-import com.pedEdt.frontEnd.client.controller.ScheduleDragController;
-import com.pedEdt.frontEnd.client.model.Teaching;
-
-//for the tooltip events
-import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.event.dom.client.ContextMenuEvent;
-import com.google.gwt.event.dom.client.ContextMenuHandler;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Widget;
+import com.pedEdt.frontEnd.client.controller.ScheduleDragController;
+import com.pedEdt.frontEnd.client.model.Teaching;
+//for the tooltip events
 
 public class TreeTeachingWidget extends Label{
 	
 	protected Teaching teaching;
 	protected TooltipListener tooltip;
 	
-	public TreeTeachingWidget(Teaching teaching){
+	public TreeTeachingWidget(final Teaching teaching){
 		super(teaching.getTeacher() + " " + String.valueOf(teaching.getType()));
 		ScheduleDragController.getInstance().makeDraggable(this);
+		ScheduleDragController.getInstance().setBehaviorDragStartSensitivity(1);
 		this.teaching = teaching;
+		
+		addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				ScheduleMenuBar.updateToTeachingOptions(teaching);
+			}
+		});
 		
 		final Widget sender = this;
 		tooltip = new TooltipListener(
@@ -44,13 +50,13 @@ public class TreeTeachingWidget extends Label{
 		});
 		
 		
-		final ContextMenu contextMenu = new ContextMenu(this);
-		this.addDomHandler(new ContextMenuHandler() {
-			public void onContextMenu(ContextMenuEvent event) {
-				event.preventDefault();
-				contextMenu.showMenu();
-			}
-		}, ContextMenuEvent.getType());
+//		final ContextMenu contextMenu = new ContextMenu(this);
+//		this.addDomHandler(new ContextMenuHandler() {
+//			public void onContextMenu(ContextMenuEvent event) {
+//				event.preventDefault();
+//				contextMenu.showMenu();
+//			}
+//		}, ContextMenuEvent.getType());
 		
 	}
 	

@@ -35,7 +35,7 @@ public class MainGUI {
 	protected ScheduleSemesterInformation schedInfobar;
 	protected HorizontalPanel menuContentPanel;
 	
-	private Semester semester;
+	public static Semester semester;
 	
 	//singleton
 	private static MainGUI mainGUIInstance;
@@ -52,6 +52,8 @@ public class MainGUI {
 	}
 	
 	private MainGUI(Semester s) {
+		
+		RootPanel.get().clear();
 		
 		this.semester = s;
 		
@@ -92,8 +94,7 @@ public class MainGUI {
 		RootPanel.get().add(vpan);
 		
 		loadWeekGrid();
-		
-		}
+	}
 
 	public Semester getSemester() {
 		return this.semester;
@@ -118,26 +119,14 @@ public class MainGUI {
 				}
 			}
 		}
-		
-//		Date date = DateUtil.addWeek(DateUtil.getDate(this.semester.getStartDate()), ScheduleNavigationBar.getInstance().getCurrentValue());
-//		List<Teaching> myList = this.semester.isSessionInWeek(date.getTime());
-//		if(myList != null) {
-//			//put the SessionWidget with teaching in grid
-//			Iterator<Teaching> i = myList.iterator();
-//			while(i.hasNext()) {
-//				Teaching t = i.next();
-//
-//				List<Long> l = t.getSeances();
-//				for(int cpt = 0; cpt < l.size(); cpt++) {
-//					if(DateUtil.inThisWeek(DateUtil.getDate(l.get(cpt)))) {
-//						SeanceWidget session = new SeanceWidget(t, 
-//								DateUtil.findPosH(DateUtil.getDate(l.get(cpt))), 
-//								DateUtil.findPosV(DateUtil.getDate(l.get(cpt))));
-//						session.setIndexSession(cpt);
-//						schedGridPan.getDropController().addTeachingSeanceWidget(session);
-//					}
-//				}
-//			}
-//		}
 	}
+	
+	public static void refresh(Semester semester) {
+		mainGUIInstance = new MainGUI(semester);
+	}
+
+	public void reloadTree() {
+		this.schedTree.rebuildTree(this.semester);
+	}
+	
 }
