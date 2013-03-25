@@ -13,6 +13,8 @@ import com.pedEdt.frontEnd.client.model.TeachingUnit;
 
 public final class ServerCommunication {
 
+	public final static String SERVERURL = "http://localhost:8080/rest/service/";
+	
 	private static ServerCommunication instance = null;
 	private static RequestBuilder builder;
 	
@@ -36,11 +38,10 @@ public final class ServerCommunication {
 	/* Semester */
 
 	public void createSemester(Semester semester) {
-		builder = new RequestBuilder(RequestBuilder.POST, "proxy.jsp?url=http://localhost:8080/rest/service/create/semester");
-		builder.setHeader("Content-type", "application/xml");
-		builder.setRequestData(Semester.toXML.toXml(semester));
+		builder = new RequestBuilder(RequestBuilder.POST, SERVERURL + "create/semester");
+		builder.setHeader("Content-Type", "application/xml");
 		try {
-			builder.sendRequest(null, new RequestCallback() {
+			builder.sendRequest(Semester.toXML.toXml(semester), new RequestCallback() {
 				public void onError(Request request, Throwable exception) {
 					Window.alert("Erreur lors de la creation du semestre.");
 				}
@@ -57,11 +58,10 @@ public final class ServerCommunication {
 	}
 	
 	public void updateSemester(Semester semester) {
-		builder = new RequestBuilder(RequestBuilder.POST, "proxy.jsp?url=http://localhost:8080/rest/service/update/semester");
-		builder.setHeader("Content-type", "application/xml");
-		builder.setRequestData(Semester.toXML.toXml(semester));
+		builder = new RequestBuilder(RequestBuilder.POST, SERVERURL + "update/semester");
+		builder.setHeader("Content-Type", "application/xml");
 		try {
-			builder.sendRequest(null, new RequestCallback() {
+			builder.sendRequest(Semester.toXML.toXml(semester), new RequestCallback() {
 				public void onError(Request request, Throwable exception) {
 					Window.alert("Erreur lors de la modification du semestre.");
 				}
@@ -77,8 +77,8 @@ public final class ServerCommunication {
 		}
 	}
 	
-	public void deleteSemester(int id) {
-		builder = new RequestBuilder(RequestBuilder.GET, "proxy.jsp?url=http://localhost:8080/rest/service/delete/semester/" + id);
+	public void deleteSemester(int id_semester) {
+		builder = new RequestBuilder(RequestBuilder.GET, SERVERURL + "delete/semester/" + id_semester);
 		try {
 			builder.sendRequest(null, new RequestCallback() {
 				public void onError(Request request, Throwable exception) {
@@ -101,11 +101,10 @@ public final class ServerCommunication {
 	/* TeachingUnit */
 
 	public void createTeachingUnit(int id_semester, TeachingUnit teachingUnit) {
-		builder = new RequestBuilder(RequestBuilder.POST, "proxy.jsp?url=http://localhost:8080/rest/service/create/teachingUnit/" + id_semester);
-		builder.setHeader("Content-type", "application/xml");
-		builder.setRequestData(TeachingUnit.toXML.toXml(teachingUnit));
+		builder = new RequestBuilder(RequestBuilder.POST, SERVERURL + "create/teachingUnit/" + id_semester);
+		builder.setHeader("Content-Type", "application/xml");
 		try {
-			builder.sendRequest(null, new RequestCallback() {
+			builder.sendRequest(TeachingUnit.toXML.toXml(teachingUnit), new RequestCallback() {
 				public void onError(Request request, Throwable exception) {
 					Window.alert("Erreur lors de la creation du TeachingUnit.");
 				}
@@ -122,11 +121,10 @@ public final class ServerCommunication {
 	}
 	
 	public void updateTeachingUnit(TeachingUnit teachingUnit) {
-		builder = new RequestBuilder(RequestBuilder.POST, "proxy.jsp?url=http://localhost:8080/rest/service/update/teachingUnit");
-		builder.setHeader("Content-type", "application/xml");
-		builder.setRequestData(TeachingUnit.toXML.toXml(teachingUnit));
+		builder = new RequestBuilder(RequestBuilder.POST, SERVERURL + "update/teachingUnit");
+		builder.setHeader("Content-Type", "application/xml");
 		try {
-			builder.sendRequest(null, new RequestCallback() {
+			builder.sendRequest(TeachingUnit.toXML.toXml(teachingUnit), new RequestCallback() {
 				public void onError(Request request, Throwable exception) {
 					Window.alert("Erreur lors de la modification du TeachingUnit.");
 				}
@@ -142,8 +140,8 @@ public final class ServerCommunication {
 		}
 	}
 	
-	public void deleteTeachingUnit(int id) {
-		builder = new RequestBuilder(RequestBuilder.GET, "proxy.jsp?url=http://localhost:8080/rest/service/delete/teachingUnit/" + id);
+	public void deleteTeachingUnit(int id_teachingUnit) {
+		builder = new RequestBuilder(RequestBuilder.GET, SERVERURL + "delete/teachingUnit/" + id_teachingUnit);
 		try {
 			builder.sendRequest(null, new RequestCallback() {
 				public void onError(Request request, Throwable exception) {
@@ -166,11 +164,10 @@ public final class ServerCommunication {
 	/* Module */
 
 	public void createModule(int id_teachingUnit, Module module) {
-		builder = new RequestBuilder(RequestBuilder.POST, "proxy.jsp?url=http://localhost:8080/rest/service/create/module/" + id_teachingUnit);
-		builder.setHeader("Content-type", "application/xml");
-		builder.setRequestData(Module.toXML.toXml(module));
+		builder = new RequestBuilder(RequestBuilder.POST, SERVERURL + "create/module/" + id_teachingUnit);
+		builder.setHeader("Content-Type", "application/xml");
 		try {
-			builder.sendRequest(null, new RequestCallback() {
+			builder.sendRequest(Module.toXML.toXml(module), new RequestCallback() {
 				public void onError(Request request, Throwable exception) {
 					Window.alert("Erreur lors de la creation du Module.");
 				}
@@ -187,11 +184,10 @@ public final class ServerCommunication {
 	}
 	
 	public void updateModule(Module module) {
-		builder = new RequestBuilder(RequestBuilder.POST, "proxy.jsp?url=http://localhost:8080/rest/service/update/module");
-		builder.setHeader("Content-type", "application/xml");
-		builder.setRequestData(Module.toXML.toXml(module));
+		builder = new RequestBuilder(RequestBuilder.POST, SERVERURL + "update/module");
+		builder.setHeader("Content-Type", "application/xml");
 		try {
-			builder.sendRequest(null, new RequestCallback() {
+			builder.sendRequest(Module.toXML.toXml(module), new RequestCallback() {
 				public void onError(Request request, Throwable exception) {
 					Window.alert("Erreur lors de la modification du Module.");
 				}
@@ -207,8 +203,8 @@ public final class ServerCommunication {
 		}
 	}
 	
-	public void deleteModule(int id) {
-		builder = new RequestBuilder(RequestBuilder.GET, "proxy.jsp?url=http://localhost:8080/rest/service/delete/module/" + id);
+	public void deleteModule(int id_module) {
+		builder = new RequestBuilder(RequestBuilder.GET, SERVERURL + "delete/module/" + id_module);
 		try {
 			builder.sendRequest(null, new RequestCallback() {
 				public void onError(Request request, Throwable exception) {
@@ -231,11 +227,10 @@ public final class ServerCommunication {
 	/* Teaching */
 
 	public void createTeaching(int id_module, Teaching teaching) {
-		builder = new RequestBuilder(RequestBuilder.POST, "proxy.jsp?url=http://localhost:8080/rest/service/create/teaching/" + id_module);
-		builder.setHeader("Content-type", "application/xml");
-		builder.setRequestData(Teaching.toXML.toXml(teaching));
+		builder = new RequestBuilder(RequestBuilder.POST, SERVERURL + "create/teaching/" + id_module);
+		builder.setHeader("Content-Type", "application/xml");
 		try {
-			builder.sendRequest(null, new RequestCallback() {
+			builder.sendRequest(Teaching.toXML.toXml(teaching), new RequestCallback() {
 				public void onError(Request request, Throwable exception) {
 					Window.alert("Erreur lors de la creation du Teaching.");
 				}
@@ -252,11 +247,10 @@ public final class ServerCommunication {
 	}
 	
 	public void updateTeaching(Teaching teaching) {
-		builder = new RequestBuilder(RequestBuilder.POST, "proxy.jsp?url=http://localhost:8080/rest/service/update/teaching");
-		builder.setHeader("Content-type", "application/xml");
-		builder.setRequestData(Teaching.toXML.toXml(teaching));
+		builder = new RequestBuilder(RequestBuilder.POST, SERVERURL + "update/teaching");
+		builder.setHeader("Content-Type", "application/xml");
 		try {
-			builder.sendRequest(null, new RequestCallback() {
+			builder.sendRequest(Teaching.toXML.toXml(teaching), new RequestCallback() {
 				public void onError(Request request, Throwable exception) {
 					Window.alert("Erreur lors de la modification du Teaching.");
 				}
@@ -272,8 +266,8 @@ public final class ServerCommunication {
 		}
 	}
 	
-	public void deleteTeaching(int id) {
-		builder = new RequestBuilder(RequestBuilder.GET, "proxy.jsp?url=http://localhost:8080/rest/service/delete/teaching/" + id);
+	public void deleteTeaching(int id_teaching) {
+		builder = new RequestBuilder(RequestBuilder.GET, SERVERURL + "delete/teaching/" + id_teaching);
 		try {
 			builder.sendRequest(null, new RequestCallback() {
 				public void onError(Request request, Throwable exception) {
@@ -295,12 +289,11 @@ public final class ServerCommunication {
 	
 	/* TeachingSceance */
 
-	public void createTeachingSceance(int idTeaching, long date) {
-		builder = new RequestBuilder(RequestBuilder.POST, "proxy.jsp?url=http://localhost:8080/rest/service/create/teachingSeance/" + idTeaching);
-		builder.setHeader("Content-type", "application/xml");
-		builder.setRequestData("" + date);
+	public void createTeachingSceance(int id_teaching, long date) {
+		builder = new RequestBuilder(RequestBuilder.POST, SERVERURL + "create/teachingSeance/" + id_teaching);
+		builder.setHeader("Content-Type", "application/xml");
 		try {
-			builder.sendRequest(null, new RequestCallback() {
+			builder.sendRequest("" + date, new RequestCallback() {
 				public void onError(Request request, Throwable exception) {
 					Window.alert("Erreur lors de la creation de la TeachingSeance.");
 				}
@@ -316,12 +309,11 @@ public final class ServerCommunication {
 		}
 	}
 	
-	public void updateTeachingSeance(int idTeaching, long oldDate, long newDate) {
-		builder = new RequestBuilder(RequestBuilder.POST, "proxy.jsp?url=http://localhost:8080/rest/service/update/teachingSeance/" + idTeaching);
-		builder.setHeader("Content-type", "application/xml");
-		builder.setRequestData(oldDate + "," + newDate);
+	public void updateTeachingSeance(int id_teaching, long oldDate, long newDate) {
+		builder = new RequestBuilder(RequestBuilder.POST, SERVERURL + "update/teachingSeance/" + id_teaching);
+		builder.setHeader("Content-Type", "application/xml");
 		try {
-			builder.sendRequest(null, new RequestCallback() {
+			builder.sendRequest(oldDate + "," + newDate, new RequestCallback() {
 				public void onError(Request request, Throwable exception) {
 					Window.alert("Erreur lors de la modification de la TeachingSeance.");
 				}
@@ -337,12 +329,11 @@ public final class ServerCommunication {
 		}
 	}
 	
-	public void deleteTeachingSeance(int idTeaching, long date) {
-		builder = new RequestBuilder(RequestBuilder.GET, "proxy.jsp?url=http://localhost:8080/rest/service/delete/teachingSeance/" + idTeaching);
-		builder.setHeader("Content-type", "application/xml");
-		builder.setRequestData("" + date);
+	public void deleteTeachingSeance(int id_teaching, long date) {
+		builder = new RequestBuilder(RequestBuilder.POST, SERVERURL + "delete/teachingSeance/" + id_teaching);
+		builder.setHeader("Content-Type", "application/xml");
 		try {
-			builder.sendRequest(null, new RequestCallback() {
+			builder.sendRequest("" + date, new RequestCallback() {
 				public void onError(Request request, Throwable exception) {
 					Window.alert("Erreur lors de la suppression de la TeachingSeance.");
 				}

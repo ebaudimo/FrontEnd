@@ -1,7 +1,8 @@
 package com.pedEdt.frontEnd.client.view;
 
-import com.google.gwt.event.dom.client.ContextMenuEvent;
-import com.google.gwt.event.dom.client.ContextMenuHandler;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.pedEdt.frontEnd.client.model.Module;
 import com.pedEdt.frontEnd.client.model.TeachingUnit;
@@ -10,10 +11,18 @@ public class TreeTeachingUnitWidget extends TreeItem{
 	
 	protected TeachingUnit teachingUnit;
 	
-	@SuppressWarnings("deprecation")
-	public TreeTeachingUnitWidget(TeachingUnit teachingUnit){
-		super(teachingUnit.getTitle()+" ("+teachingUnit.getCode()+")");
+	public TreeTeachingUnitWidget(final TeachingUnit teachingUnit){
+//		super(this.teachingUnit.getTitle() + " (" + this.teachingUnit.getCode() + ")");
 		this.teachingUnit = teachingUnit;
+		Label label = new Label(this.teachingUnit.getTitle() + " (" + this.teachingUnit.getCode() + ")");
+		label.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				ScheduleMenuBar.updateToTeachingUnitOptions(teachingUnit);
+			}
+		});
+		setWidget(label);
 		
 		/*
 		final ContextMenu contextMenu = new ContextMenu(this);
