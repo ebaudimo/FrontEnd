@@ -1,7 +1,6 @@
 package com.pedEdt.frontEnd.client.controller;
 
 import com.pedEdt.frontEnd.client.util.DateUtil;
-import com.pedEdt.frontEnd.client.view.ScheduleNavigationBar;
 import com.pedEdt.frontEnd.client.view.SeanceWidget;
 
 public class DateController {
@@ -16,7 +15,7 @@ public class DateController {
 			widget.getTeaching().removeSeanceByIndex(widget.getIndexSession());
 		
 		int index = widget.getTeaching().addSeance(newDate);
-		
+		//TODO verifier le long : millisecond ou second ? 
 		//ServerCommunication.getInstance().updateTeaching(widget.getTeaching());
 		widget.setIndexSession(index);
 	}

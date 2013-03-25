@@ -1,6 +1,7 @@
 package com.pedEdt.frontEnd.client.util;
 
 import java.util.Date;
+
 import com.pedEdt.frontEnd.client.view.ScheduleNavigationBar;
 
 public class DateUtil {
@@ -13,11 +14,17 @@ public class DateUtil {
 		return new Date(fromBD * 1000); // for milliseconds
 	}
 	
+	public static long setDateToDB(Date date) {
+		Long l = date.getTime();
+		String tmp = l.toString().substring(0, l.toString().length()-3);
+		return Long.valueOf(tmp);
+	}
+	
 	public static Date addWeek(Date startDate, int nbWeek) {
 		return new Date(startDate.getTime() + WEEK * nbWeek);
 	}
 	
-	//return the start of the week (Monday morning, 00h 00m etc.)
+	//return the start of the week (Monday morning)
  	public static long getStartWeek(Date date) {
 		long current = date.getTime();
 		

@@ -59,10 +59,10 @@ public class TreeTeachingWidget extends Label{
 	}
 
 	public void updateTreeTeaching(Teaching newTeaching) {
-		this.teaching = newTeaching;
+		//this.teaching = newTeaching;
 		if(this.teaching.getSeances().size() == this.teaching.getNbSeance()) { //all session is affected
 			ScheduleDragController.getInstance().makeNotDraggable(this);
-			this.setStyleName("teachingNotEnable");
+			this.setStyleName("teachi ngNotEnable");
 		}
 		else {
 			ScheduleDragController.getInstance().makeDraggable(this);

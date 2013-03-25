@@ -17,6 +17,7 @@ import com.google.gwt.user.client.ui.FormPanel.SubmitEvent;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -30,7 +31,7 @@ import com.pedEdt.frontEnd.client.model.TeachingUnit;
 public class Forms {
 
 	public static PopupPanel popupCreateSemester() {
-
+		
 		final PopupPanel popupPanel = new PopupPanel(false, true);
 
 		final FormPanel form = new FormPanel();
@@ -102,8 +103,6 @@ public class Forms {
 		
 		//submit
 		Button submitButton = new Button("Valider", new ClickHandler() {
-
-			@Override
 			public void onClick(ClickEvent event) {
 				form.submit();
 			}
@@ -111,10 +110,11 @@ public class Forms {
 		
 		//cancel
 		Button cancelButton = new Button("Annuler", new ClickHandler() {
-			
-			@Override
 			public void onClick(ClickEvent event) {
 				popupPanel.hide();
+				/*if(parent != null) {
+					parent.show();
+				}*/
 			}
 		});
 
