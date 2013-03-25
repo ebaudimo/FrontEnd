@@ -97,10 +97,8 @@ public class StartWindow extends PopupPanel {
 													DateUtil.getDate(s.getStartDate()), 
 													DateUtil.getDate(s.getEndDate()))) {
 									buildGoSemesterButton(parent, String.valueOf(s.getId()));
-								}
-								
+								}	
 							}
-
 							parent.add(myListBox);
 							buildLoadButton(parent, myListBox);
 						}						

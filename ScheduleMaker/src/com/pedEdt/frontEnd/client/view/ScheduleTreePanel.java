@@ -22,8 +22,10 @@ public class ScheduleTreePanel extends Composite {
 		scrollPanel.setStylePrimaryName("scroll-area");
 	}
 	
-	public void clearTree() {
-		scrollPanel.clear();
+	public void rebuildTree(Semester semester) {
+		scrollPanel.remove(semesterTree);
+		semesterTree = new TreeSemesterWidget(semester);
+		semesterTree.createTree();
+		scrollPanel.add(semesterTree);
 	}
-
 }

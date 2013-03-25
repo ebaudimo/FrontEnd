@@ -14,7 +14,7 @@ public class DateController {
 		if(widget.getIndexSession() != -1) //if it is not a new SeanceWidget
 			widget.getTeaching().removeSeanceByIndex(widget.getIndexSession());
 		
-		int index = widget.getTeaching().addSeance(newDate);
+		int index = widget.getTeaching().addSeance(DateUtil.setDateToDB(newDate));
 		//TODO verifier le long : millisecond ou second ? 
 		//ServerCommunication.getInstance().updateTeaching(widget.getTeaching());
 		widget.setIndexSession(index);
