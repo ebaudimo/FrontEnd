@@ -27,6 +27,7 @@ import com.pedEdt.frontEnd.client.model.Semester;
 import com.pedEdt.frontEnd.client.model.Teaching;
 import com.pedEdt.frontEnd.client.model.TeachingType;
 import com.pedEdt.frontEnd.client.model.TeachingUnit;
+import com.pedEdt.frontEnd.client.util.DateUtil;
 
 public class Forms {
 
@@ -723,7 +724,7 @@ public class Forms {
 					Teaching teaching = new Teaching();
 					teaching.setType(TeachingType.getTeachingType(type.getValue(type.getSelectedIndex())));
 					teaching.setTeacher(teacher.getText().trim());
-					teaching.setNbHour(Integer.parseInt(nbHour.getText().trim()));
+					teaching.setNbHour(DateUtil.hoursToMinutes(Integer.parseInt(nbHour.getText().trim())));
 					teaching.setNbSeance(Integer.parseInt(nbSeance.getText().trim()));
 					teaching.setNumGroup(Integer.parseInt(numGroup.getText().trim()));
 
@@ -775,7 +776,7 @@ public class Forms {
 		//nbHour
 		holderTab.setWidget(2, 0, new Label("Nombre d'heures : "));
 		final TextBox nbHour = new TextBox();
-		nbHour.setText("" + teaching.getNbHour());
+		nbHour.setText("" + DateUtil.minutesToHours(teaching.getNbHour()));
 		holderTab.setWidget(2, 1, nbHour);
 		
 		//nbSeance
@@ -840,7 +841,7 @@ public class Forms {
 
 					teaching.setType(TeachingType.getTeachingType(type.getValue(type.getSelectedIndex())));
 					teaching.setTeacher(teacher.getText().trim());
-					teaching.setNbHour(Integer.parseInt(nbHour.getText().trim()));
+					teaching.setNbHour(DateUtil.hoursToMinutes(Integer.parseInt(nbHour.getText().trim())));
 					teaching.setNbSeance(Integer.parseInt(nbSeance.getText().trim()));
 					teaching.setNumGroup(Integer.parseInt(numGroup.getText().trim()));
 

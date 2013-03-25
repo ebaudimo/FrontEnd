@@ -82,8 +82,6 @@ public class ScheduleNavigationBar extends Composite {
 		final Button go = new Button("GO", new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				currentValue = Integer.valueOf(where.getText());
-				
-				//Window.alert("Load new week");
 				MainGUI.getInstance().loadWeekGrid();
 			}
 		});

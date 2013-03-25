@@ -73,7 +73,7 @@ public class GridDropController extends AbsolutePositionDropController{
 		//TODO: need to find a way to update the semester object (update the teaching of the semester object)
 		new DateController().linkDateToSeanceWidget(widget, posH, posV);
 		if(context.draggable instanceof TreeTeachingWidget) {
-			((TreeTeachingWidget) context.draggable).updateTreeTeaching(widget.getTeaching());
+			((TreeTeachingWidget) context.draggable).updateTreeTeaching();
 		}
 		
 		swManager.addSeance(widget);
@@ -123,36 +123,11 @@ public class GridDropController extends AbsolutePositionDropController{
 	}	
 
 	public void addTeachingSeanceWidget(SeanceWidget session) {
-/*		//TeachingSeanceWidget l = new TeachingSeanceWidget(teaching, posH, posV);
-		session.setHeight((gridY*8+8)+"px");
-		session.setWidth((gridX*5)+"px");
-		
-		//int top =draggableList.get(0).desiredY;
-		//int left=draggableList.get(0).desiredX;
-		
-		
-		int left = session.getPosH() * gridX;
-		left = Math.max(0,left);
-		int top = session.getPosV() * gridY;
-		top = Math.max(0,top);
-		// border correction
-		top += top/10;
-		left += 1;
-		
-		dropTarget.add(session, left, top);*/
-		
-		//draggableList.get(0).positioner.removeFromParent();
 		swManager.addSeance(session);
 		swManager.doPositionning();
 	}
 
 	public void removeAllSeanceWidget() {
-//		Iterator<Widget> i = dropTarget.iterator();
-//		while(i.hasNext()) {
-//			Widget w = i.next();
-//			if(w instanceof SeanceWidget)
-//				dropTarget.remove(w);
-//		}
 		swManager.removeAllSeances();
 	}
 	

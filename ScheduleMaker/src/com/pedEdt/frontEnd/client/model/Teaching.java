@@ -42,7 +42,7 @@ public class Teaching implements java.io.Serializable {
 	public Teaching(TeachingType type, String teacher, int nbHour, int nbSeance, int numGroup, List<Long> seances) {
 		this.type = type;
 		this.teacher = teacher;
-		this.nbHour = nbHour;
+		this.nbHour = nbHour; //nbMinutes in fact
 		this.nbSeance = nbSeance;
 		this.numGroup = numGroup;
 		this.seances = seances;

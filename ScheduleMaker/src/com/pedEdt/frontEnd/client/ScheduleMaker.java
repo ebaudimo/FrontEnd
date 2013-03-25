@@ -35,9 +35,8 @@ import com.pedEdt.frontEnd.client.view.StartWindow;
  */
 public class ScheduleMaker implements EntryPoint {
 	public void onModuleLoad() {
-		
 		StartWindow startPopup = new StartWindow();
 		RootPanel.get().add(startPopup);
-		startPopup.show();
+		startPopup.center();
 	}
 }

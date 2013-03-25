@@ -31,7 +31,7 @@ public class StartWindow extends PopupPanel {
 		me = this;
 		setSize("300px", "300px");
 		setStyleName("startWindow");
-		setPopupPosition(500, 100);
+		//setPopupPosition(500, 100);
 
 		VerticalPanel contentPanel = new VerticalPanel();
 		contentPanel.add(new Label("Veuillez patienter nous recherchons les semestres deja existant ..."));
@@ -47,7 +47,7 @@ public class StartWindow extends PopupPanel {
 		parent.add(new Button("Ajouter", new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				PopupPanel newSemester = Forms.popupCreateSemester();
-				newSemester.show();
+				newSemester.center();
 			}
 		}));
 	}

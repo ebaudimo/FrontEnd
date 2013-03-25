@@ -30,13 +30,13 @@ public class SeanceWidget extends Composite {
 	}
 	
 	public SeanceWidget(final Teaching teaching, int posH, int posV) {
-		length = -1;
+		length = 8; //8 pour 80 min teaching.getNbHour()/10;
 		toRemove = false;
 		this.teaching = teaching;
 		this.posH = posH;
 		this.posV = posV;
 		
-		this.indexSession = -1;
+		this.indexSession = -1; //default
 
 		mainPanel = new VerticalPanel();
 		

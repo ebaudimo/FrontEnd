@@ -20,6 +20,14 @@ public class DateUtil {
 		return Long.valueOf(tmp);
 	}
 	
+	public static int hoursToMinutes(int nbHour) {
+		return nbHour * 60;
+	}
+	
+	public static int minutesToHours(int nbMin) {
+		return nbMin / 60;
+	}
+	
 	public static Date addWeek(Date startDate, int nbWeek) {
 		return new Date(startDate.getTime() + WEEK * nbWeek);
 	}

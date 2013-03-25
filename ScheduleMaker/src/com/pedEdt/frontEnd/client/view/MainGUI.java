@@ -100,7 +100,6 @@ public class MainGUI {
 	}
 	
 	public void loadWeekGrid() {
-		//TODO need to clear the grid panel before add new SessionWidget
 		schedGridPan.getDropController().removeAllSeanceWidget();
 		
 		List<Teaching> allTeaching = this.semester.getAllTeaching();
@@ -113,7 +112,7 @@ public class MainGUI {
 								DateUtil.findPosH(DateUtil.getDate(teaching.getSeances().get(cpt))), 
 								DateUtil.findPosV(DateUtil.getDate(teaching.getSeances().get(cpt))));
 						session.setIndexSession(cpt);
-						//TODO : ici le posH et posV sont correct
+
 						schedGridPan.getDropController().addTeachingSeanceWidget(session);
 					}
 				}
