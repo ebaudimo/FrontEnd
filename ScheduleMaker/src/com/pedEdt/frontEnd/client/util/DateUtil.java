@@ -221,4 +221,11 @@ public class DateUtil {
 	public static long getNbWeek(Date start, Date end) {
 		return (end.getTime() - start.getTime()) / WEEK;
 	}
+
+	public static int getIndexSemester(Date start) {
+		if(start.getMonth() - 5 > 0)
+			return 1;
+		else
+			return 2;
+	}
 }

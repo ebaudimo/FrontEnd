@@ -39,11 +39,12 @@ public class Forms {
 
 		VerticalPanel holder = new VerticalPanel();
 		
-		holder.add(new Label("Creer semestre"));
+		holder.add(new Label("Cr&#233;er semestre"));
 
 		FlexTable holderTab = new FlexTable();
 		holder.add(holderTab);
 		
+		/*
 		//TODO
 		//year
 		holderTab.setWidget(0, 0, new Label("Annee : "));
@@ -54,7 +55,8 @@ public class Forms {
 		holderTab.setWidget(1, 0, new Label("Numero (1 ou 2) : "));
 		final TextBox number = new TextBox();
 		holderTab.setWidget(1, 1, number);
-
+		*/
+		
 		//startDate
 		holderTab.setWidget(2, 0, new Label("Date de debut (jj/mm/aaaa) : "));
 		final TextBox startDate = new TextBox();
@@ -124,58 +126,87 @@ public class Forms {
 
 		form.add(holder);
 		form.addSubmitHandler(new FormPanel.SubmitHandler() {
-
-			@Override
 			public void onSubmit(SubmitEvent event) {
-				if (!year.getText().trim().equals("") && !number.getText().trim().equals("") && !startDate.getText().trim().equals("") && !endDate.getText().trim().equals("")) {
-					if (year.getText().trim().length() == 4) {
-						for (int i = 0; i < year.getText().trim().length(); i++) {
-							if (!java.lang.Character.isDigit(year.getText().trim().charAt(i))) {
-								Window.alert("Annee incorrecte.");
-								return;
-							}
-						}
-						
-						if (number.getText().trim().equals("1") || number.getText().trim().equals("2")) {
-							if (startDate.getText().trim().matches("^[0-9]{2}[/]{1}[0-9]{2}[/]{1}[0-9]{4}$")) {
-								if (endDate.getText().trim().matches("^[0-9]{2}[/]{1}[0-9]{2}[/]{1}[0-9]{4}$")) {
-									Date dateStart = new Date(Date.parse(startDate.getText().trim()));
-									Date dateEnd = new Date(Date.parse(endDate.getText().trim()));
-									
-									Semester semester = new Semester();
-									semester.setYear(Integer.parseInt(year.getText().trim()));
-									semester.setNumber(Integer.parseInt(number.getText().trim()));
-									semester.setStartDate(dateStart.getTime() / 1000);
-									semester.setEndDate(dateEnd.getTime() / 1000);
+				if (!startDate.getText().trim().equals("") && !endDate.getText().trim().equals("")) {
+					if (startDate.getText().trim().matches("^[0-9]{2}[/]{1}[0-9]{2}[/]{1}[0-9]{4}$")) {
+						if(endDate.getText().trim().matches("^[0-9]{2}[/]{1}[0-9]{2}[/]{1}[0-9]{4}$")) {
+							Date dateStart = new Date(Date.parse(startDate.getText().trim()));
+							Date dateEnd = new Date(Date.parse(endDate.getText().trim()));
 
-									ServerCommunication.getInstance().createSemester(semester);
-									popupPanel.hide();
-								} else {
-									Window.alert("Date de fin incorrecte.");
-									return;
-								}
-							} else {
-								Window.alert("Date de debut incorrecte.");
-								return;
-							}
+							Semester semester = new Semester();
+							semester.setYear(dateStart.getYear());
+							semester.setNumber(DateUtil.getIndexSemester(dateStart));
+							semester.setStartDate(dateStart.getTime() / 1000);
+							semester.setEndDate(dateEnd.getTime() / 1000);
+
+							ServerCommunication.getInstance().createSemester(semester);
+							popupPanel.hide();
 						} else {
-							Window.alert("Numero incorrect.");
+							Window.alert("Date de fin incorrecte.");
 							return;
 						}
 					} else {
-						Window.alert("Annee incorrecte.");
+						Window.alert("Date de debut incorrecte.");
 						return;
 					}
-				} else {
-					Window.alert("Vous devez remplir tous les champs.");
-					return;
 				}
 			}
 		});
-
 		popupPanel.setWidget(form);
 		return popupPanel;
 	} // popupCreateSemester()
+
+			/*
+			@Override
+			public void onSubmit(SubmitEvent event) {
+				if (!year.getText().trim().equals("") && !number.getText().trim().equals("") && !startDate.getText().trim().equals("") && !endDate.getText().trim().equals("")) {
+					if (!startDate.getText().trim().equals("") && !endDate.getText().trim().equals("")) {	
+
+						if (year.getText().trim().length() == 4) {
+							for (int i = 0; i < year.getText().trim().length(); i++) {
+								if (!java.lang.Character.isDigit(year.getText().trim().charAt(i))) {
+									Window.alert("Annee incorrecte.");
+									return;
+								}
+							}
+
+							if (number.getText().trim().equals("1") || number.getText().trim().equals("2")) {
+
+								if (startDate.getText().trim().matches("^[0-9]{2}[/]{1}[0-9]{2}[/]{1}[0-9]{4}$")) {
+									if (endDate.getText().trim().matches("^[0-9]{2}[/]{1}[0-9]{2}[/]{1}[0-9]{4}$")) {
+										Date dateStart = new Date(Date.parse(startDate.getText().trim()));
+										Date dateEnd = new Date(Date.parse(endDate.getText().trim()));
+
+										Semester semester = new Semester();
+										semester.setYear(Integer.parseInt(year.getText().trim()));
+										semester.setNumber(Integer.parseInt(number.getText().trim()));
+										semester.setStartDate(dateStart.getTime() / 1000);
+										semester.setEndDate(dateEnd.getTime() / 1000);
+
+										ServerCommunication.getInstance().createSemester(semester);
+										popupPanel.hide();
+									} else {
+										Window.alert("Date de fin incorrecte.");
+										return;
+									}
+								} else {
+									Window.alert("Date de debut incorrecte.");
+									return;
+								}
+							} else {
+								Window.alert("Numero incorrect.");
+								return;
+							}
+						} else {
+							Window.alert("Annee incorrecte.");
+							return;
+						}
+					} else {
+						Window.alert("Vous devez remplir tous les champs.");
+						return;
+					}
+				}
+				*/
 
 	
 	
@@ -651,9 +682,17 @@ public class Forms {
 		holderTab.setWidget(1, 1, teacher);
 		
 		//nbHour
-		holderTab.setWidget(2, 0, new Label("Nombre d'heures : "));
+		HorizontalPanel hp = new HorizontalPanel();
+		hp.add(new Label("Nombre d'heures :"));
 		final TextBox nbHour = new TextBox();
-		holderTab.setWidget(2, 1, nbHour);
+		hp.add(nbHour);
+		hp.add(new Label(" Minutes : "));
+		final TextBox nbMin = new TextBox();
+		hp.add(nbMin);
+		holderTab.setWidget(2, 0, hp);
+		//holderTab.setWidget(2, 0, new Label("Nombre d'heures : "));
+		//holderTab.setWidget(2, 1, nbHour);
+		
 		
 		//nbSeance
 		holderTab.setWidget(3, 0, new Label("Nombre de seances : "));
@@ -693,6 +732,19 @@ public class Forms {
 
 			@Override
 			public void onSubmit(SubmitEvent event) {
+				int inMinutes = 0;
+				if(!nbMin.getText().trim().equals("")) {
+					for (int i = 0; i < nbMin.getText().trim().length(); i++) {
+						if (!java.lang.Character.isDigit(nbMin.getText().trim().charAt(i))) {
+							//nbMin.setStyleName("textbox-onError");
+							Window.alert("Erreur dans la valeur des minutes");
+							return;
+						}
+						if(i == nbMin.getText().trim().length()-1)
+							inMinutes = Integer.valueOf(nbMin.getText().trim());
+					}
+				}
+				
 				if (!teacher.getText().trim().equals("") && !nbHour.getText().trim().equals("") && !nbSeance.getText().trim().equals("") && !numGroup.getText().trim().equals("")) {
 					for (int i = 0; i < nbHour.getText().trim().length(); i++) {
 						if (!java.lang.Character.isDigit(nbHour.getText().trim().charAt(i))) {
@@ -716,7 +768,8 @@ public class Forms {
 					Teaching teaching = new Teaching();
 					teaching.setType(TeachingType.getTeachingType(type.getValue(type.getSelectedIndex())));
 					teaching.setTeacher(teacher.getText().trim());
-					teaching.setNbHour(DateUtil.hoursToMinutes(Integer.parseInt(nbHour.getText().trim())));
+					teaching.setNbHour(DateUtil.hoursToMinutes(Integer.parseInt(nbHour.getText().trim()))
+							+ inMinutes);
 					teaching.setNbSeance(Integer.parseInt(nbSeance.getText().trim()));
 					teaching.setNumGroup(Integer.parseInt(numGroup.getText().trim()));
 
