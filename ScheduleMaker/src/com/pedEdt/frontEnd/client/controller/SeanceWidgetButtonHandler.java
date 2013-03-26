@@ -15,7 +15,7 @@ public class SeanceWidgetButtonHandler implements ClickHandler {
 	
 	@Override
 	public void onClick(ClickEvent event) {
-		widget.getTeaching().removeSeanceByIndex(widget.getIndexSession());
+		widget.getTeaching().removeSeance(widget.getBeginning());
 		widget.setRemoved();
 		widget.removeFromParent();
 		

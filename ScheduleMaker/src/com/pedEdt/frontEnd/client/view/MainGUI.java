@@ -53,6 +53,8 @@ public class MainGUI {
 	
 	private MainGUI(Semester s) {
 		
+		RootPanel.get().clear();
+		
 		this.semester = s;
 		
 		vpan = new VerticalPanel();
@@ -110,7 +112,7 @@ public class MainGUI {
 						SeanceWidget session = new SeanceWidget(teaching, 
 								DateUtil.findPosH(DateUtil.getDate(teaching.getSeances().get(cpt))), 
 								DateUtil.findPosV(DateUtil.getDate(teaching.getSeances().get(cpt))));
-						session.setIndexSession(cpt);
+						session.setBeginning(teaching.getSeances().get(cpt));
 
 						schedGridPan.getDropController().addTeachingSeanceWidget(session);
 					}
@@ -123,4 +125,8 @@ public class MainGUI {
 		this.schedTree.rebuildTree(this.semester);
 	}
 	
+	
+	public static void refresh(Semester semester) {
+		mainGUIInstance = new MainGUI(semester);
+	}
 }

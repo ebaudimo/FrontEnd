@@ -11,12 +11,12 @@ public class DateController {
 	public void linkDateToSeanceWidget(SeanceWidget widget, int posH, int posV) {
 		long newDate = DateUtil.computeNewDate(posH, posV);
 		
-		if(widget.getIndexSession() != -1) //if it is not a new SeanceWidget
-			widget.getTeaching().removeSeanceByIndex(widget.getIndexSession());
+		if(widget.getBeginning() != 0) //if it is not a new SeanceWidget
+			widget.getTeaching().removeSeance(widget.getBeginning());
 		
 		int index = widget.getTeaching().addSeance(DateUtil.setDateToDB(newDate));
 		//TODO verifier le long : millisecond ou second ? 
 		//ServerCommunication.getInstance().updateTeaching(widget.getTeaching());
-		widget.setIndexSession(index);
+		widget.setBeginning(DateUtil.setDateToDB(newDate));
 	}
 }

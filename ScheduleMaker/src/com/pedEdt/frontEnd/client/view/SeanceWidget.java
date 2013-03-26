@@ -18,6 +18,7 @@ public class SeanceWidget extends Composite {
 	protected VerticalPanel bodyPanel;
 	
 	protected Teaching teaching;
+	protected long beginning;
 	protected int indexSession; // index of the session represented by this widget in the teaching tab : 'seances'
 	protected int length; // nbr of blocks in the grid
 	protected int posH; // [0-4] horizontal position on the grid
@@ -37,7 +38,8 @@ public class SeanceWidget extends Composite {
 		this.posV = posV;
 		
 		this.indexSession = -1; //default
-
+		this.beginning = 0;
+		
 		mainPanel = new VerticalPanel();
 		
 		headerPanel = new HorizontalPanel();
@@ -122,11 +124,21 @@ public class SeanceWidget extends Composite {
 		return toRemove;
 	}
 
+	/*
 	public void setIndexSession(int index) {
 		this.indexSession = index;
 	}
 	
 	public int getIndexSession() {
 		return this.indexSession;
+	}
+	*/
+	
+	public void setBeginning(long date) {
+		this.beginning = date;
+	}
+	
+	public long getBeginning() {
+		return this.beginning;
 	}
 }

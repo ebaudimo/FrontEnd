@@ -112,10 +112,12 @@ public class Teaching implements java.io.Serializable {
 		return this.seances.indexOf(date);
 	}
 	
-	public void removeSeance(Date date) {
-		for (int i = 0; i < this.seances.size(); i++)
-			if (this.seances.get(i).equals(date))
-				this.seances.remove(i);
+	public int findSeance(long date) {
+		return this.seances.indexOf(date);
+	}
+	
+	public void removeSeance(long date) {
+		this.seances.remove(date);
 	}
 	
 	public void removeSeanceByIndex(int index) {

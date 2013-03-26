@@ -150,7 +150,7 @@ public class DateUtil {
 		
 	}
 	
-	//return the long for a new TeachingWidgetSession (create or update)
+	//return the long for a new TeachingWidgetSession (create or update) : in milliseconds
 	public static long computeNewDate(int posH, int posV) {
 		ScheduleNavigationBar navBar = ScheduleNavigationBar.getInstance();
 		
