@@ -18,8 +18,9 @@ public class ScheduleSemesterInformation extends Composite {
 		Date start = DateUtil.getDate(s.getStartDate());
 		Date end = DateUtil.getDate(s.getEndDate());
 		
+		//check the startDate
 		Label myLabel = new Label("   Semestre : " + String.valueOf(s.getNumber()) + "	Annee : " + String.valueOf(s.getYear()) +
-									"      Date debut : " + start.toGMTString() + " Date fin : " + end.toLocaleString()
+									"      Date debut : " + start.toLocaleString() + " Date fin : " + end.toLocaleString()
 				);
 		myLabel.setStyleName("semesterInformation");
 		myPanel.add(myLabel);

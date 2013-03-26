@@ -49,7 +49,6 @@ public final class ServerCommunication {
 
 				public void onResponseReceived(Request request, Response response) {
 					if (response.getStatusCode() == 200) {
-						
 					}
 				}
 			});
@@ -113,23 +112,23 @@ public final class ServerCommunication {
 				public void onResponseReceived(Request request, Response response) {
 					if (response.getStatusCode() == 200) {
 						//refresh page
-						RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, SERVERURL + "read/semester/" + MainGUI.getInstance().getSemester().getId());
-						try {
-							builder.sendRequest(null, new RequestCallback() {
-								public void onError(Request request, Throwable exception) {
-									Window.alert("Erreur lors de la recuperation du semester.");
-								}
-
-								public void onResponseReceived(Request request, Response response) {
-									if (response.getStatusCode() == 200) {
-										Semester semester = Semester.fromXML.read(response.getText().trim());
-										MainGUI.refresh(semester);
-									}
-								}
-							});
-						} catch (RequestException e) {
-							e.printStackTrace();
-						}
+//						RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, SERVERURL + "read/semester/" + MainGUI.getInstance().getSemester().getId());
+//						try {
+//							builder.sendRequest(null, new RequestCallback() {
+//								public void onError(Request request, Throwable exception) {
+//									Window.alert("Erreur lors de la recuperation du semester.");
+//								}
+//
+//								public void onResponseReceived(Request request, Response response) {
+//									if (response.getStatusCode() == 200) {
+//										Semester semester = Semester.fromXML.read(response.getText().trim());
+//										MainGUI.refresh(semester);
+//									}
+//								}
+//							});
+//						} catch (RequestException e) {
+//							e.printStackTrace();
+//						}
 					}
 				}
 			});
@@ -150,23 +149,23 @@ public final class ServerCommunication {
 				public void onResponseReceived(Request request, Response response) {
 					if (response.getStatusCode() == 200) {
 						//refresh page
-						RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, SERVERURL + "read/semester/" + MainGUI.getInstance().getSemester().getId());
-						try {
-							builder.sendRequest(null, new RequestCallback() {
-								public void onError(Request request, Throwable exception) {
-									Window.alert("Erreur lors de la recuperation du semester.");
-								}
-
-								public void onResponseReceived(Request request, Response response) {
-									if (response.getStatusCode() == 200) {
-										Semester semester = Semester.fromXML.read(response.getText().trim());
-										MainGUI.refresh(semester);
-									}
-								}
-							});
-						} catch (RequestException e) {
-							e.printStackTrace();
-						}
+//						RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, SERVERURL + "read/semester/" + MainGUI.getInstance().getSemester().getId());
+//						try {
+//							builder.sendRequest(null, new RequestCallback() {
+//								public void onError(Request request, Throwable exception) {
+//									Window.alert("Erreur lors de la recuperation du semester.");
+//								}
+//
+//								public void onResponseReceived(Request request, Response response) {
+//									if (response.getStatusCode() == 200) {
+//										Semester semester = Semester.fromXML.read(response.getText().trim());
+//										MainGUI.refresh(semester);
+//									}
+//								}
+//							});
+//						} catch (RequestException e) {
+//							e.printStackTrace();
+//						}
 					}
 				}
 			});
@@ -186,24 +185,24 @@ public final class ServerCommunication {
 				public void onResponseReceived(Request request, Response response) {
 					if (response.getStatusCode() == 200) {
 						//refresh page
-						RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, SERVERURL + "read/semester/" + MainGUI.getInstance().getSemester().getId());
-
-						try {
-							builder.sendRequest(null, new RequestCallback() {
-								public void onError(Request request, Throwable exception) {
-									Window.alert("Erreur lors de la recuperation du semester.");
-								}
-
-								public void onResponseReceived(Request request, Response response) {
-									if (response.getStatusCode() == 200) {
-										Semester semester = Semester.fromXML.read(response.getText().trim());
-										MainGUI.refresh(semester);
-									}
-								}
-							});
-						} catch (RequestException e) {
-							e.printStackTrace();
-						}
+//						RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, SERVERURL + "read/semester/" + MainGUI.getInstance().getSemester().getId());
+//
+//						try {
+//							builder.sendRequest(null, new RequestCallback() {
+//								public void onError(Request request, Throwable exception) {
+//									Window.alert("Erreur lors de la recuperation du semester.");
+//								}
+//
+//								public void onResponseReceived(Request request, Response response) {
+//									if (response.getStatusCode() == 200) {
+//										Semester semester = Semester.fromXML.read(response.getText().trim());
+//										MainGUI.refresh(semester);
+//									}
+//								}
+//							});
+//						} catch (RequestException e) {
+//							e.printStackTrace();
+//						}
 					}
 				}
 			});
@@ -228,24 +227,24 @@ public final class ServerCommunication {
 				public void onResponseReceived(Request request, Response response) {
 					if (response.getStatusCode() == 200) {
 						//refresh page
-						RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, SERVERURL + "read/semester/" + MainGUI.getInstance().getSemester().getId());
-
-						try {
-							builder.sendRequest(null, new RequestCallback() {
-								public void onError(Request request, Throwable exception) {
-									Window.alert("Erreur lors de la recuperation du semester.");
-								}
-
-								public void onResponseReceived(Request request, Response response) {
-									if (response.getStatusCode() == 200) {
-										Semester semester = Semester.fromXML.read(response.getText().trim());
-										MainGUI.refresh(semester);
-									}
-								}
-							});
-						} catch (RequestException e) {
-							e.printStackTrace();
-						}
+//						RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, SERVERURL + "read/semester/" + MainGUI.getInstance().getSemester().getId());
+//
+//						try {
+//							builder.sendRequest(null, new RequestCallback() {
+//								public void onError(Request request, Throwable exception) {
+//									Window.alert("Erreur lors de la recuperation du semester.");
+//								}
+//
+//								public void onResponseReceived(Request request, Response response) {
+//									if (response.getStatusCode() == 200) {
+//										Semester semester = Semester.fromXML.read(response.getText().trim());
+//										MainGUI.refresh(semester);
+//									}
+//								}
+//							});
+//						} catch (RequestException e) {
+//							e.printStackTrace();
+//						}
 					}
 				}
 			});
@@ -266,23 +265,23 @@ public final class ServerCommunication {
 				public void onResponseReceived(Request request, Response response) {
 					if (response.getStatusCode() == 200) {
 						//refresh page
-						RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, SERVERURL + "read/semester/" + MainGUI.getInstance().getSemester().getId());
-						try {
-							builder.sendRequest(null, new RequestCallback() {
-								public void onError(Request request, Throwable exception) {
-									Window.alert("Erreur lors de la recuperation du semester.");
-								}
-
-								public void onResponseReceived(Request request, Response response) {
-									if (response.getStatusCode() == 200) {
-										Semester semester = Semester.fromXML.read(response.getText().trim());
-										MainGUI.refresh(semester);
-									}
-								}
-							});
-						} catch (RequestException e) {
-							e.printStackTrace();
-						}
+//						RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, SERVERURL + "read/semester/" + MainGUI.getInstance().getSemester().getId());
+//						try {
+//							builder.sendRequest(null, new RequestCallback() {
+//								public void onError(Request request, Throwable exception) {
+//									Window.alert("Erreur lors de la recuperation du semester.");
+//								}
+//
+//								public void onResponseReceived(Request request, Response response) {
+//									if (response.getStatusCode() == 200) {
+//										Semester semester = Semester.fromXML.read(response.getText().trim());
+//										MainGUI.refresh(semester);
+//									}
+//								}
+//							});
+//						} catch (RequestException e) {
+//							e.printStackTrace();
+//						}
 					}
 				}
 			});
@@ -301,25 +300,25 @@ public final class ServerCommunication {
 
 				public void onResponseReceived(Request request, Response response) {
 					if (response.getStatusCode() == 200) {
-						//refresh page
-						RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, SERVERURL + "read/semester/" + MainGUI.getInstance().getSemester().getId());
-
-						try {
-							builder.sendRequest(null, new RequestCallback() {
-								public void onError(Request request, Throwable exception) {
-									Window.alert("Erreur lors de la recuperation du semester.");
-								}
-
-								public void onResponseReceived(Request request, Response response) {
-									if (response.getStatusCode() == 200) {
-										Semester semester = Semester.fromXML.read(response.getText().trim());
-										MainGUI.refresh(semester);
-									}
-								}
-							});
-						} catch (RequestException e) {
-							e.printStackTrace();
-						}
+//						//refresh page
+//						RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, SERVERURL + "read/semester/" + MainGUI.getInstance().getSemester().getId());
+//
+//						try {
+//							builder.sendRequest(null, new RequestCallback() {
+//								public void onError(Request request, Throwable exception) {
+//									Window.alert("Erreur lors de la recuperation du semester.");
+//								}
+//
+//								public void onResponseReceived(Request request, Response response) {
+//									if (response.getStatusCode() == 200) {
+//										Semester semester = Semester.fromXML.read(response.getText().trim());
+//										MainGUI.refresh(semester);
+//									}
+//								}
+//							});
+//						} catch (RequestException e) {
+//							e.printStackTrace();
+//						}
 					}
 				}
 			});
@@ -343,25 +342,25 @@ public final class ServerCommunication {
 
 				public void onResponseReceived(Request request, Response response) {
 					if (response.getStatusCode() == 200) {
-						//refresh page
-						RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, SERVERURL + "read/semester/" + MainGUI.getInstance().getSemester().getId());
-
-						try {
-							builder.sendRequest(null, new RequestCallback() {
-								public void onError(Request request, Throwable exception) {
-									Window.alert("Erreur lors de la recuperation du semester.");
-								}
-
-								public void onResponseReceived(Request request, Response response) {
-									if (response.getStatusCode() == 200) {
-										Semester semester = Semester.fromXML.read(response.getText().trim());
-										MainGUI.refresh(semester);
-									}
-								}
-							});
-						} catch (RequestException e) {
-							e.printStackTrace();
-						}
+//						//refresh page
+//						RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, SERVERURL + "read/semester/" + MainGUI.getInstance().getSemester().getId());
+//
+//						try {
+//							builder.sendRequest(null, new RequestCallback() {
+//								public void onError(Request request, Throwable exception) {
+//									Window.alert("Erreur lors de la recuperation du semester.");
+//								}
+//
+//								public void onResponseReceived(Request request, Response response) {
+//									if (response.getStatusCode() == 200) {
+//										Semester semester = Semester.fromXML.read(response.getText().trim());
+//										MainGUI.refresh(semester);
+//									}
+//								}
+//							});
+//						} catch (RequestException e) {
+//							e.printStackTrace();
+//						}
 					}
 				}
 			});
@@ -382,24 +381,25 @@ public final class ServerCommunication {
 				public void onResponseReceived(Request request, Response response) {
 					if (response.getStatusCode() == 200) {
 						//refresh page
-						RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, SERVERURL + "read/semester/" + MainGUI.getInstance().getSemester().getId());
-
-						try {
-							builder.sendRequest(null, new RequestCallback() {
-								public void onError(Request request, Throwable exception) {
-									Window.alert("Erreur lors de la recuperation du semester.");
-								}
-
-								public void onResponseReceived(Request request, Response response) {
-									if (response.getStatusCode() == 200) {
-										Semester semester = Semester.fromXML.read(response.getText().trim());
-										MainGUI.refresh(semester);
-									}
-								}
-							});
-						} catch (RequestException e) {
-							e.printStackTrace();
-						}
+//						
+//						RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, SERVERURL + "read/semester/" + MainGUI.getInstance().getSemester().getId());
+//
+//						try {
+//							builder.sendRequest(null, new RequestCallback() {
+//								public void onError(Request request, Throwable exception) {
+//									Window.alert("Erreur lors de la recuperation du semester.");
+//								}
+//
+//								public void onResponseReceived(Request request, Response response) {
+//									if (response.getStatusCode() == 200) {
+//										Semester semester = Semester.fromXML.read(response.getText().trim());
+//										MainGUI.refresh(semester);
+//									}
+//								}
+//							});
+//						} catch (RequestException e) {
+//							e.printStackTrace();
+//						}
 					}
 				}
 			});
@@ -419,24 +419,24 @@ public final class ServerCommunication {
 				public void onResponseReceived(Request request, Response response) {
 					if (response.getStatusCode() == 200) {
 						//refresh page
-						RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, SERVERURL + "read/semester/" + MainGUI.getInstance().getSemester().getId());
-
-						try {
-							builder.sendRequest(null, new RequestCallback() {
-								public void onError(Request request, Throwable exception) {
-									Window.alert("Erreur lors de la recuperation du semester.");
-								}
-
-								public void onResponseReceived(Request request, Response response) {
-									if (response.getStatusCode() == 200) {
-										Semester semester = Semester.fromXML.read(response.getText().trim());
-										MainGUI.refresh(semester);
-									}
-								}
-							});
-						} catch (RequestException e) {
-							e.printStackTrace();
-						}
+//						RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, SERVERURL + "read/semester/" + MainGUI.getInstance().getSemester().getId());
+//
+//						try {
+//							builder.sendRequest(null, new RequestCallback() {
+//								public void onError(Request request, Throwable exception) {
+//									Window.alert("Erreur lors de la recuperation du semester.");
+//								}
+//
+//								public void onResponseReceived(Request request, Response response) {
+//									if (response.getStatusCode() == 200) {
+//										Semester semester = Semester.fromXML.read(response.getText().trim());
+//										MainGUI.refresh(semester);
+//									}
+//								}
+//							});
+//						} catch (RequestException e) {
+//							e.printStackTrace();
+//						}
 					}
 				}
 			});
@@ -488,7 +488,7 @@ public final class ServerCommunication {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void deleteTeachingSeance(int id_teaching, long date) {
 		builder = new RequestBuilder(RequestBuilder.POST, SERVERURL + "delete/teachingSeance/" + id_teaching);
 		builder.setHeader("Content-Type", "application/xml");

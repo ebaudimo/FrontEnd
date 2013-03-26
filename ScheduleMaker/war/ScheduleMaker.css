@@ -401,7 +401,6 @@ a:visited {
         -webkit-border-radius: 6px;
         -moz-border-radius: 6px;
         border-radius: 6px;*/
-        background:red;
 }
 
 .teaching-cell-header{
@@ -466,4 +465,8 @@ a:visited {
 
 .teachingNotEnable {
 	background-color: gray;
+}
+
+.nodeSelected {
+	background:#E8EEF7;
 }

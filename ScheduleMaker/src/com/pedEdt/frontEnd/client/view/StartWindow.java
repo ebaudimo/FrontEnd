@@ -29,9 +29,8 @@ public class StartWindow extends PopupPanel {
 		super(false, true);
 
 		me = this;
-		setSize("300px", "300px");
-		setStyleName("startWindow");
-		//setPopupPosition(500, 100);
+		this.setSize("300px", "300px");
+		this.setStyleName("startWindow");
 
 		VerticalPanel contentPanel = new VerticalPanel();
 		contentPanel.add(new Label("Veuillez patienter nous recherchons les semestres deja existant ..."));

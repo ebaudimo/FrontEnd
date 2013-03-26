@@ -124,6 +124,8 @@ public class SeanceWidgetsManager {
 			SeanceWidget seance = it.next();
 			if(seance.isRemoved())
 				it.remove();
+			else
+				seance.updateBodyData();
 		}
 	
 		for (SeanceWidget seance : seances) {

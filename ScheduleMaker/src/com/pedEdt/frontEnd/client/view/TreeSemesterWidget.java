@@ -1,12 +1,13 @@
 package com.pedEdt.frontEnd.client.view;
 
-import com.google.gwt.event.dom.client.ContextMenuEvent;
-import com.google.gwt.event.dom.client.ContextMenuHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
+import com.pedEdt.frontEnd.client.model.Module;
 import com.pedEdt.frontEnd.client.model.Semester;
+import com.pedEdt.frontEnd.client.model.Teaching;
 import com.pedEdt.frontEnd.client.model.TeachingUnit;
 
 public class TreeSemesterWidget extends Tree{
@@ -24,6 +25,7 @@ public class TreeSemesterWidget extends Tree{
 
 			public void onSelection(SelectionEvent<TreeItem> event) {
 				TreeItem item = event.getSelectedItem();
+				
 				if (item.getChildCount() == 0) {
 					// Do nothing
 				} 
@@ -35,6 +37,11 @@ public class TreeSemesterWidget extends Tree{
 						comingFromSetState++;
 						item.setState(!item.getState());
 						prevOpenState = !item.getState();
+						
+						if(item.getState())
+							item.getWidget().setStyleName("nodeSelected");
+						else
+							item.getWidget().removeStyleName("nodeSelected");
 					}
 					else {
 						comingFromSetState = 0;
@@ -59,4 +66,20 @@ public class TreeSemesterWidget extends Tree{
 			}
 		}
 	}
+	
+	public Module getParentModule(Teaching teaching){
+		for(int i=0;i<getItemCount();i++){ // parcours TU
+			TreeItem itemTU = getItem(i);
+			for(int j =0; i< itemTU.getChildCount();j++){ // parcours M
+				TreeItem itemM = itemTU.getChild(j);
+				for(int k = 0; k< itemM.getChildCount();k++){
+					if(((TreeTeachingWidget)itemM.getChild(k).getWidget()).teaching == teaching){
+						return ((TreeModuleWidget)itemM).getModule();
+					}
+				}
+			}
+		}
+		return null;
+	}
+	
 }

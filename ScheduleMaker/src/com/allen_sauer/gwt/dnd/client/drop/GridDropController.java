@@ -2,7 +2,9 @@ package com.allen_sauer.gwt.dnd.client.drop;
 
 import com.allen_sauer.gwt.dnd.client.DragContext;
 import com.allen_sauer.gwt.dnd.client.drop.AbsolutePositionDropController;
+import com.google.gwt.user.client.DOM;
 import com.pedEdt.frontEnd.client.controller.DateController;
+import com.pedEdt.frontEnd.client.util.ColorUtil;
 import com.pedEdt.frontEnd.client.view.Grid;
 import com.pedEdt.frontEnd.client.view.SeanceWidget;
 import com.pedEdt.frontEnd.client.view.SeanceWidgetsManager;
@@ -52,12 +54,15 @@ public class GridDropController extends AbsolutePositionDropController{
 		SeanceWidget widget = null;
 		
 		if( context.draggable instanceof TreeTeachingWidget){
-			SeanceWidget tw = new SeanceWidget(((TreeTeachingWidget) context.draggable).getTeaching());
+			SeanceWidget seance= new SeanceWidget(((TreeTeachingWidget) context.draggable).getTeaching());
 			int lenght = ((TreeTeachingWidget)context.draggable).getLengthOnGrid();
-			tw.setLength(lenght);
-			tw.setHeight((gridY*lenght+lenght)+"px");
-			tw.setWidth((gridX-1)+"px");
-			widget = tw;
+			seance.setLength(lenght);
+			seance.setHeight((gridY*lenght+lenght)+"px");
+			seance.setWidth((gridX-1)+"px");
+			DOM.setStyleAttribute(seance.getElement(), "background",
+					ColorUtil.getInstance().getColor(((TreeTeachingWidget) context.draggable).getTeaching()));
+			seance.setTitle(((TreeTeachingWidget) context.draggable).getFather().getModule().getTitle());
+			widget = seance;
 		}
 		else if( context.draggable instanceof SeanceWidget){
 			widget = (SeanceWidget) context.draggable;
@@ -70,12 +75,11 @@ public class GridDropController extends AbsolutePositionDropController{
 		widget.setPosV(posV);
 		widget.setPosH(posH);
 		
-		//TODO: need to find a way to update the semester object (update the teaching of the semester object)
 		new DateController().linkDateToSeanceWidget(widget, posH, posV);
 		if(context.draggable instanceof TreeTeachingWidget) {
 			((TreeTeachingWidget) context.draggable).updateTreeTeaching();
 		}
-		
+
 		swManager.addSeance(widget);
 		swManager.doPositionning();
 		draggableList.get(0).positioner.removeFromParent();	

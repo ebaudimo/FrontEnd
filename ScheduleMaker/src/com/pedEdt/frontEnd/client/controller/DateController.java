@@ -14,9 +14,14 @@ public class DateController {
 		if(widget.getBeginning() != 0) //if it is not a new SeanceWidget
 			widget.getTeaching().removeSeance(widget.getBeginning());
 		
-		int index = widget.getTeaching().addSeance(DateUtil.setDateToDB(newDate));
-		//TODO verifier le long : millisecond ou second ? 
-		//ServerCommunication.getInstance().updateTeaching(widget.getTeaching());
+		widget.getTeaching().addSeance(DateUtil.setDateToDB(newDate));
+		ServerCommunication.getInstance().updateTeaching(widget.getTeaching());
 		widget.setBeginning(DateUtil.setDateToDB(newDate));
 	}
+	
+	public void unlinkTheSeanceWidget(SeanceWidget widget) {
+		widget.getTeaching().removeSeance(widget.getBeginning());
+		ServerCommunication.getInstance().updateTeaching(widget.getTeaching());
+	}
+	
 }

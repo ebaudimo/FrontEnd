@@ -15,7 +15,9 @@ public class SeanceWidgetButtonHandler implements ClickHandler {
 	
 	@Override
 	public void onClick(ClickEvent event) {
-		widget.getTeaching().removeSeance(widget.getBeginning());
+		//widget.getTeaching().removeSeance(widget.getBeginning());
+		new DateController().unlinkTheSeanceWidget(widget);
+		
 		widget.setRemoved();
 		widget.removeFromParent();
 		

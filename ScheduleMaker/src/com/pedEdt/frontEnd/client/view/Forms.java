@@ -44,6 +44,7 @@ public class Forms {
 		FlexTable holderTab = new FlexTable();
 		holder.add(holderTab);
 		
+		//TODO
 		//year
 		holderTab.setWidget(0, 0, new Label("Annee : "));
 		final TextBox year = new TextBox();
@@ -113,9 +114,6 @@ public class Forms {
 		Button cancelButton = new Button("Annuler", new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				popupPanel.hide();
-				/*if(parent != null) {
-					parent.show();
-				}*/
 			}
 		});
 

@@ -16,12 +16,16 @@ package com.pedEdt.frontEnd.client.view;
 
 import java.util.List;
 
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.pedEdt.frontEnd.client.controller.ScheduleDragController;
 import com.pedEdt.frontEnd.client.model.Semester;
 import com.pedEdt.frontEnd.client.model.Teaching;
+import com.pedEdt.frontEnd.client.util.ColorUtil;
 import com.pedEdt.frontEnd.client.util.DateUtil;
 import com.pedEdt.frontEnd.client.util.DebugPanel;
 
@@ -113,7 +117,12 @@ public class MainGUI {
 								DateUtil.findPosH(DateUtil.getDate(teaching.getSeances().get(cpt))), 
 								DateUtil.findPosV(DateUtil.getDate(teaching.getSeances().get(cpt))));
 						session.setBeginning(teaching.getSeances().get(cpt));
-
+						
+						DOM.setStyleAttribute(session.getElement(), "background",
+								ColorUtil.getInstance().getColor(teaching));
+						
+						session.setTitle(schedTree.semesterTree.getParentModule(teaching).getTitle());
+						
 						schedGridPan.getDropController().addTeachingSeanceWidget(session);
 					}
 				}

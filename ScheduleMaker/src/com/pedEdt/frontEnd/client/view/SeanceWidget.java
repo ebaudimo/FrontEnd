@@ -19,10 +19,11 @@ public class SeanceWidget extends Composite {
 	
 	protected Teaching teaching;
 	protected long beginning;
-	protected int indexSession; // index of the session represented by this widget in the teaching tab : 'seances'
+	//protected int indexSession; // index of the session represented by this widget in the teaching tab : 'seances'
 	protected int length; // nbr of blocks in the grid
 	protected int posH; // [0-4] horizontal position on the grid
 	protected int posV; // [0-61] vertical position on the grid
+	protected String title = "Titre";
 	
 	protected boolean toRemove;
 	
@@ -37,7 +38,7 @@ public class SeanceWidget extends Composite {
 		this.posH = posH;
 		this.posV = posV;
 		
-		this.indexSession = -1; //default
+		//this.indexSession = -1; //default
 		this.beginning = 0;
 		
 		mainPanel = new VerticalPanel();
@@ -48,7 +49,7 @@ public class SeanceWidget extends Composite {
 		headerPanel.setStyleName("teaching-cell-header");
 		headerPanel.setHorizontalAlignment(HorizontalPanel.ALIGN_RIGHT);
 		//TODO
-		headerLabel = new Label("title");
+		headerLabel = new Label(title);
 		headerLabel.setHorizontalAlignment(Label.ALIGN_CENTER);
 		headerLabel.setStyleName("teaching-cell-header");
 		
@@ -62,16 +63,13 @@ public class SeanceWidget extends Composite {
 		bodyPanel.setWidth("100%");
 		bodyPanel.setStyleName("teaching-cell-body");
 		//TODO
-		Label line = new Label("title");
-		line.setStyleName("teaching-cell-body");
-		bodyPanel.add(line);
-		line = new Label(String.valueOf(teaching.getType()));
+		Label line = new Label(String.valueOf(teaching.getType()));
 		line.setStyleName("teaching-cell-body");
 		bodyPanel.add(line);
 		line = new Label(teaching.getTeacher());
 		line.setStyleName("teaching-cell-body");
 		bodyPanel.add(line);
-		line = new Label("n° seance");
+		line = new Label((teaching.getSeances().indexOf(beginning)+1)+"/"+teaching.getNbSeance());
 		line.setStyleName("teaching-cell-body");
 		bodyPanel.add(line);
 		
@@ -140,5 +138,22 @@ public class SeanceWidget extends Composite {
 	
 	public long getBeginning() {
 		return this.beginning;
+	}
+	public void updateBodyData(){
+		bodyPanel.clear();
+		Label line = new Label(String.valueOf(teaching.getType()));
+		line.setStyleName("teaching-cell-body");
+		bodyPanel.add(line);
+		line = new Label(teaching.getTeacher());
+		line.setStyleName("teaching-cell-body");
+		bodyPanel.add(line);
+		line = new Label((teaching.getSeances().indexOf(beginning)+1)+"/"+teaching.getNbSeance());
+		line.setStyleName("teaching-cell-body");
+		bodyPanel.add(line);
+	}
+	
+	public void setTitle(String title){
+		this.title = title;
+		headerLabel.setText(title);
 	}
 }
