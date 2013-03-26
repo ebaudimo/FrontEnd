@@ -129,4 +129,5 @@ public class MainGUI {
 	public static void refresh(Semester semester) {
 		mainGUIInstance = new MainGUI(semester);
 	}
+	
 }

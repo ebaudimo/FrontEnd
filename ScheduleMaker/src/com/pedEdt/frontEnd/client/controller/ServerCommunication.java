@@ -187,6 +187,7 @@ public final class ServerCommunication {
 					if (response.getStatusCode() == 200) {
 						//refresh page
 						RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, SERVERURL + "read/semester/" + MainGUI.getInstance().getSemester().getId());
+
 						try {
 							builder.sendRequest(null, new RequestCallback() {
 								public void onError(Request request, Throwable exception) {
@@ -228,6 +229,7 @@ public final class ServerCommunication {
 					if (response.getStatusCode() == 200) {
 						//refresh page
 						RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, SERVERURL + "read/semester/" + MainGUI.getInstance().getSemester().getId());
+
 						try {
 							builder.sendRequest(null, new RequestCallback() {
 								public void onError(Request request, Throwable exception) {
@@ -301,6 +303,7 @@ public final class ServerCommunication {
 					if (response.getStatusCode() == 200) {
 						//refresh page
 						RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, SERVERURL + "read/semester/" + MainGUI.getInstance().getSemester().getId());
+
 						try {
 							builder.sendRequest(null, new RequestCallback() {
 								public void onError(Request request, Throwable exception) {
@@ -342,6 +345,7 @@ public final class ServerCommunication {
 					if (response.getStatusCode() == 200) {
 						//refresh page
 						RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, SERVERURL + "read/semester/" + MainGUI.getInstance().getSemester().getId());
+
 						try {
 							builder.sendRequest(null, new RequestCallback() {
 								public void onError(Request request, Throwable exception) {
@@ -379,6 +383,7 @@ public final class ServerCommunication {
 					if (response.getStatusCode() == 200) {
 						//refresh page
 						RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, SERVERURL + "read/semester/" + MainGUI.getInstance().getSemester().getId());
+
 						try {
 							builder.sendRequest(null, new RequestCallback() {
 								public void onError(Request request, Throwable exception) {
@@ -415,6 +420,7 @@ public final class ServerCommunication {
 					if (response.getStatusCode() == 200) {
 						//refresh page
 						RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, SERVERURL + "read/semester/" + MainGUI.getInstance().getSemester().getId());
+
 						try {
 							builder.sendRequest(null, new RequestCallback() {
 								public void onError(Request request, Throwable exception) {
