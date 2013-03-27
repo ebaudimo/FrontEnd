@@ -20,7 +20,6 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.pedEdt.frontEnd.client.controller.ScheduleDragController;
 import com.pedEdt.frontEnd.client.model.Semester;
@@ -38,6 +37,7 @@ public class MainGUI {
 	protected ScheduleMenuBar schedMenubar;
 	protected ScheduleSemesterInformation schedInfobar;
 	protected HorizontalPanel menuContentPanel;
+	protected ScheduleNavigationBar navBar;
 	
 	private Semester semester;
 	
@@ -66,7 +66,9 @@ public class MainGUI {
 		hpan = new HorizontalPanel();
 		hpan.setSpacing(5);
 		schedMenubar = new ScheduleMenuBar(s);
+		navBar = ScheduleNavigationBar.getInstance(1, s.getStartDate(), s.getEndDate());
 		schedGridPan = new ScheduleGridPanel();
+		
 		
 		ScheduleDragController.createInstance(schedGridPan.schedGrid.getDroppableArea(), false);
 		ScheduleDragController.getInstance().registerDropController(schedGridPan.getDropController());
@@ -91,8 +93,6 @@ public class MainGUI {
 		//vpan.add(schedMenubar);
 		
 		vpan.add(hpan);
-		
-		ScheduleNavigationBar navBar = ScheduleNavigationBar.getInstance(1, s.getStartDate(), s.getEndDate());
 		vpan.add(navBar);
 		
 		RootPanel.get().add(vpan);
@@ -108,11 +108,16 @@ public class MainGUI {
 		schedGridPan.getDropController().removeAllSeanceWidget();
 		
 		List<Teaching> allTeaching = this.semester.getAllTeaching();
+		Window.alert("size " + allTeaching.size());
 		if(allTeaching != null) {
 			for (Teaching teaching : allTeaching) {
 				//a real 'for loop' to have a counter
+				Window.alert("teaching : " + teaching.getId());
 				for(int cpt = 0; cpt < teaching.getSeances().size(); cpt++) {
+					Window.alert("" + teaching.getId() + " seance : " + cpt);
 					if(DateUtil.inThisWeek(DateUtil.getDate(teaching.getSeances().get(cpt)))) {
+						Window.alert("" + teaching.getId() + " seance : " + cpt + " in this week");
+						
 						SeanceWidget session = new SeanceWidget(teaching, 
 								DateUtil.findPosH(DateUtil.getDate(teaching.getSeances().get(cpt))), 
 								DateUtil.findPosV(DateUtil.getDate(teaching.getSeances().get(cpt))));

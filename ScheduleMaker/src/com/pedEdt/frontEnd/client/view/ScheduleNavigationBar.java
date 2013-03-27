@@ -19,6 +19,7 @@ public class ScheduleNavigationBar extends Composite {
 	private int currentValue;
 	private long nbWeek;
 	private Label myLabel;
+	private TextBox where;
 	
 	
 	private static ScheduleNavigationBar navBar;
@@ -54,6 +55,8 @@ public class ScheduleNavigationBar extends Composite {
 					currentValue --;
 					myLabel.setText("Semaine " + String.valueOf(currentValue));
 					
+					where.setText("");
+					MainGUI.getInstance().schedGridPan.gridDaysHdr.updateGridDaysHeader();
 					MainGUI.getInstance().loadWeekGrid();
 				}
 				//else : do nothing
@@ -70,6 +73,8 @@ public class ScheduleNavigationBar extends Composite {
 					currentValue ++;
 					myLabel.setText("Semaine " + String.valueOf(currentValue));
 					
+					where.setText("");
+					MainGUI.getInstance().schedGridPan.gridDaysHdr.updateGridDaysHeader();
 					MainGUI.getInstance().loadWeekGrid();
 				}
 				//else : do nothing
@@ -77,12 +82,15 @@ public class ScheduleNavigationBar extends Composite {
 		}));
 		
 		navPanel.add(new Label("Aller directement : "));
-		final TextBox where = new TextBox();
+		where = new TextBox();
 		where.setStyleName("textbox");
 		final Button go = new Button("GO", new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				currentValue = Integer.valueOf(where.getText());
 				myLabel.setText("Semaine " + String.valueOf(currentValue));
+				
+				where.setText("");
+				MainGUI.getInstance().schedGridPan.gridDaysHdr.updateGridDaysHeader();
 				MainGUI.getInstance().loadWeekGrid();
 			}
 		});

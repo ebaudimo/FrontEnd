@@ -122,6 +122,7 @@ public class Teaching implements java.io.Serializable {
 	
 	public void removeSeanceByIndex(int index) {
 		this.seances.remove(index);
+		Collections.sort(this.seances);
 	}
 	
 	public boolean isSessionInPeriod(long start) {

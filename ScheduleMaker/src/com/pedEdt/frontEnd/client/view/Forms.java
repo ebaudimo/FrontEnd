@@ -39,7 +39,7 @@ public class Forms {
 
 		VerticalPanel holder = new VerticalPanel();
 		
-		holder.add(new Label("Cr&#233;er semestre"));
+		holder.add(new Label("Creer semestre"));
 
 		FlexTable holderTab = new FlexTable();
 		holder.add(holderTab);
@@ -223,6 +223,7 @@ public class Forms {
 		FlexTable holderTab = new FlexTable();
 		holder.add(holderTab);
 
+		/*
 		//year
 		holderTab.setWidget(0, 0, new Label("Annee : "));
 		final TextBox year = new TextBox();
@@ -234,7 +235,8 @@ public class Forms {
 		final TextBox number = new TextBox();
 		number.setText("" + semester.getNumber());
 		holderTab.setWidget(1, 1, number);
-
+		*/
+		
 		//startDate
 		holderTab.setWidget(2, 0, new Label("Date de debut (jj/mm/aaaa) : "));
 		final TextBox startDate = new TextBox();
@@ -315,6 +317,32 @@ public class Forms {
 
 			@Override
 			public void onSubmit(SubmitEvent event) {
+				
+				if (!startDate.getText().trim().equals("") && !endDate.getText().trim().equals("")) {
+					if (startDate.getText().trim().matches("^[0-9]{2}[/]{1}[0-9]{2}[/]{1}[0-9]{4}$")) {
+						if(endDate.getText().trim().matches("^[0-9]{2}[/]{1}[0-9]{2}[/]{1}[0-9]{4}$")) {
+							Date dateStart = new Date(Date.parse(startDate.getText().trim()));
+							Date dateEnd = new Date(Date.parse(endDate.getText().trim()));
+
+							Semester semester = new Semester();
+							semester.setYear(dateStart.getYear());
+							semester.setNumber(DateUtil.getIndexSemester(dateStart));
+							semester.setStartDate(dateStart.getTime() / 1000);
+							semester.setEndDate(dateEnd.getTime() / 1000);
+
+							ServerCommunication.getInstance().createSemester(semester);
+							popupPanel.hide();
+						} else {
+							Window.alert("Date de fin incorrecte.");
+							return;
+						}
+					} else {
+						Window.alert("Date de debut incorrecte.");
+						return;
+					}
+				}
+				
+				/*
 				if (!year.getText().trim().equals("") && !number.getText().trim().equals("") && !startDate.getText().trim().equals("") && !endDate.getText().trim().equals("")) {
 					if (year.getText().trim().length() == 4) {
 						for (int i = 0; i < year.getText().trim().length(); i++) {
@@ -357,6 +385,7 @@ public class Forms {
 					Window.alert("Vous devez remplir tous les champs.");
 					return;
 				}
+				*/
 			}
 		});
 

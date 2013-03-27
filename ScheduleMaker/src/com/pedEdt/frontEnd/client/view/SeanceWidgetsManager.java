@@ -120,7 +120,7 @@ public class SeanceWidgetsManager {
 		for(int i=0;i<nbIntervals;i++)
 			timeIntervals[i].reset();
 		
-		for(Iterator<SeanceWidget> it = seances.iterator();it.hasNext(); ){
+		for(Iterator<SeanceWidget> it = seances.iterator(); it.hasNext(); ) {
 			SeanceWidget seance = it.next();
 			if(seance.isRemoved())
 				it.remove();

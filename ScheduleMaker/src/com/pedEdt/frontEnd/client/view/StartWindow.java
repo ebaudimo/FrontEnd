@@ -71,39 +71,45 @@ public class StartWindow extends PopupPanel {
 
 		final ListBox myListBox = new ListBox();
 
-		String url = "proxy.jsp?url=http://localhost:8080/rest/service/read/semesters";
+		String url = "http://localhost:8080/rest/service/read/semesters";
 		final RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, url);
 
 		try {
 			builder.sendRequest(null, new RequestCallback() {
 
 				public void onResponseReceived(Request request, Response response) {
-
+					Window.alert("1");
 					parent.clear();
 					parent.add(new Label("Selectionner un semestre : "));
-
+					
 					if(response.getStatusCode() == 200) {
+						Window.alert("2");
 						List<Semester> sl = SemesterList.fromXML.read(response.getText().trim()).getSemesterList();
+						Window.alert("3");
+						if(sl != null) {
+							if(!sl.isEmpty()) {
+								Window.alert("empty");
+								Iterator<Semester> i = sl.iterator();
+								while (i.hasNext()) {
+									Semester s = i.next();
+									myListBox.addItem("Semestre " + String.valueOf(s.getNumber()) + " de " + String.valueOf(s.getYear()),
+											String.valueOf(s.getId())); //value is the semester id in database
 
-						if(!sl.isEmpty()) {
-							Iterator<Semester> i = sl.iterator();
-							while (i.hasNext()) {
-								Semester s = i.next();
-								myListBox.addItem("Semestre " + String.valueOf(s.getNumber()) + " de " + String.valueOf(s.getYear()),
-													String.valueOf(s.getId())); //value is the semester id in database
-								
-								if(DateUtil.inPeriod(new Date(), 
-													DateUtil.getDate(s.getStartDate()), 
-													DateUtil.getDate(s.getEndDate()))) {
-									buildGoSemesterButton(parent, String.valueOf(s.getId()));
-								}	
-							}
-							parent.add(myListBox);
-							buildLoadButton(parent, myListBox);
-						}						
+									if(DateUtil.inPeriod(new Date(), 
+											DateUtil.getDate(s.getStartDate()), 
+											DateUtil.getDate(s.getEndDate()))) {
+										buildGoSemesterButton(parent, String.valueOf(s.getId()));
+									}	
+								}
+								parent.add(myListBox);
+								buildLoadButton(parent, myListBox);
+							}	
+						}
+						Window.alert("add");
+						buildAddButton(parent);					
 					}
 					
-					buildAddButton(parent);
+					Window.alert("fin");
 				}
 
 				@Override
@@ -118,7 +124,7 @@ public class StartWindow extends PopupPanel {
 
 	private void searchSemester(String id) {
 
-		RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, "proxy.jsp?url=http://localhost:8080/rest/service/read/semester/" + id);
+		RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, "http://localhost:8080/rest/service/read/semester/" + id);
 		try {
 			builder.sendRequest(null, new RequestCallback() {
 				public void onResponseReceived(Request request, Response response) {

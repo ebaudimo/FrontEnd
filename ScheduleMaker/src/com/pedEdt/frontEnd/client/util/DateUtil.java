@@ -2,6 +2,7 @@ package com.pedEdt.frontEnd.client.util;
 
 import java.util.Date;
 
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.pedEdt.frontEnd.client.view.ScheduleNavigationBar;
 
 public class DateUtil {
@@ -219,7 +220,7 @@ public class DateUtil {
 	}
 	
 	public static long getNbWeek(Date start, Date end) {
-		return (end.getTime() - start.getTime()) / WEEK;
+		return (getEndWeek(end) - getStartWeek(start)) / WEEK;
 	}
 
 	public static int getIndexSemester(Date start) {
@@ -227,5 +228,35 @@ public class DateUtil {
 			return 1;
 		else
 			return 2;
+	}
+
+	public static String buildWeekHeader(int indexDay) {
+		DateTimeFormat fmt = DateTimeFormat.getFormat("dd/MM");
+		ScheduleNavigationBar navBar = ScheduleNavigationBar.getInstance();
+		
+		Date navigation = new Date(navBar.getStart() + WEEK * (navBar.getCurrentValue()-1));
+		Date startWeek = new Date(getStartWeek(navigation));
+				
+		long currentDate = startWeek.getTime();
+		//currentDate = currentDate + WEEK * (navBar.getCurrentValue()-1);
+
+		switch(indexDay) {
+		case 1: //Monday
+			return fmt.format(new Date(currentDate));
+		case 2:
+			currentDate = currentDate + DAY;
+			return fmt.format(new Date(currentDate));
+		case 3:
+			currentDate = currentDate + DAY * 2;
+			return fmt.format(new Date(currentDate));
+		case 4:
+			currentDate = currentDate + DAY * 3;
+			return fmt.format(new Date(currentDate));
+		case 5: //Friday
+			currentDate = currentDate + DAY * 4;
+			return fmt.format(new Date(currentDate));
+		default:
+			return "";
+		}
 	}
 }
