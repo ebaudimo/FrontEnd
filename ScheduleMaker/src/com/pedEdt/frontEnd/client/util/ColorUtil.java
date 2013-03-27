@@ -5,12 +5,10 @@ import java.util.List;
 
 class Color{
 	private String name;
-	private boolean used;
 	private List<Object> users;
 	
 	public Color(String name){
 	this.name = name;
-	used = false;
 	users = new ArrayList<Object>();
 	}
 	
@@ -18,30 +16,32 @@ class Color{
 		return name;
 	}
 	public boolean isUsed(){
-		return used;
+		return users.isEmpty();
 	}
 	public void addUser(Object o){
-		used = true;
 		users.add(o);
-	}
-	public void setUnUsed(){
-		used = false;
 	}
 	
 	public boolean usedBy(Object o){
 		return users.contains(o);
 	}
+	
+	public void removeUser(Object o){
+		users.remove(0);
+	}
+	
+	public void clearUsers(){
+		users.clear();
+	}
 }
 
 class ColorType {
-	private boolean used;
 	private List<Object> users;
 	private List<Color> colors;
 	
 	public ColorType(List<Color> colors){
 		this.colors = colors;
 		users = new ArrayList<Object>();
-		used = false;
 	}
 	
 	public List<Color> getColors(){
@@ -53,11 +53,13 @@ class ColorType {
 	}
 	
 	public void addUser(Object o){
-		used = true;
 		users.add(o);
 	}
 	public boolean isUsed(){
-		return used;
+		return users.isEmpty();
+	}
+	public void removeUser(Object o){
+		users.remove(o);
 	}
 }
 
@@ -116,6 +118,10 @@ public class ColorUtil {
 	}
 	
 	public void setColorType(Object o){
+		for (ColorType colorType : colorTypes) {
+			if( colorType.usedBy(o))
+				return;
+		}
 		int i = getFreeColorType();
 		colorTypes.get(i).addUser(o);
 	}
@@ -123,6 +129,10 @@ public class ColorUtil {
 	public void setColor(Object colorTypeUser, Object o){
 		for (ColorType ct : colorTypes) {
 			if(ct.usedBy(colorTypeUser)){
+				for (Color c : ct.getColors()) {
+					if(c.usedBy(o))
+						return;
+				}
 				for (Color c : ct.getColors()) {
 					if(!c.isUsed()){
 						c.addUser(o);
@@ -138,7 +148,7 @@ public class ColorUtil {
 	public void affectSameColor(Object src, Object o){
 		for (ColorType ct : colorTypes) {
 			for (Color c : ct.getColors()) {
-				if(c.usedBy(src)){
+				if(c.usedBy(src) && !c.usedBy(o)){
 					c.addUser(o);
 					return;
 				}
@@ -154,5 +164,27 @@ public class ColorUtil {
 			}
 		}
 		return null;
+	}
+	
+	public void removeColorType(Object o){
+		for (ColorType colorType : colorTypes) {
+			if(colorType.usedBy(o)){
+				for (Color color : colorType.getColors()) {
+					color.clearUsers();
+				}
+				return;
+			}
+		}
+	}
+	
+	public void removeColor(Object o){
+		for (ColorType colorType : colorTypes) {
+			for (Color color : colorType.getColors()) {
+				if(color.usedBy(o)){
+					color.removeUser(o);
+					return;
+				}
+			}
+		}
 	}
 }

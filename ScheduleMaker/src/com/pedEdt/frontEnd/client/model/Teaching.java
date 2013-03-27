@@ -140,4 +140,10 @@ public class Teaching implements java.io.Serializable {
 		}
 		return false;
 	}
+	
+	public boolean equals(Object o){
+		if( o instanceof Teaching)
+			return ((Teaching) o).getId() == id;
+		return false;
+	}
 }

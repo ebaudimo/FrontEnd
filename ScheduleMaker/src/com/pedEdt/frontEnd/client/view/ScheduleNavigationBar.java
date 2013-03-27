@@ -45,6 +45,7 @@ public class ScheduleNavigationBar extends Composite {
 			setCurrentValue(1);
 		
 		HorizontalPanel navPanel = new HorizontalPanel();
+		navPanel.setSpacing(5);
 		
 		navPanel.add(new Button("Precedent", new ClickHandler() {
 
@@ -102,7 +103,7 @@ public class ScheduleNavigationBar extends Composite {
 					go.setEnabled(false);
 				}
 				else {
-					if(str.matches("[0-9]*")) {
+					if(str.matches("[0-9]*") && !(Integer.valueOf(str) > nbWeek)) {		
 						where.removeStyleDependentName("onError");
 						go.setEnabled(true);
 					}

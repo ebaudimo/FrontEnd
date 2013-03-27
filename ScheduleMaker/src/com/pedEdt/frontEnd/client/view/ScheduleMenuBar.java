@@ -11,6 +11,7 @@ import com.pedEdt.frontEnd.client.model.Module;
 import com.pedEdt.frontEnd.client.model.Semester;
 import com.pedEdt.frontEnd.client.model.Teaching;
 import com.pedEdt.frontEnd.client.model.TeachingUnit;
+import com.pedEdt.frontEnd.client.util.ColorUtil;
 import com.pedEdt.frontEnd.client.util.DebugPanel;
 
 public class ScheduleMenuBar extends Composite {
@@ -119,6 +120,7 @@ public class ScheduleMenuBar extends Composite {
 			public void execute() {
 				if (Window.confirm("Voulez-vous supprimer cette UE?")) {
 					MainGUI.getInstance().getSemester().removeTeachingUnit(teachingUnit);
+					ColorUtil.getInstance().removeColorType(teachingUnit);
 					ServerCommunication.getInstance().deleteTeachingUnit(teachingUnit.getId());
 				}
 			}
@@ -150,6 +152,7 @@ public class ScheduleMenuBar extends Composite {
 			public void execute() {
 				if (Window.confirm("Voulez-vous supprimer ce module?")) {
 					MainGUI.getInstance().schedTree.semesterTree.getParentTeachingUnit(module).removeModule(module);
+					ColorUtil.getInstance().removeColor(module);
 					ServerCommunication.getInstance().deleteModule(module.getId());
 				}
 			}

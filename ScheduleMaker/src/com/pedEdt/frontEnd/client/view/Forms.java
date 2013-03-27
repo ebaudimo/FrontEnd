@@ -12,13 +12,12 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.FormPanel;
-import com.google.gwt.user.client.ui.FormPanel.SubmitEvent;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DatePicker;
@@ -36,7 +35,7 @@ public class Forms {
 		
 		final PopupPanel popupPanel = new PopupPanel(false, true);
 
-		final FormPanel form = new FormPanel();
+		final SimplePanel form = new SimplePanel();
 
 		VerticalPanel holder = new VerticalPanel();
 		
@@ -44,19 +43,6 @@ public class Forms {
 
 		FlexTable holderTab = new FlexTable();
 		holder.add(holderTab);
-		
-		/*
-		//TODO
-		//year
-		holderTab.setWidget(0, 0, new Label("Annee : "));
-		final TextBox year = new TextBox();
-		holderTab.setWidget(0, 1, year);
-
-		//number
-		holderTab.setWidget(1, 0, new Label("Numero (1 ou 2) : "));
-		final TextBox number = new TextBox();
-		holderTab.setWidget(1, 1, number);
-		*/
 		
 		//startDate
 		holderTab.setWidget(2, 0, new Label("Date de debut (jj/mm/aaaa) : "));
@@ -109,7 +95,31 @@ public class Forms {
 		//submit
 		Button submitButton = new Button("Valider", new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				form.submit();
+				if (!startDate.getText().trim().equals("") && !endDate.getText().trim().equals("")) {
+					if (startDate.getText().trim().matches("^[0-9]{2}[/]{1}[0-9]{2}[/]{1}[0-9]{4}$")) {
+						if(endDate.getText().trim().matches("^[0-9]{2}[/]{1}[0-9]{2}[/]{1}[0-9]{4}$")) {
+							DateTimeFormat dateFormat = DateTimeFormat.getFormat("dd/MM/yyyy");
+							Date dateStart = dateFormat.parseStrict(startDate.getText().trim());
+							Date dateEnd = dateFormat.parse(endDate.getText().trim());
+							DateTimeFormat year = DateTimeFormat.getFormat("yyyy");
+
+							Semester semester = new Semester();
+							semester.setYear(Integer.parseInt(year.format(dateStart)));
+							semester.setNumber(DateUtil.getIndexSemester(dateStart));
+							semester.setStartDate(DateUtil.setDateToDB(DateUtil.getStartWeek(dateStart)));
+							semester.setEndDate(DateUtil.setDateToDB(DateUtil.getEndWeek(dateEnd)));
+
+							ServerCommunication.getInstance().createSemester(semester);
+							popupPanel.hide();
+						} else {
+							Window.alert("Date de fin incorrecte.");
+							return;
+						}
+					} else {
+						Window.alert("Date de debut incorrecte.");
+						return;
+					}
+				}
 			}
 		});
 		
@@ -126,98 +136,15 @@ public class Forms {
 		holder.add(buttonsPanel);
 
 		form.add(holder);
-		form.addSubmitHandler(new FormPanel.SubmitHandler() {
-			public void onSubmit(SubmitEvent event) {
-				if (!startDate.getText().trim().equals("") && !endDate.getText().trim().equals("")) {
-					if (startDate.getText().trim().matches("^[0-9]{2}[/]{1}[0-9]{2}[/]{1}[0-9]{4}$")) {
-						if(endDate.getText().trim().matches("^[0-9]{2}[/]{1}[0-9]{2}[/]{1}[0-9]{4}$")) {
-							DateTimeFormat dateFormat = DateTimeFormat.getFormat("dd/MM/yyyy");
-							Date dateStart = dateFormat.parseStrict(startDate.getText().trim());
-							Date dateEnd = dateFormat.parse(endDate.getText().trim());
-							DateTimeFormat year = DateTimeFormat.getFormat("yyyy");
-
-							Semester semester = new Semester();
-							semester.setYear(Integer.parseInt(year.format(dateStart)));
-							semester.setNumber(DateUtil.getIndexSemester(dateStart));
-							semester.setStartDate(dateStart.getTime() / 1000);
-							semester.setEndDate(dateEnd.getTime() / 1000);
-
-							ServerCommunication.getInstance().createSemester(semester);
-							popupPanel.hide();
-						} else {
-							Window.alert("Date de fin incorrecte.");
-							return;
-						}
-					} else {
-						Window.alert("Date de debut incorrecte.");
-						return;
-					}
-				}
-			}
-		});
 		popupPanel.setWidget(form);
 		return popupPanel;
 	} // popupCreateSemester()
-
-			/*
-			@Override
-			public void onSubmit(SubmitEvent event) {
-				if (!year.getText().trim().equals("") && !number.getText().trim().equals("") && !startDate.getText().trim().equals("") && !endDate.getText().trim().equals("")) {
-					if (!startDate.getText().trim().equals("") && !endDate.getText().trim().equals("")) {	
-
-						if (year.getText().trim().length() == 4) {
-							for (int i = 0; i < year.getText().trim().length(); i++) {
-								if (!java.lang.Character.isDigit(year.getText().trim().charAt(i))) {
-									Window.alert("Annee incorrecte.");
-									return;
-								}
-							}
-
-							if (number.getText().trim().equals("1") || number.getText().trim().equals("2")) {
-
-								if (startDate.getText().trim().matches("^[0-9]{2}[/]{1}[0-9]{2}[/]{1}[0-9]{4}$")) {
-									if (endDate.getText().trim().matches("^[0-9]{2}[/]{1}[0-9]{2}[/]{1}[0-9]{4}$")) {
-										Date dateStart = new Date(Date.parse(startDate.getText().trim()));
-										Date dateEnd = new Date(Date.parse(endDate.getText().trim()));
-
-										Semester semester = new Semester();
-										semester.setYear(Integer.parseInt(year.getText().trim()));
-										semester.setNumber(Integer.parseInt(number.getText().trim()));
-										semester.setStartDate(dateStart.getTime() / 1000);
-										semester.setEndDate(dateEnd.getTime() / 1000);
-
-										ServerCommunication.getInstance().createSemester(semester);
-										popupPanel.hide();
-									} else {
-										Window.alert("Date de fin incorrecte.");
-										return;
-									}
-								} else {
-									Window.alert("Date de debut incorrecte.");
-									return;
-								}
-							} else {
-								Window.alert("Numero incorrect.");
-								return;
-							}
-						} else {
-							Window.alert("Annee incorrecte.");
-							return;
-						}
-					} else {
-						Window.alert("Vous devez remplir tous les champs.");
-						return;
-					}
-				}
-				*/
-
-	
 	
 	public static PopupPanel popupUpdateSemester(final Semester semester) {
 
 		final PopupPanel popupPanel = new PopupPanel(false, true);
 
-		final FormPanel form = new FormPanel();
+		final SimplePanel form = new SimplePanel();
 
 		VerticalPanel holder = new VerticalPanel();
 		
@@ -225,20 +152,6 @@ public class Forms {
 
 		FlexTable holderTab = new FlexTable();
 		holder.add(holderTab);
-
-		/*
-		//year
-		holderTab.setWidget(0, 0, new Label("Annee : "));
-		final TextBox year = new TextBox();
-		year.setText("" + semester.getYear());
-		holderTab.setWidget(0, 1, year);
-
-		//number
-		holderTab.setWidget(1, 0, new Label("Numero : "));
-		final TextBox number = new TextBox();
-		number.setText("" + semester.getNumber());
-		holderTab.setWidget(1, 1, number);
-		*/
 		
 		//startDate
 		holderTab.setWidget(2, 0, new Label("Date de debut (jj/mm/aaaa) : "));
@@ -297,7 +210,31 @@ public class Forms {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				form.submit();
+				if (!startDate.getText().trim().equals("") && !endDate.getText().trim().equals("")) {
+					if (startDate.getText().trim().matches("^[0-9]{2}[/]{1}[0-9]{2}[/]{1}[0-9]{4}$")) {
+						if(endDate.getText().trim().matches("^[0-9]{2}[/]{1}[0-9]{2}[/]{1}[0-9]{4}$")) {
+							DateTimeFormat dateFormat = DateTimeFormat.getFormat("dd/MM/yyyy");
+							Date dateStart = dateFormat.parseStrict(startDate.getText().trim());
+							Date dateEnd = dateFormat.parse(endDate.getText().trim());
+							DateTimeFormat year = DateTimeFormat.getFormat("yyyy");
+
+							Semester semester = new Semester();
+							semester.setYear(Integer.parseInt(year.format(dateStart)));
+							semester.setNumber(DateUtil.getIndexSemester(dateStart));
+							semester.setStartDate(DateUtil.setDateToDB(DateUtil.getStartWeek(dateStart)));
+							semester.setEndDate(DateUtil.setDateToDB(DateUtil.getEndWeek(dateEnd)));
+
+							ServerCommunication.getInstance().updateSemester(semester);
+							popupPanel.hide();
+						} else {
+							Window.alert("Date de fin incorrecte.");
+							return;
+						}
+					} else {
+						Window.alert("Date de debut incorrecte.");
+						return;
+					}
+				}
 			}
 		});
 		
@@ -316,84 +253,6 @@ public class Forms {
 		holder.add(buttonsPanel);
 
 		form.add(holder);
-		form.addSubmitHandler(new FormPanel.SubmitHandler() {
-
-			@Override
-			public void onSubmit(SubmitEvent event) {
-				
-				if (!startDate.getText().trim().equals("") && !endDate.getText().trim().equals("")) {
-					if (startDate.getText().trim().matches("^[0-9]{2}[/]{1}[0-9]{2}[/]{1}[0-9]{4}$")) {
-						if(endDate.getText().trim().matches("^[0-9]{2}[/]{1}[0-9]{2}[/]{1}[0-9]{4}$")) {
-							DateTimeFormat dateFormat = DateTimeFormat.getFormat("dd/MM/yyyy");
-							Date dateStart = dateFormat.parseStrict(startDate.getText().trim());
-							Date dateEnd = dateFormat.parse(endDate.getText().trim());
-							DateTimeFormat year = DateTimeFormat.getFormat("yyyy");
-
-							Semester semester = new Semester();
-							semester.setYear(Integer.parseInt(year.format(dateStart)));
-							semester.setNumber(DateUtil.getIndexSemester(dateStart));
-							semester.setStartDate(dateStart.getTime() / 1000);
-							semester.setEndDate(dateEnd.getTime() / 1000);
-
-							ServerCommunication.getInstance().createSemester(semester);
-							popupPanel.hide();
-						} else {
-							Window.alert("Date de fin incorrecte.");
-							return;
-						}
-					} else {
-						Window.alert("Date de debut incorrecte.");
-						return;
-					}
-				}
-				
-				/*
-				if (!year.getText().trim().equals("") && !number.getText().trim().equals("") && !startDate.getText().trim().equals("") && !endDate.getText().trim().equals("")) {
-					if (year.getText().trim().length() == 4) {
-						for (int i = 0; i < year.getText().trim().length(); i++) {
-							if (!java.lang.Character.isDigit(year.getText().trim().charAt(i))) {
-								Window.alert("Annee incorrecte.");
-								return;
-							}
-						}
-						
-						if (number.getText().trim().equals("1") || number.getText().trim().equals("2")) {
-							if (startDate.getText().trim().matches("^[0-9]{2}[/]{1}[0-9]{2}[/]{1}[0-9]{4}$")) {
-								if (endDate.getText().trim().matches("^[0-9]{2}[/]{1}[0-9]{2}[/]{1}[0-9]{4}$")) {
-										Date dateStart = new Date(Date.parse(startDate.getText().trim()));
-										Date dateEnd = new Date(Date.parse(endDate.getText().trim()));
-										
-										semester.setYear(Integer.parseInt(year.getText().trim()));
-										semester.setNumber(Integer.parseInt(number.getText().trim()));
-										semester.setStartDate(dateStart.getTime() / 1000);
-										semester.setEndDate(dateEnd.getTime() / 1000);
-
-										ServerCommunication.getInstance().updateSemester(semester);
-										popupPanel.hide();
-								} else {
-									Window.alert("Date de fin incorrecte.");
-									return;
-								}
-							} else {
-								Window.alert("Date de debut incorrecte.");
-								return;
-							}
-						} else {
-							Window.alert("Numero incorrect.");
-							return;
-						}
-					} else {
-						Window.alert("Annee incorrecte.");
-						return;
-					}
-				} else {
-					Window.alert("Vous devez remplir tous les champs.");
-					return;
-				}
-				*/
-			}
-		});
-
 		popupPanel.setWidget(form);
 		return popupPanel;
 	} // popupUpdateSemester(Semester semester)
@@ -404,7 +263,7 @@ public class Forms {
 
 		final PopupPanel popupPanel = new PopupPanel(false, true);
 
-		final FormPanel form = new FormPanel();
+		final SimplePanel form = new SimplePanel();
 
 		VerticalPanel holder = new VerticalPanel();
 		
@@ -432,7 +291,17 @@ public class Forms {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				form.submit();
+				if (!code.getText().trim().equals("") && !title.getText().trim().equals("")) {
+					TeachingUnit teachingUnit = new TeachingUnit();
+					teachingUnit.setCode(code.getText().trim());
+					teachingUnit.setTitle(title.getText().trim());
+
+					ServerCommunication.getInstance().createTeachingUnit(semester, teachingUnit);
+					popupPanel.hide();
+				} else {
+					Window.alert("Vous devez remplir tous les champs.");
+					return;
+				}
 			}
 		});
 		
@@ -451,24 +320,6 @@ public class Forms {
 		holder.add(buttonsPanel);
 
 		form.add(holder);
-		form.addSubmitHandler(new FormPanel.SubmitHandler() {
-
-			@Override
-			public void onSubmit(SubmitEvent event) {
-				if (!code.getText().trim().equals("") && !title.getText().trim().equals("")) {
-					TeachingUnit teachingUnit = new TeachingUnit();
-					teachingUnit.setCode(code.getText().trim());
-					teachingUnit.setTitle(title.getText().trim());
-
-					ServerCommunication.getInstance().createTeachingUnit(semester, teachingUnit);
-					popupPanel.hide();
-				} else {
-					Window.alert("Vous devez remplir tous les champs.");
-					return;
-				}
-			}
-		});
-
 		popupPanel.setWidget(form);
 		return popupPanel;
 	} // popupCreateTeachingUnit(Semester semester)
@@ -479,7 +330,7 @@ public class Forms {
 		
 		final PopupPanel popupPanel = new PopupPanel(false, true);
 
-		final FormPanel form = new FormPanel();
+		final SimplePanel form = new SimplePanel();
 
 		VerticalPanel holder = new VerticalPanel();
 		
@@ -505,7 +356,16 @@ public class Forms {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				form.submit();
+				if (!code.getText().trim().equals("") && !title.getText().trim().equals("")) {
+					teachingUnit.setCode(code.getText().trim());
+					teachingUnit.setTitle(title.getText().trim());
+
+					ServerCommunication.getInstance().updateTeachingUnit(teachingUnit);
+					popupPanel.hide();
+				} else {
+					Window.alert("Vous devez remplir tous les champs.");
+					return;
+				}
 			}
 		});
 		
@@ -524,23 +384,6 @@ public class Forms {
 		holder.add(buttonsPanel);
 
 		form.add(holder);
-		form.addSubmitHandler(new FormPanel.SubmitHandler() {
-
-			@Override
-			public void onSubmit(SubmitEvent event) {
-				if (!code.getText().trim().equals("") && !title.getText().trim().equals("")) {
-					teachingUnit.setCode(code.getText().trim());
-					teachingUnit.setTitle(title.getText().trim());
-
-					ServerCommunication.getInstance().updateTeachingUnit(teachingUnit);
-					popupPanel.hide();
-				} else {
-					Window.alert("Vous devez remplir tous les champs.");
-					return;
-				}
-			}
-		});
-
 		popupPanel.setWidget(form);
 		return popupPanel;
 	} // popupUpdateTeachingUnit(TeachintUnit teachingUnit)
@@ -551,7 +394,7 @@ public class Forms {
 
 		final PopupPanel popupPanel = new PopupPanel(false, true);
 
-		final FormPanel form = new FormPanel();
+		final SimplePanel form = new SimplePanel();
 
 		VerticalPanel holder = new VerticalPanel();
 		
@@ -575,7 +418,17 @@ public class Forms {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				form.submit();
+				if (!code.getText().trim().equals("") && !title.getText().trim().equals("")) {
+					Module module = new Module();
+					module.setCode(code.getText().trim());
+					module.setTitle(title.getText().trim());
+
+					ServerCommunication.getInstance().createModule(teachingUnit, module);
+					popupPanel.hide();
+				} else {
+					Window.alert("Vous devez remplir tous les champs.");
+					return;
+				}
 			}
 		});
 		
@@ -594,24 +447,6 @@ public class Forms {
 		holder.add(buttonsPanel);
 
 		form.add(holder);
-		form.addSubmitHandler(new FormPanel.SubmitHandler() {
-
-			@Override
-			public void onSubmit(SubmitEvent event) {
-				if (!code.getText().trim().equals("") && !title.getText().trim().equals("")) {
-					Module module = new Module();
-					module.setCode(code.getText().trim());
-					module.setTitle(title.getText().trim());
-
-					ServerCommunication.getInstance().createModule(teachingUnit, module);
-					popupPanel.hide();
-				} else {
-					Window.alert("Vous devez remplir tous les champs.");
-					return;
-				}
-			}
-		});
-
 		popupPanel.setWidget(form);
 		return popupPanel;
 	} // popupCreateModule(TeachingUnit teachingUnit)
@@ -622,7 +457,7 @@ public class Forms {
 		
 		final PopupPanel popupPanel = new PopupPanel(false, true);
 
-		final FormPanel form = new FormPanel();
+		final SimplePanel form = new SimplePanel();
 
 		VerticalPanel holder = new VerticalPanel();
 		
@@ -648,7 +483,16 @@ public class Forms {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				form.submit();
+				if (!code.getText().trim().equals("") && !title.getText().trim().equals("")) {
+					module.setCode(code.getText().trim());
+					module.setTitle(title.getText().trim());
+	
+					ServerCommunication.getInstance().updateModule(module);
+					popupPanel.hide();
+				} else {
+					Window.alert("Vous devez remplir tous les champs.");
+					return;
+				}
 			}
 		});
 		
@@ -667,23 +511,6 @@ public class Forms {
 		holder.add(buttonsPanel);
 
 		form.add(holder);
-		form.addSubmitHandler(new FormPanel.SubmitHandler() {
-
-			@Override
-			public void onSubmit(SubmitEvent event) {
-				if (!code.getText().trim().equals("") && !title.getText().trim().equals("")) {
-					module.setCode(code.getText().trim());
-					module.setTitle(title.getText().trim());
-	
-					ServerCommunication.getInstance().updateModule(module);
-					popupPanel.hide();
-				} else {
-					Window.alert("Vous devez remplir tous les champs.");
-					return;
-				}
-			}
-		});
-
 		popupPanel.setWidget(form);
 		return popupPanel;
 	} // popupUpdateModule(Module module)
@@ -694,7 +521,7 @@ public class Forms {
 
 		final PopupPanel popupPanel = new PopupPanel(false, true);
 
-		final FormPanel form = new FormPanel();
+		final SimplePanel form = new SimplePanel();
 
 		VerticalPanel holder = new VerticalPanel();
 		
@@ -744,29 +571,6 @@ public class Forms {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				form.submit();
-			}
-		});
-		
-		//cancel
-		Button cancelButton = new Button("Annuler", new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
-				popupPanel.hide();
-			}
-		});
-
-		HorizontalPanel buttonsPanel = new HorizontalPanel();
-		buttonsPanel.add(submitButton);
-		buttonsPanel.add(cancelButton);
-		holder.add(buttonsPanel);
-
-		form.add(holder);
-		form.addSubmitHandler(new FormPanel.SubmitHandler() {
-
-			@Override
-			public void onSubmit(SubmitEvent event) {
 				int inMinutes = 0;
 				if(!nbMin.getText().trim().equals("")) {
 					for (int i = 0; i < nbMin.getText().trim().length(); i++) {
@@ -816,7 +620,22 @@ public class Forms {
 				}
 			}
 		});
+		
+		//cancel
+		Button cancelButton = new Button("Annuler", new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				popupPanel.hide();
+			}
+		});
 
+		HorizontalPanel buttonsPanel = new HorizontalPanel();
+		buttonsPanel.add(submitButton);
+		buttonsPanel.add(cancelButton);
+		holder.add(buttonsPanel);
+
+		form.add(holder);
 		popupPanel.setWidget(form);
 		return popupPanel;
 	} // popupCreateTeaching(final Module module)
@@ -827,7 +646,7 @@ public class Forms {
 
 		final PopupPanel popupPanel = new PopupPanel(false, true);
 
-		final FormPanel form = new FormPanel();
+		final SimplePanel form = new SimplePanel();
 
 		VerticalPanel holder = new VerticalPanel();
 		
@@ -882,29 +701,6 @@ public class Forms {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				form.submit();
-			}
-		});
-		
-		//cancel
-		Button cancelButton = new Button("Annuler", new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
-				popupPanel.hide();
-			}
-		});
-
-		HorizontalPanel buttonsPanel = new HorizontalPanel();
-		buttonsPanel.add(submitButton);
-		buttonsPanel.add(cancelButton);
-		holder.add(buttonsPanel);
-
-		form.add(holder);
-		form.addSubmitHandler(new FormPanel.SubmitHandler() {
-
-			@Override
-			public void onSubmit(SubmitEvent event) {
 				if (!teacher.getText().trim().equals("") && !nbHour.getText().trim().equals("") && !nbSeance.getText().trim().equals("") && !numGroup.getText().trim().equals("")) {
 					for (int i = 0; i < nbHour.getText().trim().length(); i++) {
 						if (!java.lang.Character.isDigit(nbHour.getText().trim().charAt(i))) {
@@ -939,7 +735,22 @@ public class Forms {
 				}
 			}
 		});
+		
+		//cancel
+		Button cancelButton = new Button("Annuler", new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				popupPanel.hide();
+			}
+		});
 
+		HorizontalPanel buttonsPanel = new HorizontalPanel();
+		buttonsPanel.add(submitButton);
+		buttonsPanel.add(cancelButton);
+		holder.add(buttonsPanel);
+
+		form.add(holder);
 		popupPanel.setWidget(form);
 		return popupPanel;
 	} // popupUpdateTeaching(final Teaching teaching)

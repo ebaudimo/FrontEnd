@@ -108,4 +108,10 @@ public class TeachingUnit implements java.io.Serializable {
 				return module;
 		return null;
 	}
+	
+	public boolean equals(Object o){
+		if( o instanceof TeachingUnit)
+			return ((TeachingUnit) o).getId() == id;
+		return false;
+	}
 }

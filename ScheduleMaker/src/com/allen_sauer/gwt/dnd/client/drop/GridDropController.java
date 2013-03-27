@@ -55,9 +55,8 @@ public class GridDropController extends AbsolutePositionDropController{
 		
 		if( context.draggable instanceof TreeTeachingWidget){
 			SeanceWidget seance= new SeanceWidget(((TreeTeachingWidget) context.draggable).getTeaching());
-			int lenght = ((TreeTeachingWidget)context.draggable).getLengthOnGrid();
-			seance.setLength(lenght);
-			seance.setHeight((gridY*lenght+lenght)+"px");
+			int length = seance.getLength();
+			seance.setHeight((gridY*length+length)+"px");
 			seance.setWidth((gridX-1)+"px");
 			DOM.setStyleAttribute(seance.getElement(), "background",
 					ColorUtil.getInstance().getColor(((TreeTeachingWidget) context.draggable).getTeaching()));

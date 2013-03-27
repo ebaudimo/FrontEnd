@@ -15,20 +15,9 @@
 package com.pedEdt.frontEnd.client;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
-import com.pedEdt.frontEnd.client.controller.ScheduleDragController;
-import com.pedEdt.frontEnd.client.model.Module;
-import com.pedEdt.frontEnd.client.model.Semester;
-import com.pedEdt.frontEnd.client.model.Teaching;
-import com.pedEdt.frontEnd.client.model.TeachingType;
-import com.pedEdt.frontEnd.client.model.TeachingUnit;
-import com.pedEdt.frontEnd.client.util.DebugPanel;
-import com.pedEdt.frontEnd.client.view.ScheduleGridPanel;
-import com.pedEdt.frontEnd.client.view.ScheduleMenuBar;
-import com.pedEdt.frontEnd.client.view.ScheduleTreePanel;
 import com.pedEdt.frontEnd.client.view.StartWindow;
+import com.pedEdt.frontEnd.client.view.TitlePanel;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -36,6 +25,8 @@ import com.pedEdt.frontEnd.client.view.StartWindow;
 public class ScheduleMaker implements EntryPoint {
 	public void onModuleLoad() {
 		StartWindow startPopup = new StartWindow();
+		RootPanel.get().setStyleName("center");
+		RootPanel.get().add(new TitlePanel());
 		RootPanel.get().add(startPopup);
 		startPopup.center();
 	}

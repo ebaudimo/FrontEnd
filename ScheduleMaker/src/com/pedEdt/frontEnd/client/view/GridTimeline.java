@@ -2,36 +2,28 @@ package com.pedEdt.frontEnd.client.view;
 
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 
-
-//TODO: Continue... bugged at the moment, height is not what's expected
 public class GridTimeline extends Composite {
 
 	private AbsolutePanel timelinePanel;
-	
-	private final int intervalsPerHour = 6;
-	private final int pixelsPerInterval = 10;
-	private final int dayStartAt = 8;
-	private final int HOURS_IN_DAY = 11;
 	
 	public GridTimeline(){
 		timelinePanel = new AbsolutePanel();
 		timelinePanel.setWidth("50px");
 		initWidget(timelinePanel);
 
-		addSeanceLabel("8h-9h20");
+		addSeanceLabel("8h - 9h20");
 		addPauseLabel();
-		addSeanceLabel("9h30-10h50");
+		addSeanceLabel("9h30 - 10h50");
 		addPauseLabel();
-		addSeanceLabel("11h-12h20");
+		addSeanceLabel("11h - 12h20");
 		addLunchLabel();
-		addSeanceLabel("13h50-15h10");
+		addSeanceLabel("13h50 - 15h10");
 		addPauseLabel();
-		addSeanceLabel("15h20-16h-40");
+		addSeanceLabel("15h20 - 16h40");
 		addPauseLabel();
-		addSeanceLabel("16h50-18h10");
+		addSeanceLabel("16h50 - 18h10");
 		
 	}
 	

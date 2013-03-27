@@ -13,6 +13,7 @@ import com.pedEdt.frontEnd.client.model.Teaching;
 import com.pedEdt.frontEnd.client.model.TeachingUnit;
 import com.pedEdt.frontEnd.client.view.MainGUI;
 import com.pedEdt.frontEnd.client.view.StartWindow;
+import com.pedEdt.frontEnd.client.view.TitlePanel;
 
 public final class ServerCommunication {
 
@@ -52,7 +53,7 @@ public final class ServerCommunication {
 				public void onResponseReceived(Request request, Response response) {
 					if (response.getStatusCode() == 200) {
 						Semester s = Semester.fromXML.read(response.getText().trim());
-						MainGUI.getInstance().getInstance(s);
+						MainGUI.getInstance(s);
 					}
 				}
 			});
@@ -72,7 +73,7 @@ public final class ServerCommunication {
 
 				public void onResponseReceived(Request request, Response response) {
 					if (response.getStatusCode() == 200) {
-						MainGUI.getInstance().getInstance(semester);
+						MainGUI.getInstance(semester);
 					}
 				}
 			});
@@ -92,6 +93,8 @@ public final class ServerCommunication {
 				public void onResponseReceived(Request request, Response response) {
 					if (response.getStatusCode() == 200) {
 						RootPanel.get().clear();
+						RootPanel.get().setStyleName("center");
+						RootPanel.get().add(new TitlePanel());
 						StartWindow startPopup = new StartWindow();
 						RootPanel.get().add(startPopup);
 						startPopup.center();

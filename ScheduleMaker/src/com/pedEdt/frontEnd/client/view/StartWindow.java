@@ -13,8 +13,10 @@ import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.pedEdt.frontEnd.client.controller.ServerCommunication;
@@ -47,12 +49,11 @@ public class StartWindow extends PopupPanel {
 		parent.add(new Button("Ajouter", new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				Forms.popupCreateSemester().center();
-				me.hide();
 			}
 		}));
 	}
 
-	private void buildLoadButton(VerticalPanel parent, final ListBox list) {
+	private void buildLoadButton(Panel parent, final ListBox list) {
 		parent.add(new Button("Charger", new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				searchSemester(list.getValue(list.getSelectedIndex()));
@@ -80,6 +81,7 @@ public class StartWindow extends PopupPanel {
 
 				public void onResponseReceived(Request request, Response response) {
 					parent.clear();
+					parent.setHorizontalAlignment(HorizontalPanel.ALIGN_CENTER);
 					parent.add(new Label("Selectionner un semestre : "));
 					
 					if(response.getStatusCode() == 200) {
@@ -98,8 +100,10 @@ public class StartWindow extends PopupPanel {
 										buildGoSemesterButton(parent, String.valueOf(s.getId()));
 									}	
 								}
-								parent.add(myListBox);
-								buildLoadButton(parent, myListBox);
+								HorizontalPanel hpan = new HorizontalPanel();
+								hpan.add(myListBox);
+								buildLoadButton(hpan, myListBox);
+								parent.add(hpan);
 							}	
 						}
 						buildAddButton(parent);					

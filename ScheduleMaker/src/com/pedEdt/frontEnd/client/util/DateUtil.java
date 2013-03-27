@@ -92,38 +92,38 @@ public class DateUtil {
 		
 		switch(date.getDay()) {
 		case 0: //Sunday
-			current = current + HOUR * (23 - date.getHours()); 
-			current = current + 60000 * (59 - date.getMinutes());
+			//current = current + HOUR * (23 - date.getHours()); 
+			//current = current + 60000 * (59 - date.getMinutes());
 			break;
 		case 1: //Monday
 			current = current + DAY * 6;
-			current = current + HOUR * (23 - date.getHours()); 
-			current = current + 60000 * (59 - date.getMinutes());
+			//current = current + HOUR * (23 - date.getHours()); 
+			//current = current + 60000 * (59 - date.getMinutes());
 			break;
 		case 2:
 			current = current + DAY * 5;
-			current = current + HOUR * (23 - date.getHours()); 
-			current = current + 60000 * (59 - date.getMinutes());
+			//current = current + HOUR * (23 - date.getHours()); 
+			//current = current + 60000 * (59 - date.getMinutes());
 			break;
 		case 3:
 			current = current + DAY * 4;
-			current = current + HOUR * (23 - date.getHours()); 
-			current = current + 60000 * (59 - date.getMinutes());
+			//current = current + HOUR * (23 - date.getHours()); 
+			//current = current + 60000 * (59 - date.getMinutes());
 			break;
 		case 4:
 			current = current + DAY * 3;
-			current = current + HOUR * (23 - date.getHours()); 
-			current = current + 60000 * (59 - date.getMinutes());
+			//current = current + HOUR * (23 - date.getHours()); 
+			//current = current + 60000 * (59 - date.getMinutes());
 			break;
 		case 5:
 			current = current + DAY * 2;
-			current = current + HOUR * (23 - date.getHours()); 
-			current = current + 60000 * (59 - date.getMinutes());
+			//current = current + HOUR * (23 - date.getHours()); 
+			//current = current + 60000 * (59 - date.getMinutes());
 			break;
 		case 6:
 			current = current + DAY;
-			current = current + HOUR * (23 - date.getHours()); 
-			current = current + 60000 * (59 - date.getMinutes());
+			//current = current + HOUR * (23 - date.getHours()); 
+			//current = current + 60000 * (59 - date.getMinutes());
 			break;
 		default:
 			break;
@@ -220,7 +220,7 @@ public class DateUtil {
 	}
 	
 	public static long getNbWeek(Date start, Date end) {
-		return (getEndWeek(end) - getStartWeek(start)) / WEEK;
+		return (getEndWeek(end) - getStartWeek(start) + DAY) / WEEK;
 	}
 
 	public static int getIndexSemester(Date start) {

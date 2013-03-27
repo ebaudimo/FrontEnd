@@ -102,4 +102,10 @@ public class Module implements java.io.Serializable {
 				return teaching;
 		return null;
 	}
+	
+	public boolean equals(Object o){
+		if( o instanceof Module)
+			return ((Module) o).getId() == id;
+		return false;
+	}
 }

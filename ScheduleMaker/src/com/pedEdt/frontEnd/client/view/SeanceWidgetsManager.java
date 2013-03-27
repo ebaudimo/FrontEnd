@@ -97,13 +97,10 @@ public class SeanceWidgetsManager {
 					timeIntervals[startInterval+i].nbSeances
 					: nbNeighs;
 		}
-		
-		//TODO
+
 		int width = gridX/nbNeighs-1;
 		seance.setWidth(width+"px");
-		//seance.setWidth("100px");
 		seance.setHeight((gridY*length+length)+"px");
-		//seance.setHeight("100px");
 		
 		int left = seance.getPosH() * gridX+1;
 		left = Math.max(0,left);

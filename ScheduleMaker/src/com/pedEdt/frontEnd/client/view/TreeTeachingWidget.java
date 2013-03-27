@@ -20,7 +20,7 @@ public class TreeTeachingWidget extends Label{
 	protected TooltipListener tooltip;
 	
 	public TreeTeachingWidget(final Teaching teaching,  TreeModuleWidget father) {
-		super(teaching.getTeacher() + " " + String.valueOf(teaching.getType()));
+		super(String.valueOf(teaching.getType())+" G"+teaching.getNumGroup());
 		ScheduleDragController.getInstance().makeDraggable(this);
 		ScheduleDragController.getInstance().setBehaviorDragStartSensitivity(1);
 		this.teaching = teaching;
@@ -36,7 +36,9 @@ public class TreeTeachingWidget extends Label{
 		final Widget sender = this;
 		tooltip = new TooltipListener(
 				"Teacher : " + teaching.getTeacher() + "<br/>" +
-				"Reste " + String.valueOf(teaching.getNbSeance() - teaching.getSeances().size()) + " seances sur " + String.valueOf(teaching.getNbSeance()),
+				"Groupe : " + teaching.getNumGroup() + "<br/>" +
+				"Reste " + String.valueOf(teaching.getNbSeance() - teaching.getSeances().size()) + 
+				" seances sur " + String.valueOf(teaching.getNbSeance()),
 				5000);
 		
 		
@@ -53,15 +55,6 @@ public class TreeTeachingWidget extends Label{
 		});
 		
 		updateTreeTeaching();
-		
-//		final ContextMenu contextMenu = new ContextMenu(this);
-//		this.addDomHandler(new ContextMenuHandler() {
-//			public void onContextMenu(ContextMenuEvent event) {
-//				event.preventDefault();
-//				contextMenu.showMenu();
-//			}
-//		}, ContextMenuEvent.getType());
-		
 	}
 	
 	public Teaching getTeaching() {
@@ -86,13 +79,13 @@ public class TreeTeachingWidget extends Label{
 	
 	public void updateTooltip() {
 		tooltip.setText("Teacher : " + teaching.getTeacher() + "<br/>" +
+		"Groupe : " + teaching.getNumGroup() + "<br/>" +
 		"Reste " + String.valueOf(teaching.getNbSeance() - teaching.getSeances().size()) + 
 		" seances sur " + String.valueOf(teaching.getNbSeance()));	
 	}
 
 	public int getLengthOnGrid(){
-		//TODO: compute with nbHours and nbSeances
-		return 8;
+		return teaching.getNbHour()/(10*teaching.getNbSeance());
 	}
 }
 

@@ -25,7 +25,6 @@ import com.pedEdt.frontEnd.client.model.Semester;
 import com.pedEdt.frontEnd.client.model.Teaching;
 import com.pedEdt.frontEnd.client.util.ColorUtil;
 import com.pedEdt.frontEnd.client.util.DateUtil;
-import com.pedEdt.frontEnd.client.util.DebugPanel;
 
 public class MainGUI {
 	
@@ -35,7 +34,7 @@ public class MainGUI {
 	protected ScheduleTreePanel schedTree;
 	protected ScheduleMenuBar schedMenubar;
 	protected ScheduleSemesterInformation schedInfobar;
-	protected HorizontalPanel menuContentPanel;
+	protected VerticalPanel menuContentPanel;
 	protected ScheduleNavigationBar navBar;
 	
 	private Semester semester;
@@ -53,15 +52,18 @@ public class MainGUI {
 	}
 	
 	private MainGUI(Semester s) {
-		
+
 		RootPanel.get().clear();
 		
 		this.semester = s;
-		
 		vpan = new VerticalPanel();
+		vpan.setWidth("90%");
 		vpan.setSpacing(5);
+		vpan.addStyleName("center");
+		vpan.setHorizontalAlignment(VerticalPanel.ALIGN_CENTER);
 		hpan = new HorizontalPanel();
 		hpan.setSpacing(5);
+		hpan.setWidth("100%");
 		schedMenubar = new ScheduleMenuBar(s);
 		navBar = ScheduleNavigationBar.getInstance(1, s.getStartDate(), s.getEndDate());
 		schedGridPan = new ScheduleGridPanel();
@@ -73,22 +75,23 @@ public class MainGUI {
 		
 		//build the tree
 		schedTree = new ScheduleTreePanel(s);
-				
+		
 		hpan.add(schedTree);
 		hpan.add(schedGridPan);
 		
-		//debug
-		hpan.add(DebugPanel.getInstance());
-		//end debug
-		
 		schedInfobar = new ScheduleSemesterInformation(s);
 		
-		menuContentPanel = new HorizontalPanel();
-		menuContentPanel.add(schedMenubar);
-		menuContentPanel.add(schedInfobar);
-		vpan.add(menuContentPanel);
-		//vpan.add(schedMenubar);
 		
+		menuContentPanel = new VerticalPanel();
+		menuContentPanel.setWidth("100%");
+		schedMenubar.setWidth("100%");
+		schedInfobar.setWidth("100%");
+		menuContentPanel.add(schedMenubar);
+		menuContentPanel.setHorizontalAlignment(VerticalPanel.ALIGN_CENTER);
+		menuContentPanel.add(schedInfobar);
+		
+		vpan.add( new TitlePanel());
+		vpan.add(menuContentPanel);
 		vpan.add(hpan);
 		vpan.add(navBar);
 		
@@ -111,7 +114,6 @@ public class MainGUI {
 		List<Teaching> allTeaching = this.semester.getAllTeaching();
 		if(allTeaching != null) {
 			for (Teaching teaching : allTeaching) {
-				//a real 'for loop' to have a counter
 				for(int cpt = 0; cpt < teaching.getSeances().size(); cpt++) {
 					if(DateUtil.inThisWeek(DateUtil.getDate(teaching.getSeances().get(cpt)))) {
 						
