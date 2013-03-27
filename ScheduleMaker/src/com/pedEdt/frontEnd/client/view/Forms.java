@@ -16,7 +16,6 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -39,13 +38,13 @@ public class Forms {
 
 		VerticalPanel holder = new VerticalPanel();
 		
-		holder.add(new Label("Creer semestre"));
+		holder.add(new Label("Créer semestre"));
 
 		FlexTable holderTab = new FlexTable();
 		holder.add(holderTab);
 		
 		//startDate
-		holderTab.setWidget(2, 0, new Label("Date de debut (jj/mm/aaaa) : "));
+		holderTab.setWidget(2, 0, new Label("Date de début (jj/mm/aaaa) : "));
 		final TextBox startDate = new TextBox();
 		final DatePicker startDatePicker = new DatePicker();
 		startDatePicker.addValueChangeHandler(new ValueChangeHandler<Date>() {
@@ -116,7 +115,7 @@ public class Forms {
 							return;
 						}
 					} else {
-						Window.alert("Date de debut incorrecte.");
+						Window.alert("Date de début incorrecte.");
 						return;
 					}
 				}
@@ -154,7 +153,7 @@ public class Forms {
 		holder.add(holderTab);
 		
 		//startDate
-		holderTab.setWidget(2, 0, new Label("Date de debut (jj/mm/aaaa) : "));
+		holderTab.setWidget(2, 0, new Label("Date de début (jj/mm/aaaa) : "));
 		final TextBox startDate = new TextBox();
 		startDate.setText(DateTimeFormat.getFormat("dd/MM/yyyy").format(new Date(semester.getStartDate() * 1000)));
 		final DatePicker startDatePicker = new DatePicker();
@@ -207,7 +206,6 @@ public class Forms {
 
 		//submit
 		Button submitButton = new Button("Valider", new ClickHandler() {
-
 			@Override
 			public void onClick(ClickEvent event) {
 				if (!startDate.getText().trim().equals("") && !endDate.getText().trim().equals("")) {
@@ -218,7 +216,6 @@ public class Forms {
 							Date dateEnd = dateFormat.parse(endDate.getText().trim());
 							DateTimeFormat year = DateTimeFormat.getFormat("yyyy");
 
-							Semester semester = new Semester();
 							semester.setYear(Integer.parseInt(year.format(dateStart)));
 							semester.setNumber(DateUtil.getIndexSemester(dateStart));
 							semester.setStartDate(DateUtil.setDateToDB(DateUtil.getStartWeek(dateStart)));
@@ -231,7 +228,7 @@ public class Forms {
 							return;
 						}
 					} else {
-						Window.alert("Date de debut incorrecte.");
+						Window.alert("Date de début incorrecte.");
 						return;
 					}
 				}
@@ -267,7 +264,7 @@ public class Forms {
 
 		VerticalPanel holder = new VerticalPanel();
 		
-		holder.add(new Label("Creer UE"));
+		holder.add(new Label("Créer UE"));
 
 		FlexTable holderTab = new FlexTable();
 		holder.add(holderTab);
@@ -398,7 +395,7 @@ public class Forms {
 
 		VerticalPanel holder = new VerticalPanel();
 		
-		holder.add(new Label("Creer module"));
+		holder.add(new Label("Créer module"));
 
 		FlexTable holderTab = new FlexTable();
 		holder.add(holderTab);
@@ -461,7 +458,7 @@ public class Forms {
 
 		VerticalPanel holder = new VerticalPanel();
 		
-		holder.add(new Label("Creer Module"));
+		holder.add(new Label("Créer Module"));
 
 		FlexTable holderTab = new FlexTable();
 		holder.add(holderTab);
@@ -525,7 +522,7 @@ public class Forms {
 
 		VerticalPanel holder = new VerticalPanel();
 		
-		holder.add(new Label("Creer Enseignement"));
+		holder.add(new Label("Créer Enseignement"));
 
 		FlexTable holderTab = new FlexTable();
 		holder.add(holderTab);
@@ -557,12 +554,12 @@ public class Forms {
 		
 		
 		//nbSeance
-		holderTab.setWidget(3, 0, new Label("Nombre de seances : "));
+		holderTab.setWidget(3, 0, new Label("Nombre de séances : "));
 		final TextBox nbSeance = new TextBox();
 		holderTab.setWidget(3, 1, nbSeance);
 		
 		//numGroup
-		holderTab.setWidget(4, 0, new Label("Numero du groupe : "));
+		holderTab.setWidget(4, 0, new Label("Numéro du groupe : "));
 		final TextBox numGroup = new TextBox();
 		holderTab.setWidget(4, 1, numGroup);
 
@@ -579,7 +576,7 @@ public class Forms {
 							Window.alert("Erreur dans la valeur des minutes");
 							return;
 						}
-						if(i == nbMin.getText().trim().length()-1)
+						if(i == nbMin.getText().trim().length()-1) //end of loop 'for'
 							inMinutes = Integer.valueOf(nbMin.getText().trim());
 					}
 				}
@@ -593,13 +590,13 @@ public class Forms {
 					}
 					for (int i = 0; i < nbSeance.getText().trim().length(); i++) {
 						if (!java.lang.Character.isDigit(nbSeance.getText().trim().charAt(i))) {
-							Window.alert("Nombre de seances incorrect.");
+							Window.alert("Nombre de séances incorrect.");
 							return;
 						}
 					}
 					for (int i = 0; i < numGroup.getText().trim().length(); i++) {
 						if (!java.lang.Character.isDigit(numGroup.getText().trim().charAt(i))) {
-							Window.alert("Numero de groupe incorrect.");
+							Window.alert("Numéro de groupe incorrect.");
 							return;
 						}
 					}
@@ -685,13 +682,13 @@ public class Forms {
 		holderTab.setWidget(2, 1, hp);
 		
 		//nbSeance
-		holderTab.setWidget(3, 0, new Label("Nombre de seances : "));
+		holderTab.setWidget(3, 0, new Label("Nombre de séances : "));
 		final TextBox nbSeance = new TextBox();
 		nbSeance.setText("" + teaching.getNbSeance());
 		holderTab.setWidget(3, 1, nbSeance);
 		
 		//numGroup
-		holderTab.setWidget(4, 0, new Label("Numero du groupe : "));
+		holderTab.setWidget(4, 0, new Label("Numéro du groupe : "));
 		final TextBox numGroup = new TextBox();
 		numGroup.setText("" + teaching.getNumGroup());
 		holderTab.setWidget(4, 1, numGroup);
@@ -710,13 +707,13 @@ public class Forms {
 					}
 					for (int i = 0; i < nbSeance.getText().trim().length(); i++) {
 						if (!java.lang.Character.isDigit(nbSeance.getText().trim().charAt(i))) {
-							Window.alert("Nombre de seances incorrect.");
+							Window.alert("Nombre de séances incorrect.");
 							return;
 						}
 					}
 					for (int i = 0; i < numGroup.getText().trim().length(); i++) {
 						if (!java.lang.Character.isDigit(numGroup.getText().trim().charAt(i))) {
-							Window.alert("Numero de groupe incorrect.");
+							Window.alert("Numéro de groupe incorrect.");
 							return;
 						}
 					}

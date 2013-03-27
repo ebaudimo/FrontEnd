@@ -18,8 +18,7 @@ public class SeanceWidget extends Composite {
 	protected VerticalPanel bodyPanel;
 	
 	protected Teaching teaching;
-	protected long beginning;
-	//protected int indexSession; // index of the session represented by this widget in the teaching tab : 'seances'
+	protected long beginning; //the date representation of where is place this SeanceWidget
 	protected int length; // nbr of blocks in the grid
 	protected int posH; // [0-4] horizontal position on the grid
 	protected int posV; // [0-61] vertical position on the grid
@@ -37,8 +36,6 @@ public class SeanceWidget extends Composite {
 		this.teaching = teaching;
 		this.posH = posH;
 		this.posV = posV;
-		
-		//this.indexSession = -1; //default
 		this.beginning = 0;
 		
 		mainPanel = new VerticalPanel();
@@ -121,16 +118,6 @@ public class SeanceWidget extends Composite {
 	public boolean isRemoved(){
 		return toRemove;
 	}
-
-	/*
-	public void setIndexSession(int index) {
-		this.indexSession = index;
-	}
-	
-	public int getIndexSession() {
-		return this.indexSession;
-	}
-	*/
 	
 	public void setBeginning(long date) {
 		this.beginning = date;
@@ -139,6 +126,7 @@ public class SeanceWidget extends Composite {
 	public long getBeginning() {
 		return this.beginning;
 	}
+	
 	public void updateBodyData(){
 		bodyPanel.clear();
 		Label line = new Label(String.valueOf(teaching.getType()));

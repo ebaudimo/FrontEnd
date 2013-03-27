@@ -4,11 +4,8 @@ import com.pedEdt.frontEnd.client.util.DateUtil;
 import com.pedEdt.frontEnd.client.view.SeanceWidget;
 
 public class DateController {
-	
-	public DateController() {	
-	}
-	
-	public void linkDateToSeanceWidget(SeanceWidget widget, int posH, int posV) {
+		
+	public static void linkDateToSeanceWidget(SeanceWidget widget, int posH, int posV) {
 		long newDate = DateUtil.computeNewDate(posH, posV);
 		
 		if(widget.getBeginning() != 0) //if it is not a new SeanceWidget
@@ -19,7 +16,7 @@ public class DateController {
 		widget.setBeginning(DateUtil.setDateToDB(newDate));
 	}
 	
-	public void unlinkTheSeanceWidget(SeanceWidget widget) {
+	public static void unlinkTheSeanceWidget(SeanceWidget widget) {
 		widget.getTeaching().removeSeance(widget.getBeginning());
 		ServerCommunication.getInstance().updateTeaching(widget.getTeaching());
 	}

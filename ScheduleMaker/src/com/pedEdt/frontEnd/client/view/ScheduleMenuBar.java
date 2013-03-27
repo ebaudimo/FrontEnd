@@ -22,32 +22,12 @@ public class ScheduleMenuBar extends Composite {
 	public ScheduleMenuBar(final Semester semester) {
 		menuBar = new MenuBar();
 
-//		//debug
-//		MenuBar debugMenu = new MenuBar(true);
-//		debugMenu.addItem("Afficher/Cacher", new ScheduledCommand() {
-//
-//			@Override
-//			public void execute() {
-//				DebugPanel.getInstance().setVisible(!DebugPanel.getInstance().isVisible());
-//			}
-//		});
-//		debugMenu.addItem("Clear", new ScheduledCommand() {
-//
-//			@Override
-//			public void execute() {
-//				DebugPanel.getInstance().vpan.clear();	
-//			}
-//		});
-//		menuBar.addItem("Debug", debugMenu);
-//		//end debug
-
 		//semester
 		MenuBar semesterMenu = new MenuBar(true);
 		semesterMenu.addItem("Nouveau Semestre", new ScheduledCommand() {
 
 			@Override
 			public void execute() {
-				//				DebugPanel.getInstance().vpan.add(new Label("Semester->New callback"));
 				Forms.popupCreateSemester().center();
 			}
 		});
@@ -62,7 +42,6 @@ public class ScheduleMenuBar extends Composite {
 
 			@Override
 			public void execute() {
-//				DebugPanel.getInstance().vpan.add(new Label("Semester->Open callback"));
 				Forms.popupUpdateSemester(semester).center();
 			}
 		});
@@ -70,7 +49,6 @@ public class ScheduleMenuBar extends Composite {
 
 			@Override
 			public void execute() {
-				//				DebugPanel.getInstance().vpan.add(new Label("Semester->Close callback"));
 				Forms.popupCreateTeachingUnit(semester).center();
 			}
 		});

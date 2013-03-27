@@ -36,7 +36,7 @@ public class StartWindow extends PopupPanel {
 		this.setStyleName("startWindow");
 
 		VerticalPanel contentPanel = new VerticalPanel();
-		contentPanel.add(new Label("Veuillez patienter nous recherchons les semestres deja existant ..."));
+		contentPanel.add(new Label("Veuillez patienter nous recherchons les semestres déjà existant ..."));
 
 		//build the semesterList with a list of semester send by server
 		buildSemesterList(contentPanel);
@@ -82,12 +82,12 @@ public class StartWindow extends PopupPanel {
 				public void onResponseReceived(Request request, Response response) {
 					parent.clear();
 					parent.setHorizontalAlignment(HorizontalPanel.ALIGN_CENTER);
-					parent.add(new Label("Selectionner un semestre : "));
 					
 					if(response.getStatusCode() == 200) {
 						List<Semester> sl = SemesterList.fromXML.read(response.getText().trim()).getSemesterList();
 						if(sl != null) {
 							if(!sl.isEmpty()) {
+								parent.add(new Label("Selectionner un semestre : é è à "));
 								Iterator<Semester> i = sl.iterator();
 								while (i.hasNext()) {
 									Semester s = i.next();
@@ -112,7 +112,7 @@ public class StartWindow extends PopupPanel {
 
 				@Override
 				public void onError(Request request, Throwable exception) {
-					Window.alert("Erreur sur la r�cup�ration des semestres.");
+					Window.alert("Erreur sur la récupèration des semestres.");
 				}
 			});
 		} catch (RequestException e) {

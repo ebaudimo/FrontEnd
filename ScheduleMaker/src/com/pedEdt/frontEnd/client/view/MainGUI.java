@@ -21,6 +21,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.pedEdt.frontEnd.client.controller.ScheduleDragController;
+import com.pedEdt.frontEnd.client.controller.ServerCommunication;
 import com.pedEdt.frontEnd.client.model.Semester;
 import com.pedEdt.frontEnd.client.model.Teaching;
 import com.pedEdt.frontEnd.client.util.ColorUtil;
@@ -43,7 +44,7 @@ public class MainGUI {
 	private static MainGUI mainGUIInstance;
 	
 	public static MainGUI getInstance(Semester s) {
-		mainGUIInstance = new MainGUI(s);
+		mainGUIInstance = new MainGUI(s); //rebuild with new semester
 		return mainGUIInstance;
 	}
 	
@@ -114,9 +115,10 @@ public class MainGUI {
 		List<Teaching> allTeaching = this.semester.getAllTeaching();
 		if(allTeaching != null) {
 			for (Teaching teaching : allTeaching) {
+				boolean update = false;
 				for(int cpt = 0; cpt < teaching.getSeances().size(); cpt++) {
 					if(DateUtil.inThisWeek(DateUtil.getDate(teaching.getSeances().get(cpt)))) {
-						
+						//this teaching has a seance in the current week, we need to build and place a seanceWidget
 						SeanceWidget session = new SeanceWidget(teaching, 
 								DateUtil.findPosH(DateUtil.getDate(teaching.getSeances().get(cpt))), 
 								DateUtil.findPosV(DateUtil.getDate(teaching.getSeances().get(cpt))));
@@ -129,8 +131,19 @@ public class MainGUI {
 						
 						schedGridPan.getDropController().addTeachingSeanceWidget(session);
 					}
-				}
-			}
+					
+					//this seance is not correct
+					if(!DateUtil.inThisSemester(DateUtil.getDate(teaching.getSeances().get(cpt)))) {
+						teaching.removeSeance(teaching.getSeances().get(cpt));
+						update = true;
+					}
+					
+				} //end for each seance of teaching
+				
+				if(update)
+					ServerCommunication.getInstance().updateTeaching(teaching);
+				
+			} //end for each teaching
 		}
 	}
 

@@ -12,6 +12,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.pedEdt.frontEnd.client.util.DateUtil;
 
+//this object act as a 'time keeper', it is to it that turns other object to retrieve current semester date information
 public class ScheduleNavigationBar extends Composite {
 	
 	private long start;
@@ -21,10 +22,10 @@ public class ScheduleNavigationBar extends Composite {
 	private Label myLabel;
 	private TextBox where;
 	
-	
+	//singleton style
 	private static ScheduleNavigationBar navBar;
 	public static ScheduleNavigationBar getInstance(int numWeek, long startFromDB, long endFromDB) {
-		navBar = new ScheduleNavigationBar(numWeek, startFromDB, endFromDB);
+		navBar = new ScheduleNavigationBar(numWeek, startFromDB, endFromDB); //to rebuild it
 		return navBar;
 	}
 	
@@ -103,6 +104,7 @@ public class ScheduleNavigationBar extends Composite {
 					go.setEnabled(false);
 				}
 				else {
+					//only digit and lower than last week of semester
 					if(str.matches("[0-9]*") && !(Integer.valueOf(str) > nbWeek)) {		
 						where.removeStyleDependentName("onError");
 						go.setEnabled(true);

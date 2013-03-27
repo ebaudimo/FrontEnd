@@ -74,7 +74,7 @@ public class GridDropController extends AbsolutePositionDropController{
 		widget.setPosV(posV);
 		widget.setPosH(posH);
 		
-		new DateController().linkDateToSeanceWidget(widget, posH, posV);
+		DateController.linkDateToSeanceWidget(widget, posH, posV);
 		if(context.draggable instanceof TreeTeachingWidget) {
 			((TreeTeachingWidget) context.draggable).updateTreeTeaching();
 		}

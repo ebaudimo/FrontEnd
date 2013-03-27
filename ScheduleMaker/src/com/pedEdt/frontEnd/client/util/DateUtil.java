@@ -5,6 +5,11 @@ import java.util.Date;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.pedEdt.frontEnd.client.view.ScheduleNavigationBar;
 
+/**
+ * 
+ * Tool class for many method with or on date for our application
+ *
+ */
 public class DateUtil {
 	
 	public static long WEEK = 604800000;
@@ -12,10 +17,13 @@ public class DateUtil {
 	public static long HOUR = 3600000;
 	public static long TEN_MINUTES = 600000;
 	
+	//in database the date is in long, which represent date in second
+	//java.util.date need a long in millisecond to build a date
 	public static Date getDate(long fromBD) {
 		return new Date(fromBD * 1000); // for milliseconds
 	}
 	
+	//reverse of the previous method
 	public static long setDateToDB(Date date) {
 		Long l = date.getTime();
 		String tmp = l.toString().substring(0, l.toString().length()-3);
@@ -27,10 +35,12 @@ public class DateUtil {
 		return Long.valueOf(tmp);
 	}
 	
+	//convert hours int into minutes representation in int
 	public static int hoursToMinutes(int nbHour) {
 		return nbHour * 60;
 	}
 	
+	//reverse of the previous
 	public static int minutesToHours(int nbMin) {
 		return nbMin / 60;
 	}
@@ -86,7 +96,7 @@ public class DateUtil {
 		
 	}
 	
-	//return the end of the week
+	//return the end of the week (Sunday 00h00)
 	public static long getEndWeek(Date date) {
 		long current = date.getTime();
 		
@@ -132,13 +142,15 @@ public class DateUtil {
 		return current;
 	}
 	
-	public static boolean inPeriod(Date date, Date start, Date end) {
-		if(date.before(end) && date.after(start))
+	//test if my date is between the two others
+	public static boolean inPeriod(Date search, Date start, Date end) {
+		if(search.before(end) && search.after(start))
 			return true;
 		
 		return false;
 	}
 
+	//test if my date is in the current week
 	public static boolean inThisWeek(Date search) {
 		ScheduleNavigationBar navBar = ScheduleNavigationBar.getInstance();
 		
@@ -148,6 +160,13 @@ public class DateUtil {
 		Date endWeek = new Date(getEndWeek(navigation));
 		
 		return inPeriod(search, startWeek, endWeek);
+		
+	}
+	
+	//test if my date is in the current semester
+	public static boolean inThisSemester(Date search) {
+		ScheduleNavigationBar navBar = ScheduleNavigationBar.getInstance();
+		return inPeriod(search, new Date(navBar.getStart()), new Date(navBar.getEnd()));
 		
 	}
 	
@@ -162,6 +181,7 @@ public class DateUtil {
 		return currentDate;
 	}
 
+	//find the position H (the day) in the grid with the date desired
 	public static int findPosH(Date sessionDate) {
 		switch(sessionDate.getDay()) {
 		case 1: //Monday
@@ -179,6 +199,7 @@ public class DateUtil {
 		}
 	}
 	
+	//find the position V (hours and minutes) in the grid with the date desired
 	public static int findPosV(Date sessionDate) {
 		int hour = sessionDate.getHours();
 		int min = sessionDate.getMinutes();
@@ -219,10 +240,12 @@ public class DateUtil {
 		}
 	}
 	
+	//return the number of week between two dates
 	public static long getNbWeek(Date start, Date end) {
-		return (getEndWeek(end) - getStartWeek(start) + DAY) / WEEK;
+		return (getEndWeek(end) - getStartWeek(start) + DAY) / WEEK; //+ DAY because the getEndWeek return the Sunday morning
 	}
 
+	//return index of semester which start at start, return only 1 (for July to December) or 2 (January to June)
 	public static int getIndexSemester(Date start) {
 		if(start.getMonth() - 5 > 0)
 			return 1;
@@ -230,6 +253,7 @@ public class DateUtil {
 			return 2;
 	}
 
+	//return a string representation of date for the header column label
 	public static String buildWeekHeader(int indexDay) {
 		DateTimeFormat fmt = DateTimeFormat.getFormat("dd/MM");
 		ScheduleNavigationBar navBar = ScheduleNavigationBar.getInstance();
@@ -238,8 +262,7 @@ public class DateUtil {
 		Date startWeek = new Date(getStartWeek(navigation));
 				
 		long currentDate = startWeek.getTime();
-		//currentDate = currentDate + WEEK * (navBar.getCurrentValue()-1);
-
+		
 		switch(indexDay) {
 		case 1: //Monday
 			return fmt.format(new Date(currentDate));
