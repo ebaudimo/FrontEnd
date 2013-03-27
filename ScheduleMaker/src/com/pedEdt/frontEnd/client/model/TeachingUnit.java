@@ -10,7 +10,7 @@ import com.google.gwt.core.client.GWT;
 
 public class TeachingUnit implements java.io.Serializable {
 
-	interface TUReader extends XmlReader<TeachingUnit> {}
+	public interface TUReader extends XmlReader<TeachingUnit> {}
 	public static final TUReader fromXML = GWT.create(TUReader.class);
 	
 	public interface TUWriter extends XmlWriter<TeachingUnit> {}
@@ -102,4 +102,10 @@ public class TeachingUnit implements java.io.Serializable {
 		return myList;
 	}
 	
+	public Module getModuleById(int id) {
+		for (Module module : modules)
+			if (module.getId() == id)
+				return module;
+		return null;
+	}
 }

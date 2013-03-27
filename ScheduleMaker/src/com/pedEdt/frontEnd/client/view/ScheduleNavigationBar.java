@@ -24,9 +24,7 @@ public class ScheduleNavigationBar extends Composite {
 	
 	private static ScheduleNavigationBar navBar;
 	public static ScheduleNavigationBar getInstance(int numWeek, long startFromDB, long endFromDB) {
-		if(navBar == null)
-			navBar = new ScheduleNavigationBar(numWeek, startFromDB, endFromDB);
-		
+		navBar = new ScheduleNavigationBar(numWeek, startFromDB, endFromDB);
 		return navBar;
 	}
 	

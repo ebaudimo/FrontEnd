@@ -5,6 +5,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MenuBar;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.pedEdt.frontEnd.client.controller.ServerCommunication;
 import com.pedEdt.frontEnd.client.model.Module;
 import com.pedEdt.frontEnd.client.model.Semester;
@@ -76,8 +77,13 @@ public class ScheduleMenuBar extends Composite {
 
 			@Override
 			public void execute() {
-				if (Window.confirm("Voulez-vous supprimer ce semestre?"))
+				if (Window.confirm("Voulez-vous supprimer ce semestre?")) {
+					RootPanel.get().clear();
+					StartWindow startPopup = new StartWindow();
+					RootPanel.get().add(startPopup);
+					startPopup.center();
 					ServerCommunication.getInstance().deleteSemester(semester.getId());
+				}
 			}
 		});
 		menuBar.addItem("Semestre", semesterMenu);
@@ -111,8 +117,10 @@ public class ScheduleMenuBar extends Composite {
 
 			@Override
 			public void execute() {
-				if (Window.confirm("Voulez-vous supprimer cette UE?"))
+				if (Window.confirm("Voulez-vous supprimer cette UE?")) {
+					MainGUI.getInstance().getSemester().removeTeachingUnit(teachingUnit);
 					ServerCommunication.getInstance().deleteTeachingUnit(teachingUnit.getId());
+				}
 			}
 		});
 	}
@@ -140,8 +148,10 @@ public class ScheduleMenuBar extends Composite {
 
 			@Override
 			public void execute() {
-				if (Window.confirm("Voulez-vous supprimer ce module?"))
+				if (Window.confirm("Voulez-vous supprimer ce module?")) {
+					MainGUI.getInstance().schedTree.semesterTree.getParentTeachingUnit(module).removeModule(module);
 					ServerCommunication.getInstance().deleteModule(module.getId());
+				}
 			}
 		});
 	}
@@ -161,8 +171,10 @@ public class ScheduleMenuBar extends Composite {
 
 			@Override
 			public void execute() {
-				if (Window.confirm("Voulez-vous supprimer cet enseignement?"))
+				if (Window.confirm("Voulez-vous supprimer cet enseignement?")) {
+					MainGUI.getInstance().schedTree.semesterTree.getParentModule(teaching).removeTeaching(teaching);
 					ServerCommunication.getInstance().deleteTeaching(teaching.getId());
+				}
 			}
 		});
 	}

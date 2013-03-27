@@ -67,6 +67,19 @@ public class TreeSemesterWidget extends Tree{
 		}
 	}
 	
+	public TeachingUnit getParentTeachingUnit(Module module){
+		for(int i=0;i<getItemCount();i++){ // parcours TU
+			TreeItem itemTU = getItem(i);
+			for(int j =0; i< itemTU.getChildCount();j++){ // parcours M
+				TreeItem itemM = itemTU.getChild(j);
+				if(((TreeModuleWidget)itemM).module == module){
+					return ((TreeTeachingUnitWidget)itemTU).getTeachingUnit();
+				}
+			}
+		}
+		return null;
+	}
+	
 	public Module getParentModule(Teaching teaching){
 		for(int i=0;i<getItemCount();i++){ // parcours TU
 			TreeItem itemTU = getItem(i);

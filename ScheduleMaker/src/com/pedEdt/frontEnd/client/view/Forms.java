@@ -133,9 +133,7 @@ public class Forms {
 						if(endDate.getText().trim().matches("^[0-9]{2}[/]{1}[0-9]{2}[/]{1}[0-9]{4}$")) {
 							DateTimeFormat dateFormat = DateTimeFormat.getFormat("dd/MM/yyyy");
 							Date dateStart = dateFormat.parseStrict(startDate.getText().trim());
-							Window.alert("startDate = " + dateStart.toString());
 							Date dateEnd = dateFormat.parse(endDate.getText().trim());
-							Window.alert("endDate = " + dateEnd.toString());
 							DateTimeFormat year = DateTimeFormat.getFormat("yyyy");
 
 							Semester semester = new Semester();
@@ -146,10 +144,6 @@ public class Forms {
 
 							ServerCommunication.getInstance().createSemester(semester);
 							popupPanel.hide();
-							
-							StartWindow startPopup = new StartWindow();
-							RootPanel.get().add(startPopup);
-							startPopup.center();
 						} else {
 							Window.alert("Date de fin incorrecte.");
 							return;
@@ -330,11 +324,13 @@ public class Forms {
 				if (!startDate.getText().trim().equals("") && !endDate.getText().trim().equals("")) {
 					if (startDate.getText().trim().matches("^[0-9]{2}[/]{1}[0-9]{2}[/]{1}[0-9]{4}$")) {
 						if(endDate.getText().trim().matches("^[0-9]{2}[/]{1}[0-9]{2}[/]{1}[0-9]{4}$")) {
-							Date dateStart = new Date(Date.parse(startDate.getText().trim()));
-							Date dateEnd = new Date(Date.parse(endDate.getText().trim()));
+							DateTimeFormat dateFormat = DateTimeFormat.getFormat("dd/MM/yyyy");
+							Date dateStart = dateFormat.parseStrict(startDate.getText().trim());
+							Date dateEnd = dateFormat.parse(endDate.getText().trim());
+							DateTimeFormat year = DateTimeFormat.getFormat("yyyy");
 
 							Semester semester = new Semester();
-							semester.setYear(dateStart.getYear());
+							semester.setYear(Integer.parseInt(year.format(dateStart)));
 							semester.setNumber(DateUtil.getIndexSemester(dateStart));
 							semester.setStartDate(dateStart.getTime() / 1000);
 							semester.setEndDate(dateEnd.getTime() / 1000);
@@ -464,7 +460,7 @@ public class Forms {
 					teachingUnit.setCode(code.getText().trim());
 					teachingUnit.setTitle(title.getText().trim());
 
-					ServerCommunication.getInstance().createTeachingUnit(semester.getId(), teachingUnit);
+					ServerCommunication.getInstance().createTeachingUnit(semester, teachingUnit);
 					popupPanel.hide();
 				} else {
 					Window.alert("Vous devez remplir tous les champs.");
@@ -607,7 +603,7 @@ public class Forms {
 					module.setCode(code.getText().trim());
 					module.setTitle(title.getText().trim());
 
-					ServerCommunication.getInstance().createModule(teachingUnit.getId(), module);
+					ServerCommunication.getInstance().createModule(teachingUnit, module);
 					popupPanel.hide();
 				} else {
 					Window.alert("Vous devez remplir tous les champs.");
@@ -721,15 +717,16 @@ public class Forms {
 		
 		//nbHour
 		HorizontalPanel hp = new HorizontalPanel();
-		hp.add(new Label("Nombre d'heures :"));
 		final TextBox nbHour = new TextBox();
+		nbHour.setWidth("30px");
 		hp.add(nbHour);
-		hp.add(new Label(" Minutes : "));
+		hp.add(new Label("h "));
 		final TextBox nbMin = new TextBox();
+		nbMin.setWidth("30px");
 		hp.add(nbMin);
-		holderTab.setWidget(2, 0, hp);
-		//holderTab.setWidget(2, 0, new Label("Nombre d'heures : "));
-		//holderTab.setWidget(2, 1, nbHour);
+		hp.add(new Label("min"));
+		holderTab.setWidget(2, 0, new Label("Nombre d'heures : "));
+		holderTab.setWidget(2, 1, hp);
 		
 		
 		//nbSeance
@@ -811,7 +808,7 @@ public class Forms {
 					teaching.setNbSeance(Integer.parseInt(nbSeance.getText().trim()));
 					teaching.setNumGroup(Integer.parseInt(numGroup.getText().trim()));
 
-					ServerCommunication.getInstance().createTeaching(module.getId(), teaching);
+					ServerCommunication.getInstance().createTeaching(module, teaching);
 					popupPanel.hide();
 				} else {
 					Window.alert("Vous devez remplir tous les champs.");
@@ -856,10 +853,17 @@ public class Forms {
 		holderTab.setWidget(1, 1, teacher);
 		
 		//nbHour
-		holderTab.setWidget(2, 0, new Label("Nombre d'heures : "));
+		HorizontalPanel hp = new HorizontalPanel();
 		final TextBox nbHour = new TextBox();
-		nbHour.setText("" + DateUtil.minutesToHours(teaching.getNbHour()));
-		holderTab.setWidget(2, 1, nbHour);
+		nbHour.setWidth("30px");
+		hp.add(nbHour);
+		hp.add(new Label("h "));
+		final TextBox nbMin = new TextBox();
+		nbMin.setWidth("30px");
+		hp.add(nbMin);
+		hp.add(new Label("min"));
+		holderTab.setWidget(2, 0, new Label("Nombre d'heures : "));
+		holderTab.setWidget(2, 1, hp);
 		
 		//nbSeance
 		holderTab.setWidget(3, 0, new Label("Nombre de seances : "));

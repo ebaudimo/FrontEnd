@@ -6,11 +6,13 @@ import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.pedEdt.frontEnd.client.model.Module;
 import com.pedEdt.frontEnd.client.model.Semester;
 import com.pedEdt.frontEnd.client.model.Teaching;
 import com.pedEdt.frontEnd.client.model.TeachingUnit;
 import com.pedEdt.frontEnd.client.view.MainGUI;
+import com.pedEdt.frontEnd.client.view.StartWindow;
 
 public final class ServerCommunication {
 
@@ -38,7 +40,7 @@ public final class ServerCommunication {
 	
 	/* Semester */
 
-	public void createSemester(Semester semester) {
+	public void createSemester(final Semester semester) {
 		builder = new RequestBuilder(RequestBuilder.POST, SERVERURL + "create/semester");
 		builder.setHeader("Content-Type", "application/xml");
 		try {
@@ -49,6 +51,8 @@ public final class ServerCommunication {
 
 				public void onResponseReceived(Request request, Response response) {
 					if (response.getStatusCode() == 200) {
+						Semester s = Semester.fromXML.read(response.getText().trim());
+						MainGUI.getInstance().getInstance(s);
 					}
 				}
 			});
@@ -57,7 +61,7 @@ public final class ServerCommunication {
 		}
 	}
 	
-	public void updateSemester(Semester semester) {
+	public void updateSemester(final Semester semester) {
 		builder = new RequestBuilder(RequestBuilder.POST, SERVERURL + "update/semester");
 		builder.setHeader("Content-Type", "application/xml");
 		try {
@@ -68,7 +72,7 @@ public final class ServerCommunication {
 
 				public void onResponseReceived(Request request, Response response) {
 					if (response.getStatusCode() == 200) {
-						
+						MainGUI.getInstance().getInstance(semester);
 					}
 				}
 			});
@@ -87,7 +91,10 @@ public final class ServerCommunication {
 
 				public void onResponseReceived(Request request, Response response) {
 					if (response.getStatusCode() == 200) {
-						
+						RootPanel.get().clear();
+						StartWindow startPopup = new StartWindow();
+						RootPanel.get().add(startPopup);
+						startPopup.center();
 					}
 				}
 			});
@@ -100,8 +107,8 @@ public final class ServerCommunication {
 	
 	/* TeachingUnit */
 
-	public void createTeachingUnit(final int idSemester, TeachingUnit teachingUnit) {
-		builder = new RequestBuilder(RequestBuilder.POST, SERVERURL + "create/teachingUnit/" + idSemester);
+	public void createTeachingUnit(final Semester semester, TeachingUnit teachingUnit) {
+		builder = new RequestBuilder(RequestBuilder.POST, SERVERURL + "create/teachingUnit/" + semester.getId());
 		builder.setHeader("Content-Type", "application/xml");
 		try {
 			builder.sendRequest(TeachingUnit.toXML.toXml(teachingUnit), new RequestCallback() {
@@ -111,24 +118,10 @@ public final class ServerCommunication {
 
 				public void onResponseReceived(Request request, Response response) {
 					if (response.getStatusCode() == 200) {
-						//refresh page
-//						RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, SERVERURL + "read/semester/" + MainGUI.getInstance().getSemester().getId());
-//						try {
-//							builder.sendRequest(null, new RequestCallback() {
-//								public void onError(Request request, Throwable exception) {
-//									Window.alert("Erreur lors de la recuperation du semester.");
-//								}
-//
-//								public void onResponseReceived(Request request, Response response) {
-//									if (response.getStatusCode() == 200) {
-//										Semester semester = Semester.fromXML.read(response.getText().trim());
-//										MainGUI.refresh(semester);
-//									}
-//								}
-//							});
-//						} catch (RequestException e) {
-//							e.printStackTrace();
-//						}
+						Semester semester = MainGUI.getInstance().getSchedTree().getSemesterTree().getSemester();
+						Semester s = Semester.fromXML.read(response.getText().trim());
+						semester.setTeachingUnits(s.getTeachingUnits());
+						MainGUI.getInstance().reloadTree();
 					}
 				}
 			});
@@ -148,24 +141,8 @@ public final class ServerCommunication {
 
 				public void onResponseReceived(Request request, Response response) {
 					if (response.getStatusCode() == 200) {
-						//refresh page
-//						RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, SERVERURL + "read/semester/" + MainGUI.getInstance().getSemester().getId());
-//						try {
-//							builder.sendRequest(null, new RequestCallback() {
-//								public void onError(Request request, Throwable exception) {
-//									Window.alert("Erreur lors de la recuperation du semester.");
-//								}
-//
-//								public void onResponseReceived(Request request, Response response) {
-//									if (response.getStatusCode() == 200) {
-//										Semester semester = Semester.fromXML.read(response.getText().trim());
-//										MainGUI.refresh(semester);
-//									}
-//								}
-//							});
-//						} catch (RequestException e) {
-//							e.printStackTrace();
-//						}
+						MainGUI.getInstance().reloadTree();
+						MainGUI.getInstance().loadWeekGrid();
 					}
 				}
 			});
@@ -184,25 +161,8 @@ public final class ServerCommunication {
 
 				public void onResponseReceived(Request request, Response response) {
 					if (response.getStatusCode() == 200) {
-						//refresh page
-//						RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, SERVERURL + "read/semester/" + MainGUI.getInstance().getSemester().getId());
-//
-//						try {
-//							builder.sendRequest(null, new RequestCallback() {
-//								public void onError(Request request, Throwable exception) {
-//									Window.alert("Erreur lors de la recuperation du semester.");
-//								}
-//
-//								public void onResponseReceived(Request request, Response response) {
-//									if (response.getStatusCode() == 200) {
-//										Semester semester = Semester.fromXML.read(response.getText().trim());
-//										MainGUI.refresh(semester);
-//									}
-//								}
-//							});
-//						} catch (RequestException e) {
-//							e.printStackTrace();
-//						}
+						MainGUI.getInstance().reloadTree();
+						MainGUI.getInstance().loadWeekGrid();
 					}
 				}
 			});
@@ -215,8 +175,8 @@ public final class ServerCommunication {
 	
 	/* Module */
 
-	public void createModule(int id_teachingUnit, Module module) {
-		builder = new RequestBuilder(RequestBuilder.POST, SERVERURL + "create/module/" + id_teachingUnit);
+	public void createModule(final TeachingUnit teachingUnit, Module module) {
+		builder = new RequestBuilder(RequestBuilder.POST, SERVERURL + "create/module/" + teachingUnit.getId());
 		builder.setHeader("Content-Type", "application/xml");
 		try {
 			builder.sendRequest(Module.toXML.toXml(module), new RequestCallback() {
@@ -226,25 +186,11 @@ public final class ServerCommunication {
 
 				public void onResponseReceived(Request request, Response response) {
 					if (response.getStatusCode() == 200) {
-						//refresh page
-//						RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, SERVERURL + "read/semester/" + MainGUI.getInstance().getSemester().getId());
-//
-//						try {
-//							builder.sendRequest(null, new RequestCallback() {
-//								public void onError(Request request, Throwable exception) {
-//									Window.alert("Erreur lors de la recuperation du semester.");
-//								}
-//
-//								public void onResponseReceived(Request request, Response response) {
-//									if (response.getStatusCode() == 200) {
-//										Semester semester = Semester.fromXML.read(response.getText().trim());
-//										MainGUI.refresh(semester);
-//									}
-//								}
-//							});
-//						} catch (RequestException e) {
-//							e.printStackTrace();
-//						}
+						Semester semester = MainGUI.getInstance().getSchedTree().getSemesterTree().getSemester();
+						TeachingUnit t = TeachingUnit.fromXML.read(response.getText().trim());
+						semester.removeTeachingUnit(teachingUnit);
+						semester.addTeachingUnit(t);
+						MainGUI.getInstance().reloadTree();
 					}
 				}
 			});
@@ -264,24 +210,8 @@ public final class ServerCommunication {
 
 				public void onResponseReceived(Request request, Response response) {
 					if (response.getStatusCode() == 200) {
-						//refresh page
-//						RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, SERVERURL + "read/semester/" + MainGUI.getInstance().getSemester().getId());
-//						try {
-//							builder.sendRequest(null, new RequestCallback() {
-//								public void onError(Request request, Throwable exception) {
-//									Window.alert("Erreur lors de la recuperation du semester.");
-//								}
-//
-//								public void onResponseReceived(Request request, Response response) {
-//									if (response.getStatusCode() == 200) {
-//										Semester semester = Semester.fromXML.read(response.getText().trim());
-//										MainGUI.refresh(semester);
-//									}
-//								}
-//							});
-//						} catch (RequestException e) {
-//							e.printStackTrace();
-//						}
+						MainGUI.getInstance().reloadTree();
+						MainGUI.getInstance().loadWeekGrid();
 					}
 				}
 			});
@@ -300,25 +230,8 @@ public final class ServerCommunication {
 
 				public void onResponseReceived(Request request, Response response) {
 					if (response.getStatusCode() == 200) {
-//						//refresh page
-//						RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, SERVERURL + "read/semester/" + MainGUI.getInstance().getSemester().getId());
-//
-//						try {
-//							builder.sendRequest(null, new RequestCallback() {
-//								public void onError(Request request, Throwable exception) {
-//									Window.alert("Erreur lors de la recuperation du semester.");
-//								}
-//
-//								public void onResponseReceived(Request request, Response response) {
-//									if (response.getStatusCode() == 200) {
-//										Semester semester = Semester.fromXML.read(response.getText().trim());
-//										MainGUI.refresh(semester);
-//									}
-//								}
-//							});
-//						} catch (RequestException e) {
-//							e.printStackTrace();
-//						}
+						MainGUI.getInstance().reloadTree();
+						MainGUI.getInstance().loadWeekGrid();
 					}
 				}
 			});
@@ -331,8 +244,8 @@ public final class ServerCommunication {
 	
 	/* Teaching */
 
-	public void createTeaching(int id_module, Teaching teaching) {
-		builder = new RequestBuilder(RequestBuilder.POST, SERVERURL + "create/teaching/" + id_module);
+	public void createTeaching(final Module module, Teaching teaching) {
+		builder = new RequestBuilder(RequestBuilder.POST, SERVERURL + "create/teaching/" + module.getId());
 		builder.setHeader("Content-Type", "application/xml");
 		try {
 			builder.sendRequest(Teaching.toXML.toXml(teaching), new RequestCallback() {
@@ -342,25 +255,11 @@ public final class ServerCommunication {
 
 				public void onResponseReceived(Request request, Response response) {
 					if (response.getStatusCode() == 200) {
-//						//refresh page
-//						RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, SERVERURL + "read/semester/" + MainGUI.getInstance().getSemester().getId());
-//
-//						try {
-//							builder.sendRequest(null, new RequestCallback() {
-//								public void onError(Request request, Throwable exception) {
-//									Window.alert("Erreur lors de la recuperation du semester.");
-//								}
-//
-//								public void onResponseReceived(Request request, Response response) {
-//									if (response.getStatusCode() == 200) {
-//										Semester semester = Semester.fromXML.read(response.getText().trim());
-//										MainGUI.refresh(semester);
-//									}
-//								}
-//							});
-//						} catch (RequestException e) {
-//							e.printStackTrace();
-//						}
+						TeachingUnit teachingUnit = MainGUI.getInstance().getSchedTree().getSemesterTree().getParentTeachingUnit(module);
+						Module m = Module.fromXML.read(response.getText().trim());
+						teachingUnit.removeModule(module);
+						teachingUnit.addModule(m);
+						MainGUI.getInstance().reloadTree();
 					}
 				}
 			});
@@ -380,26 +279,8 @@ public final class ServerCommunication {
 
 				public void onResponseReceived(Request request, Response response) {
 					if (response.getStatusCode() == 200) {
-						//refresh page
-//						
-//						RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, SERVERURL + "read/semester/" + MainGUI.getInstance().getSemester().getId());
-//
-//						try {
-//							builder.sendRequest(null, new RequestCallback() {
-//								public void onError(Request request, Throwable exception) {
-//									Window.alert("Erreur lors de la recuperation du semester.");
-//								}
-//
-//								public void onResponseReceived(Request request, Response response) {
-//									if (response.getStatusCode() == 200) {
-//										Semester semester = Semester.fromXML.read(response.getText().trim());
-//										MainGUI.refresh(semester);
-//									}
-//								}
-//							});
-//						} catch (RequestException e) {
-//							e.printStackTrace();
-//						}
+						MainGUI.getInstance().reloadTree();
+						MainGUI.getInstance().loadWeekGrid();
 					}
 				}
 			});
@@ -418,25 +299,8 @@ public final class ServerCommunication {
 
 				public void onResponseReceived(Request request, Response response) {
 					if (response.getStatusCode() == 200) {
-						//refresh page
-//						RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, SERVERURL + "read/semester/" + MainGUI.getInstance().getSemester().getId());
-//
-//						try {
-//							builder.sendRequest(null, new RequestCallback() {
-//								public void onError(Request request, Throwable exception) {
-//									Window.alert("Erreur lors de la recuperation du semester.");
-//								}
-//
-//								public void onResponseReceived(Request request, Response response) {
-//									if (response.getStatusCode() == 200) {
-//										Semester semester = Semester.fromXML.read(response.getText().trim());
-//										MainGUI.refresh(semester);
-//									}
-//								}
-//							});
-//						} catch (RequestException e) {
-//							e.printStackTrace();
-//						}
+						MainGUI.getInstance().reloadTree();
+						MainGUI.getInstance().loadWeekGrid();
 					}
 				}
 			});

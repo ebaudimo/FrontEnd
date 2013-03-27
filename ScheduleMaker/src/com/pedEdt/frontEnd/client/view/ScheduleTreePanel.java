@@ -7,7 +7,7 @@ import com.pedEdt.frontEnd.client.model.Semester;
 public class ScheduleTreePanel extends Composite {
 
 	protected ScrollPanel scrollPanel;
-	protected TreeSemesterWidget semesterTree;
+	protected static TreeSemesterWidget semesterTree;
 	
 	public ScheduleTreePanel(Semester semester) {
 		
@@ -27,5 +27,9 @@ public class ScheduleTreePanel extends Composite {
 		semesterTree = new TreeSemesterWidget(semester);
 		semesterTree.createTree();
 		scrollPanel.add(semesterTree);
+	}
+	
+	public static TreeSemesterWidget getSemesterTree() {
+		return semesterTree;
 	}
 }

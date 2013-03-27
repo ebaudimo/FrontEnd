@@ -17,6 +17,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.pedEdt.frontEnd.client.controller.ServerCommunication;
 import com.pedEdt.frontEnd.client.model.Semester;
 import com.pedEdt.frontEnd.client.model.SemesterList;
 import com.pedEdt.frontEnd.client.util.DateUtil;
@@ -71,24 +72,20 @@ public class StartWindow extends PopupPanel {
 
 		final ListBox myListBox = new ListBox();
 
-		String url = "http://localhost:8080/rest/service/read/semesters";
+		String url = ServerCommunication.SERVERURL + "read/semesters";
 		final RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, url);
 
 		try {
 			builder.sendRequest(null, new RequestCallback() {
 
 				public void onResponseReceived(Request request, Response response) {
-					Window.alert("1");
 					parent.clear();
 					parent.add(new Label("Selectionner un semestre : "));
 					
 					if(response.getStatusCode() == 200) {
-						Window.alert("2");
 						List<Semester> sl = SemesterList.fromXML.read(response.getText().trim()).getSemesterList();
-						Window.alert("3");
 						if(sl != null) {
 							if(!sl.isEmpty()) {
-								Window.alert("empty");
 								Iterator<Semester> i = sl.iterator();
 								while (i.hasNext()) {
 									Semester s = i.next();
@@ -105,11 +102,8 @@ public class StartWindow extends PopupPanel {
 								buildLoadButton(parent, myListBox);
 							}	
 						}
-						Window.alert("add");
 						buildAddButton(parent);					
 					}
-					
-					Window.alert("fin");
 				}
 
 				@Override
@@ -124,7 +118,7 @@ public class StartWindow extends PopupPanel {
 
 	private void searchSemester(String id) {
 
-		RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, "http://localhost:8080/rest/service/read/semester/" + id);
+		RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, ServerCommunication.SERVERURL + "read/semester/" + id);
 		try {
 			builder.sendRequest(null, new RequestCallback() {
 				public void onResponseReceived(Request request, Response response) {

@@ -121,4 +121,19 @@ public class Semester implements java.io.Serializable {
 		}
 		return myList;
 	}
+	
+	public TeachingUnit getTeachingUnitById(int id) {
+		for (TeachingUnit teachingUnit : teachingUnits)
+			if (teachingUnit.getId() == id)
+				return teachingUnit;
+		return null;
+	}
+	
+	public Module getModuleById(int id) {
+		for (TeachingUnit teachingUnit : teachingUnits)
+			for (Module module : teachingUnit.getModules())
+				if (module.getId() == id)
+					return module;
+		return null;
+	}
 }

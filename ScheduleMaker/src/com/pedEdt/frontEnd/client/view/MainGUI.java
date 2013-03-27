@@ -17,7 +17,6 @@ package com.pedEdt.frontEnd.client.view;
 import java.util.List;
 
 import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -45,9 +44,7 @@ public class MainGUI {
 	private static MainGUI mainGUIInstance;
 	
 	public static MainGUI getInstance(Semester s) {
-		if(null == mainGUIInstance) 
-			mainGUIInstance = new MainGUI(s);
-		
+		mainGUIInstance = new MainGUI(s);
 		return mainGUIInstance;
 	}
 	
@@ -104,19 +101,19 @@ public class MainGUI {
 		return this.semester;
 	}
 	
+	public ScheduleTreePanel getSchedTree() {
+		return this.schedTree;
+	}
+	
 	public void loadWeekGrid() {
 		schedGridPan.getDropController().removeAllSeanceWidget();
 		
 		List<Teaching> allTeaching = this.semester.getAllTeaching();
-		Window.alert("size " + allTeaching.size());
 		if(allTeaching != null) {
 			for (Teaching teaching : allTeaching) {
 				//a real 'for loop' to have a counter
-				Window.alert("teaching : " + teaching.getId());
 				for(int cpt = 0; cpt < teaching.getSeances().size(); cpt++) {
-					Window.alert("" + teaching.getId() + " seance : " + cpt);
 					if(DateUtil.inThisWeek(DateUtil.getDate(teaching.getSeances().get(cpt)))) {
-						Window.alert("" + teaching.getId() + " seance : " + cpt + " in this week");
 						
 						SeanceWidget session = new SeanceWidget(teaching, 
 								DateUtil.findPosH(DateUtil.getDate(teaching.getSeances().get(cpt))), 
@@ -136,12 +133,6 @@ public class MainGUI {
 	}
 
 	public void reloadTree() {
-		this.schedTree.rebuildTree(this.semester);
+		mainGUIInstance.schedTree.rebuildTree(mainGUIInstance.semester);
 	}
-	
-	
-	public static void refresh(Semester semester) {
-		mainGUIInstance = new MainGUI(semester);
-	}
-	
 }
