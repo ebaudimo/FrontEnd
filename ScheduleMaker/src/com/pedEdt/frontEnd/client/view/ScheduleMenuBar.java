@@ -41,7 +41,7 @@ public class ScheduleMenuBar extends Composite {
 
 		//semester
 		MenuBar semesterMenu = new MenuBar(true);
-		semesterMenu.addItem("Nouveau semestre", new ScheduledCommand() {
+		semesterMenu.addItem("Nouveau Semestre", new ScheduledCommand() {
 
 			@Override
 			public void execute() {
@@ -49,7 +49,22 @@ public class ScheduleMenuBar extends Composite {
 				Forms.popupCreateSemester().center();
 			}
 		});
-		semesterMenu.addItem("Nouvelle UE", new ScheduledCommand() {
+		semesterMenu.addItem("Ouvrir Semestre", new ScheduledCommand() {
+
+			@Override
+			public void execute() {
+				DebugPanel.getInstance().vpan.add(new Label("Semester->Open callback"));
+			}
+		});
+		semesterMenu.addItem("Modifier Semestre", new ScheduledCommand() {
+
+			@Override
+			public void execute() {
+//				DebugPanel.getInstance().vpan.add(new Label("Semester->Open callback"));
+				Forms.popupUpdateSemester(semester).center();
+			}
+		});
+		semesterMenu.addItem("Ajouter UE", new ScheduledCommand() {
 
 			@Override
 			public void execute() {
@@ -57,14 +72,7 @@ public class ScheduleMenuBar extends Composite {
 				Forms.popupCreateTeachingUnit(semester).center();
 			}
 		});
-		semesterMenu.addItem("Ouvrir semestre", new ScheduledCommand() {
-
-			@Override
-			public void execute() {
-				DebugPanel.getInstance().vpan.add(new Label("Semester->Open callback"));
-			}
-		});
-		semesterMenu.addItem("Supprimer semestre", new ScheduledCommand() {
+		semesterMenu.addItem("Supprimer Semestre", new ScheduledCommand() {
 
 			@Override
 			public void execute() {
@@ -83,7 +91,7 @@ public class ScheduleMenuBar extends Composite {
 	public static void updateToTeachingUnitOptions(final TeachingUnit teachingUnit) {
 		selectedOption.clearItems();
 
-		selectedOption.addItem("Nouveau Module", new ScheduledCommand() {
+		selectedOption.addItem("Ajouter Module", new ScheduledCommand() {
 
 			@Override
 			public void execute() {
@@ -91,7 +99,7 @@ public class ScheduleMenuBar extends Composite {
 			}
 		});
 
-		selectedOption.addItem("Modifier l'UE", new ScheduledCommand() {
+		selectedOption.addItem("Modifier UE", new ScheduledCommand() {
 
 			@Override
 			public void execute() {
@@ -99,7 +107,7 @@ public class ScheduleMenuBar extends Composite {
 			}
 		});
 
-		selectedOption.addItem("Supprimer l'UE", new ScheduledCommand() {
+		selectedOption.addItem("Supprimer UE", new ScheduledCommand() {
 
 			@Override
 			public void execute() {
@@ -112,7 +120,7 @@ public class ScheduleMenuBar extends Composite {
 	public static void updateToModuleOptions(final Module module) {
 		selectedOption.clearItems();
 
-		selectedOption.addItem("Nouvel Enseignement", new ScheduledCommand() {
+		selectedOption.addItem("Ajouter Enseignement", new ScheduledCommand() {
 
 			@Override
 			public void execute() {
@@ -120,7 +128,7 @@ public class ScheduleMenuBar extends Composite {
 			}
 		});
 
-		selectedOption.addItem("Modifier le Module", new ScheduledCommand() {
+		selectedOption.addItem("Modifier Module", new ScheduledCommand() {
 
 			@Override
 			public void execute() {
@@ -128,7 +136,7 @@ public class ScheduleMenuBar extends Composite {
 			}
 		});
 
-		selectedOption.addItem("Supprimer le Module", new ScheduledCommand() {
+		selectedOption.addItem("Supprimer Module", new ScheduledCommand() {
 
 			@Override
 			public void execute() {
@@ -141,7 +149,7 @@ public class ScheduleMenuBar extends Composite {
 	public static void updateToTeachingOptions(final Teaching teaching) {
 		selectedOption.clearItems();
 
-		selectedOption.addItem("Modifier l'enseignement", new ScheduledCommand() {
+		selectedOption.addItem("Modifier Enseignement", new ScheduledCommand() {
 
 			@Override
 			public void execute() {
@@ -149,7 +157,7 @@ public class ScheduleMenuBar extends Composite {
 			}
 		});
 
-		selectedOption.addItem("Supprimer l'enseignement", new ScheduledCommand() {
+		selectedOption.addItem("Supprimer Enseignement", new ScheduledCommand() {
 
 			@Override
 			public void execute() {

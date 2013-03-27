@@ -18,6 +18,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DatePicker;
@@ -130,17 +131,25 @@ public class Forms {
 				if (!startDate.getText().trim().equals("") && !endDate.getText().trim().equals("")) {
 					if (startDate.getText().trim().matches("^[0-9]{2}[/]{1}[0-9]{2}[/]{1}[0-9]{4}$")) {
 						if(endDate.getText().trim().matches("^[0-9]{2}[/]{1}[0-9]{2}[/]{1}[0-9]{4}$")) {
-							Date dateStart = new Date(Date.parse(startDate.getText().trim()));
-							Date dateEnd = new Date(Date.parse(endDate.getText().trim()));
+							DateTimeFormat dateFormat = DateTimeFormat.getFormat("dd/MM/yyyy");
+							Date dateStart = dateFormat.parseStrict(startDate.getText().trim());
+							Window.alert("startDate = " + dateStart.toString());
+							Date dateEnd = dateFormat.parse(endDate.getText().trim());
+							Window.alert("endDate = " + dateEnd.toString());
+							DateTimeFormat year = DateTimeFormat.getFormat("yyyy");
 
 							Semester semester = new Semester();
-							semester.setYear(dateStart.getYear());
+							semester.setYear(Integer.parseInt(year.format(dateStart)));
 							semester.setNumber(DateUtil.getIndexSemester(dateStart));
 							semester.setStartDate(dateStart.getTime() / 1000);
 							semester.setEndDate(dateEnd.getTime() / 1000);
 
 							ServerCommunication.getInstance().createSemester(semester);
 							popupPanel.hide();
+							
+							StartWindow startPopup = new StartWindow();
+							RootPanel.get().add(startPopup);
+							startPopup.center();
 						} else {
 							Window.alert("Date de fin incorrecte.");
 							return;

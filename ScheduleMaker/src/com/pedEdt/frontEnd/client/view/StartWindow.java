@@ -45,8 +45,8 @@ public class StartWindow extends PopupPanel {
 	private void buildAddButton(VerticalPanel parent) {
 		parent.add(new Button("Ajouter", new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				PopupPanel newSemester = Forms.popupCreateSemester();
-				newSemester.center();
+				Forms.popupCreateSemester().center();
+				me.hide();
 			}
 		}));
 	}
