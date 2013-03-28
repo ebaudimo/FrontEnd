@@ -3,8 +3,9 @@ package com.pedEdt.frontEnd.client.view;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MenuBar;
+import com.google.gwt.user.client.ui.MenuItem;
+import com.google.gwt.user.client.ui.MenuItemSeparator;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.pedEdt.frontEnd.client.controller.ServerCommunication;
 import com.pedEdt.frontEnd.client.model.Module;
@@ -12,7 +13,6 @@ import com.pedEdt.frontEnd.client.model.Semester;
 import com.pedEdt.frontEnd.client.model.Teaching;
 import com.pedEdt.frontEnd.client.model.TeachingUnit;
 import com.pedEdt.frontEnd.client.util.ColorUtil;
-import com.pedEdt.frontEnd.client.util.DebugPanel;
 
 public class ScheduleMenuBar extends Composite {
 
@@ -24,6 +24,14 @@ public class ScheduleMenuBar extends Composite {
 
 		//semester
 		MenuBar semesterMenu = new MenuBar(true);
+		semesterMenu.addItem("Ajouter UE", new ScheduledCommand() {
+
+			@Override
+			public void execute() {
+				Forms.popupCreateTeachingUnit(semester).center();
+			}
+		});
+		semesterMenu.addSeparator(new MenuItemSeparator());
 		semesterMenu.addItem("Nouveau Semestre", new ScheduledCommand() {
 
 			@Override
@@ -35,7 +43,8 @@ public class ScheduleMenuBar extends Composite {
 
 			@Override
 			public void execute() {
-				DebugPanel.getInstance().vpan.add(new Label("Semester->Open callback"));
+				StartWindow startPopup = new StartWindow();
+				startPopup.center();
 			}
 		});
 		semesterMenu.addItem("Modifier Semestre", new ScheduledCommand() {
@@ -45,13 +54,7 @@ public class ScheduleMenuBar extends Composite {
 				Forms.popupUpdateSemester(semester).center();
 			}
 		});
-		semesterMenu.addItem("Ajouter UE", new ScheduledCommand() {
-
-			@Override
-			public void execute() {
-				Forms.popupCreateTeachingUnit(semester).center();
-			}
-		});
+		
 		semesterMenu.addItem("Supprimer Semestre", new ScheduledCommand() {
 
 			@Override
@@ -131,6 +134,9 @@ public class ScheduleMenuBar extends Composite {
 				if (Window.confirm("Voulez-vous supprimer ce module?")) {
 					MainGUI.getInstance().schedTree.semesterTree.getParentTeachingUnit(module).removeModule(module);
 					ColorUtil.getInstance().removeColor(module);
+					for (Teaching teaching : module.getTeachings()) {
+						ColorUtil.getInstance().removeColor(teaching);
+					}
 					ServerCommunication.getInstance().deleteModule(module.getId());
 				}
 			}

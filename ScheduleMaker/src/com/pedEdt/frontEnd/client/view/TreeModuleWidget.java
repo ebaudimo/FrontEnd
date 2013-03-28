@@ -2,6 +2,7 @@ package com.pedEdt.frontEnd.client.view;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.pedEdt.frontEnd.client.model.Module;
@@ -18,23 +19,16 @@ public class TreeModuleWidget extends TreeItem{
 		this.module = module;
 		this.father = father;
 		ColorUtil.getInstance().setColor(father.getTeachingUnit(),module);
+		
 		Label label = new Label(module.getTitle() + " ("+module.getCode() + ")");
 		label.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				ScheduleMenuBar.updateToModuleOptions(module);
 			}
 		});
+		DOM.setStyleAttribute(label.getElement(), "background", 
+				ColorUtil.getInstance().getColor(module));
 		setWidget(label);
-		
-		/*
-		final ContextMenu contextMenu = new ContextMenu(this);
-		this.addDomHandler(new ContextMenuHandler() {
-			public void onContextMenu(ContextMenuEvent event) {
-				event.preventDefault();
-				contextMenu.showMenu();
-			}
-		}, ContextMenuEvent.getType());
-		*/
 	}
 	
 	public Module getModule(){

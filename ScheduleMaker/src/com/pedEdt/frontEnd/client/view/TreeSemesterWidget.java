@@ -18,6 +18,7 @@ public class TreeSemesterWidget extends Tree{
 		this.semester = semester;
 		
 		// code from https://code.google.com/p/google-web-toolkit/issues/detail?id=3660
+		// to correct a known bug
 		addSelectionHandler(new SelectionHandler<TreeItem>() {
 			int comingFromSetState = 0;
 			boolean prevOpenState = true;
@@ -36,11 +37,6 @@ public class TreeSemesterWidget extends Tree{
 						comingFromSetState++;
 						item.setState(!item.getState());
 						prevOpenState = !item.getState();
-						
-						if(item.getState())
-							item.getWidget().setStyleName("nodeSelected");
-						else
-							item.getWidget().removeStyleName("nodeSelected");
 					}
 					else {
 						comingFromSetState = 0;
@@ -61,6 +57,7 @@ public class TreeSemesterWidget extends Tree{
 			for (TeachingUnit teachingUnit : semester.getTeachingUnits()) {
 				TreeTeachingUnitWidget widget = new TreeTeachingUnitWidget(teachingUnit);
 				widget.createTree();
+				widget.setState(true);
 				addItem(widget);
 			}
 		}

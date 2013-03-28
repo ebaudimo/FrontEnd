@@ -16,7 +16,7 @@ class Color{
 		return name;
 	}
 	public boolean isUsed(){
-		return users.isEmpty();
+		return !users.isEmpty();
 	}
 	public void addUser(Object o){
 		users.add(o);
@@ -56,7 +56,7 @@ class ColorType {
 		users.add(o);
 	}
 	public boolean isUsed(){
-		return users.isEmpty();
+		return !users.isEmpty();
 	}
 	public void removeUser(Object o){
 		users.remove(o);
@@ -73,32 +73,39 @@ public class ColorUtil {
 		colorTypes = new ArrayList<ColorType>();
 		
 		List<Color> reds = new ArrayList<Color>();
-		reds.add(new Color("#990000"));
-		reds.add(new Color("#CC0000"));
-		reds.add(new Color("#FF0000"));
-		reds.add(new Color("#FF6666"));
+		reds.add(new Color("#DF6B62"));
+		reds.add(new Color("#E77E76"));
+		reds.add(new Color("#E78A83"));
+		reds.add(new Color("#B8463D"));
 		colorTypes.add(new ColorType(reds));
 		
 		List<Color> blues = new ArrayList<Color>();
-		blues.add(new Color("#000099"));
-		blues.add(new Color("#3333FF"));
-		blues.add(new Color("#6666CC"));
-		blues.add(new Color("#9999FF"));
+		blues.add(new Color("#496594"));
+		blues.add(new Color("#617EAF"));
+		blues.add(new Color("#6A83AF"));
+		blues.add(new Color("#2D4A7A"));
 		colorTypes.add(new ColorType(blues));
 		
 		List<Color> greens = new ArrayList<Color>();
-		greens.add(new Color("#006600"));
-		greens.add(new Color("#009900"));
-		greens.add(new Color("#33CC00"));
-		greens.add(new Color("#33CC33"));
+		greens.add(new Color("#5AB750"));
+		greens.add(new Color("#70C966"));
+		greens.add(new Color("#7AC972"));
+		greens.add(new Color("#3B9732"));
 		colorTypes.add(new ColorType(greens));
 		
 		List<Color> yellows = new ArrayList<Color>();
-		yellows.add(new Color("#FF9900"));
-		yellows.add(new Color("#FFCC00"));
-		yellows.add(new Color("#FFCC33"));
-		yellows.add(new Color("#FFFF66"));
+		yellows.add(new Color("#DFD862"));
+		yellows.add(new Color("#E7E176"));
+		yellows.add(new Color("#E7E183"));
+		yellows.add(new Color("#B8B13D"));
 		colorTypes.add(new ColorType(yellows));
+		
+		List<Color> violets = new ArrayList<Color>();
+		violets.add(new Color("#A2478E"));
+		violets.add(new Color("#B95FA5"));
+		violets.add(new Color("#B969A8"));
+		violets.add(new Color("#862C72"));
+		colorTypes.add(new ColorType(violets));
 		
 	}
 	
@@ -166,12 +173,21 @@ public class ColorUtil {
 		return null;
 	}
 	
+	public String getColorFromColorTypeUser(Object o){
+		for (ColorType ct : colorTypes) {
+			if( ct.usedBy(o))
+				return ct.getColors().get(0).getName();
+		}
+		return null;
+	}
+	
 	public void removeColorType(Object o){
 		for (ColorType colorType : colorTypes) {
 			if(colorType.usedBy(o)){
 				for (Color color : colorType.getColors()) {
 					color.clearUsers();
 				}
+				colorType.removeUser(o);
 				return;
 			}
 		}
@@ -186,5 +202,9 @@ public class ColorUtil {
 				}
 			}
 		}
+	}
+
+	public static void reset() {
+		instance = new ColorUtil();
 	}
 }
